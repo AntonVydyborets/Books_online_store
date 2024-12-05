@@ -7,19 +7,21 @@ class Book(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), index=True, nullable=False)
+    author = Column(String(50, nullable=False))
+    publisher = Column(String(50, nullable=True))
     description = Column(Text, nullable=True)
     price = Column(Float, nullable=False)
     publication_year = Column(Integer, nullable=False)
     country_of_origin = Column(String(50), nullable=True)
     text_language = Column(String(50), nullable=True)
-    category = Column(String(50), nullable=False)
+    genre = Column(String(50), nullable=False)
     rating = Column(Float, nullable=True, default=0.0)
     is_available = Column(Boolean, default=True)
 
     order_books = relationship("OrderBook", back_populates="book")
 
 
-class Orders(Base):
+class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True)
