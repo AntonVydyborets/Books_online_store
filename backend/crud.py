@@ -14,6 +14,8 @@ async def create_book(db: Session, book: BookCreate):
     await db.refresh(db_book)
     return db_book
 
+async def get_book_by_name(db: Session, name: str) -> Book:
+    return db.query(Book).filter(Book.name == name).first()
 
 async def create_order(db: Session, order: OrderCreate):
     total_price = 0
