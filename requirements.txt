@@ -6,3 +6,4 @@ alembic
 pydantic 
 email-validator
 psycopg2-binary
+secure-smtplib

@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
+
 class BookBase(BaseModel):
     name: str
     description: str
@@ -12,36 +13,48 @@ class BookBase(BaseModel):
     text_language: str
     genre: str
     rating: float
-    is_available: bool
+    is_available: Optional[bool] = True
+
 
 class BookCreate(BookBase):
-    pass
+    is_available: Optional[bool] = True
+
 
 class BookResponse(BookBase):
     id: int
     rating: Optional[float] = 0.0
 
-    class Config: 
-        orm_mode = True 
+    class Config:
+        orm_mode = True
+
 
 class OrderBookCreate(BaseModel):
     book_id: int
     quantity: int
 
+
+class OrderBookResponse(BaseModel):
+    book_id: int
+    quantity: int
+    book_name: str 
+
+    class Config:
+        orm_mode = True
+
+
 class OrderCreate(BaseModel):
     email: str
-    phone: int
-    books: List[OrderBookCreate] 
+    phone: str 
+    books: List[OrderBookCreate]
+
 
 class OrderResponse(BaseModel):
     id: int
     status: str
     total_price: float
     email: str
-    phone: int
-    books: List[OrderBookCreate]
+    phone: str
+    books: List[OrderBookResponse] 
 
     class Config:
         orm_mode = True
-
-

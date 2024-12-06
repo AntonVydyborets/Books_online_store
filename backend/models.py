@@ -2,13 +2,14 @@ from sqlalchemy import Boolean, Integer, Column, String, Float, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from backend.database import Base
 
+
 class Book(Base):
     __tablename__ = "books"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), index=True, nullable=False)
-    author = Column(String(50, nullable=False))
-    publisher = Column(String(50, nullable=True))
+    author = Column(String(50), nullable=False)
+    publisher = Column(String(50), nullable=True)
     description = Column(Text, nullable=True)
     price = Column(Float, nullable=False)
     publication_year = Column(Integer, nullable=False)
@@ -40,6 +41,6 @@ class OrderBook(Base):
     order_id = Column(Integer, ForeignKey("orders.id"), nullable=False)
     book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
     quantity = Column(Integer, default=1)
-    order = relationship("Orders", back_populates="items")
-    book = relationship("Book", back_populates="order_books")
 
+    order = relationship("Order", back_populates="items")
+    book = relationship("Book", back_populates="order_books")
