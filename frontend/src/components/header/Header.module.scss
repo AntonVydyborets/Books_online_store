@@ -40,6 +40,11 @@
 }
 
 .header_top__right_menu__lang {
+  background-color: #dcdcdc;
+  padding: 7px;
+  border-radius: 25px;
+
+  line-height: 16px;
   gap: 8px;
 }
 
@@ -102,8 +107,8 @@
 
   transition: all 0.2s ease-in;
 
-  // opacity: 0;
-  // visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .verticalNavigation__title {
