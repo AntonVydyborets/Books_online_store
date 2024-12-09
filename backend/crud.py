@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from backend.models import Book, Order, OrderBook
-from backend.schemas import BookCreate, OrderCreate, OrderBookCreate
+from backend.schemas import BookCreate, OrderCreate
 
 
 async def get_book(db: AsyncSession, skip: int = 0, limit: int = 10):

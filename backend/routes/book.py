@@ -2,8 +2,8 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from backend import crud, schemas, models
-from backend.database import async_session
+from backend import schemas, models
+from backend.database import get_db
 
 
 router = APIRouter()
@@ -16,7 +16,8 @@ async def get_book(
     max_price: Optional[float] = None,
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(async_session)):
+    db: AsyncSession = Depends(get_db)):
+
     query = select(models.Book)
 
     if genre:
@@ -32,7 +33,7 @@ async def get_book(
 
 
 @router.post("/books", response_model=schemas.BookResponse, status_code=201)
-async def create_book(book: schemas.BookCreate, db: AsyncSession = Depends(async_session)):
+async def create_book(book: schemas.BookCreate, db: AsyncSession = Depends(get_db)):
     existing_book_query = await db.execute(select(models.Book).filter(models.Book.name == book.name))
     existing_book = existing_book_query.scalars().first()
 

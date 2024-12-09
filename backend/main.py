@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routes import book, order
+from backend.routes import book, order, admin
 
 
 app = FastAPI(
@@ -12,7 +12,7 @@ app = FastAPI(
 origins = [
     "http://localhost",
     "http://localhost:8000",
-    
+
 ]
 
 app.add_middleware(
@@ -25,3 +25,4 @@ app.add_middleware(
 
 app.include_router(book.router, prefix="/api/v1")
 app.include_router(order.router, prefix="/api/v1")
+app.include_router(admin.router, prefix="/api/v1")

@@ -25,7 +25,7 @@ class BookResponse(BookBase):
     rating: Optional[float] = 0.0
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrderBookCreate(BaseModel):
@@ -36,15 +36,15 @@ class OrderBookCreate(BaseModel):
 class OrderBookResponse(BaseModel):
     book_id: int
     quantity: int
-    book_name: str 
+    book_name: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class OrderCreate(BaseModel):
     email: str
-    phone: str 
+    phone: str
     books: List[OrderBookCreate]
 
 
@@ -54,7 +54,7 @@ class OrderResponse(BaseModel):
     total_price: float
     email: str
     phone: str
-    books: List[OrderBookResponse] 
+    books: List[OrderBookResponse]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
