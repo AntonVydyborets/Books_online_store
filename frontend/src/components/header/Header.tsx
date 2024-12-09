@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import logo from '@/assets/images/logo.png'
 import account_icon from '@/assets/images/account.svg'
 import wishlist_icon from '@/assets/images/wishlist.svg'
@@ -10,7 +12,11 @@ import BaseInput from '@/ui/baseInput/BaseInput'
 
 import s from './Header.module.scss'
 
-const Header = () => {
+interface HeaderProps {
+  isMenuOpen?: boolean
+}
+
+const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
   return (
     <div className={s.header}>
       <Container>
@@ -46,7 +52,7 @@ const Header = () => {
       </Container>
       <div className={s.header_bottom}>
         <Container className={s.header_bottom__container}>
-          <VerticalMenu />
+          <VerticalMenu isMenuOpen={isMenuOpen} />
           <div className="header_bottom__menu">
             <ul className={s.header_bottom__menu__main}>
               <li>

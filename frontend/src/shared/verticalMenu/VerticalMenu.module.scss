@@ -9,6 +9,7 @@
   border-right: 1px solid #333;
   cursor: pointer;
 
+  &.isOpen,
   &:hover {
     .verticalNavigation__title {
       color: #b4acac;
