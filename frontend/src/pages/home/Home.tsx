@@ -1,4 +1,4 @@
-import SliderBooks from './../../components/sliderBooks/SliderBooks';
+import SliderBooks from '../../components/sliderBooks/SliderBooks';
 
 const Home = () => {
   const sale = [

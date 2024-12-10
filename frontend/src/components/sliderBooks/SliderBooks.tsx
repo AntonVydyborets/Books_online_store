@@ -2,11 +2,16 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SlideItem from '../slideItem/SlideItem'
 import { Navigation } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
+import 'swiper/scss'
+import 'swiper/scss/navigation'
 import styles from './SliderBooks.module.scss'
 
-export default function SliderBooks({ title, data }) {
+interface SliderBooksProps {
+  title: string;
+  data: []; // Array of Book objects
+}
+
+const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>{title}</h3>
@@ -25,3 +30,5 @@ export default function SliderBooks({ title, data }) {
     </div>
   )
 }
+
+export default SliderBooks;
