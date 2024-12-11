@@ -1,0 +1,15 @@
+.shopMain__content {
+  display: flex;
+}
+
+.sidebar {
+  flex: 0 0 25%; /* 25% width */
+}
+
+.mainContent__inner {
+  flex: 1; /* 75% width */
+}
+
+.title {
+  margin-bottom: 30px;
+}

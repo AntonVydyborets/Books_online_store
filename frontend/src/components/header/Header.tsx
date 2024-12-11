@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router'
 
 import logo from '@/assets/images/logo.png'
 import account_icon from '@/assets/images/account.svg'
@@ -22,7 +23,9 @@ const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
       <Container>
         <div className={s.header_top}>
           <div className="header_top__logo">
-            <img src={logo} alt="logo" />
+            <Link to="/">
+              <img src={logo} alt="logo" />
+            </Link>
           </div>
           <div className={s.header_top__search}>
             <BaseInput type="text" placeholder="Пошук" />
