@@ -1,5 +1,5 @@
-import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+
 import styles from './SubscribeForm.module.scss'
 
 type FormValue = {
@@ -16,7 +16,7 @@ const SubscribeForm = () => {
   const onSubmit: SubmitHandler<FormValue> = (value) => {
     console.log('Form Submitted:', value)
   }
-  
+
   return (
     <div className={styles.container}>
       <div className={styles.left}>

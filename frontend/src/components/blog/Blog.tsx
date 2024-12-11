@@ -5,7 +5,9 @@ import BlogItem from '../blogItem/BlogItem'
 
 import { BlogItemType } from '@/utils/types/BlogItemType.ts'
 
+// @ts-ignore
 import 'swiper/scss'
+
 import styles from './Blog.module.scss'
 
 interface SliderBlogsProps {

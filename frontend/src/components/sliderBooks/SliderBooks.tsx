@@ -7,7 +7,9 @@ import SlideItem from '../slideItem/SlideItem'
 
 import { BookItemType } from '@/utils/types/BookItemType.ts'
 
+// @ts-ignore
 import 'swiper/scss'
+// @ts-ignore
 import 'swiper/scss/navigation'
 import styles from './SliderBooks.module.scss'
 
