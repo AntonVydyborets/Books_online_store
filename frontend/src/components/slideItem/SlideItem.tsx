@@ -1,16 +1,11 @@
-import React from 'react';
-import styles from './SlideItem.module.scss';
+import React from 'react'
 
-interface Book {
-  cover: string;
-  title: string;
-  genre: string;
-  price: number;
-  stock: boolean;
-}
+import { BookItemType } from '@/utils/types/BookItemType.ts'
+
+import styles from './SlideItem.module.scss'
 
 interface SlideItemProps {
-  book: Book | null;
+  book: BookItemType | null
 }
 
 const SlideItem: React.FC<SlideItemProps> = ({ book }) => {
@@ -34,7 +29,7 @@ const SlideItem: React.FC<SlideItemProps> = ({ book }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SlideItem;
+export default SlideItem

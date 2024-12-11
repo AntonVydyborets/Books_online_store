@@ -7,7 +7,7 @@ const ProductItem = () => {
     <div>
       <div className={s.container}>
         <div className={s['img-wrap']}>
-          <img src="https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg" alt={'title'} />
+          <img src="https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg" alt="title" />
         </div>
         <div className={s['content-wrap']}>
           <h6 className={s.title}>За Перекопом є земля 1</h6>

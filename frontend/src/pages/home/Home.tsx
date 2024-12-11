@@ -1,7 +1,7 @@
-import Blog from '@/components/blog/Blog';
+import Blog from '@/components/blog/Blog'
 import OurHistory from '@/shared/ourHistory/OurHistory'
-import SliderBooks from '@/components/sliderBooks/SliderBooks';
-import SubscribeForm from '@/components/subscribeForm/SubscribeForm';
+import SliderBooks from '@/components/sliderBooks/SliderBooks'
+import SubscribeForm from '@/components/subscribeForm/SubscribeForm'
 
 const Home = () => {
   const sale = [
