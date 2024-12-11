@@ -1,12 +1,20 @@
+import { FC } from 'react'
+
+import clsx from 'clsx'
+
 import burger from '@/assets/images/burger.svg'
 import star_icon from '@/assets/images/Star.svg'
 import right_arrow from '@/assets/images/chevron-right.svg'
 
 import s from './VerticalMenu.module.scss'
 
-const VerticalMenu = () => {
+interface VerticalMenuProps {
+  isMenuOpen?: boolean
+}
+
+const VerticalMenu: FC<VerticalMenuProps> = ({ isMenuOpen }) => {
   return (
-    <div className={s.verticalNavigation}>
+    <div className={clsx(s.verticalNavigation, { [s.isOpen]: isMenuOpen })}>
       <div className={s.verticalNavigation__burger}>
         <img src={burger} alt="burger" />
       </div>
