@@ -1,6 +1,8 @@
 import React from 'react'
-import styles from './BlogItem.module.scss'
+
 import { BlogItemType } from '@/utils/types/BlogItemType.ts'
+
+import styles from './BlogItem.module.scss'
 
 interface BlogItemProps {
   blog: BlogItemType | null

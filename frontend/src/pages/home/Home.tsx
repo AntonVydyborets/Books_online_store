@@ -1,7 +1,8 @@
 import Blog from '@/components/blog/Blog'
-import OurHistory from '@/shared/ourHistory/OurHistory'
 import SliderBooks from '@/components/sliderBooks/SliderBooks'
 import SubscribeForm from '@/components/subscribeForm/SubscribeForm'
+
+import OurHistory from '@/shared/ourHistory/OurHistory'
 
 const Home = () => {
   const sale = [
@@ -137,7 +138,6 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Home</h1>
       <SliderBooks data={sale} title="РОЗПРОДАЖ" />
       <SliderBooks data={newBook} title="НОВИНКИ" />
       <Blog data={blogs} />
