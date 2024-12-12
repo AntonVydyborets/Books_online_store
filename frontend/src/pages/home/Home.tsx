@@ -1,9 +1,10 @@
 import Blog from '@/components/blog/Blog'
 import SliderBooks from '@/components/sliderBooks/SliderBooks'
 import SubscribeForm from '@/components/subscribeForm/SubscribeForm'
+import Footer from '@/components/footer/Footer'
+import Header from '@/components/header/Header'
 
 import OurHistory from '@/shared/ourHistory/OurHistory'
-import Footer from '@/components/footer/Footer';
 
 const Home = () => {
   const sale = [
@@ -138,14 +139,17 @@ const Home = () => {
   ]
 
   return (
-    <div>
-      <SliderBooks data={sale} title="РОЗПРОДАЖ" />
-      <SliderBooks data={newBook} title="НОВИНКИ" />
-      <Blog data={blogs} />
-      <OurHistory />
-      <SubscribeForm />
-      <Footer />
-    </div>
+    <>
+      <Header />
+      <div>
+        <SliderBooks data={sale} title="РОЗПРОДАЖ" />
+        <SliderBooks data={newBook} title="НОВИНКИ" />
+        <Blog data={blogs} />
+        <OurHistory />
+        <SubscribeForm />
+        <Footer />
+      </div>
+    </>
   )
 }
 

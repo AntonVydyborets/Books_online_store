@@ -59,10 +59,10 @@ const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
           <div className="header_bottom__menu">
             <ul className={s.header_bottom__menu__main}>
               <li>
-                <a href="#">Про нас</a>
+                <Link to="/">Головна</Link>
               </li>
               <li>
-                <a href="#">Знижки</a>
+                <Link to="/shop">Магазин</Link>
               </li>
             </ul>
           </div>
