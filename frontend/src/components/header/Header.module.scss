@@ -1,3 +1,7 @@
+.mobile_header {
+  display: none;
+}
+
 .header {
   height: 212px;
   padding-top: 20px;
@@ -74,4 +78,38 @@
 
 .verticalNavigation__burger {
   margin-right: 10px;
+}
+
+@media (max-width: 1024px) {
+  .mobile_header {
+    display: flex;
+    align-items: center;
+
+    height: 80px;
+    border-bottom: 1px solid #d9d9d9;
+
+    margin-bottom: 30px;
+  }
+
+  .header {
+    display: none;
+  }
+
+  .mobile_header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile_header__logo__link {
+    img {
+      width: 100px;
+    }
+  }
+
+  .mobile_header__tools {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
 }

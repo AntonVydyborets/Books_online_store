@@ -5,3 +5,19 @@
   grid-column-gap: 0;
   grid-row-gap: 15px;
 }
+
+/* Tablet (e.g., width between 768px and 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    grid-row-gap: 20px; /* Increase row gap for better spacing */
+  }
+}
+
+/* Mobile (e.g., width below 768px) */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr; /* 1 column on mobile */
+    grid-row-gap: 25px; /* Further spacing between rows */
+  }
+}

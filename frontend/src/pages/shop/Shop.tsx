@@ -16,6 +16,31 @@ const Shop = () => {
           <Typography className={s.title} tag="h2">
             Книга року
           </Typography>
+
+          <div className={s.filterList}>
+            <div className={s.filterList__items}>
+              <div className={s.filterList__item}>
+                <div>Фентезі</div>
+                <span>x</span>
+              </div>
+              <div className={s.filterList__item}>
+                <div>Пригоди</div>
+                <span>x</span>
+              </div>
+              <div className={s.filterList__item}>
+                <div>Детективи</div>
+                <span>x</span>
+              </div>
+            </div>
+            <div className="filterList__sort">
+              <select>
+                <option value="1">Сортувати за</option>
+                <option value="2">Популярністю</option>
+                <option value="3">Ціною</option>
+                <option value="4">Назвою</option>
+              </select>
+            </div>
+          </div>
         </Container>
         <Container>
           <div className={s.shopMain__content}>
