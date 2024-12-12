@@ -1,5 +1,6 @@
 import Header from '@/components/header/Header'
 import ProductGrid from '@/components/productGrid/ProductGrid'
+import Footer from '@/components/footer/Footer'
 
 import Container from '@/shared/container/Container'
 
@@ -11,7 +12,7 @@ const Shop = () => {
   return (
     <>
       <Header />
-      <div className="shopMain">
+      <div className={s.shopMain}>
         <Container>
           <Typography className={s.title} tag="h2">
             Книга року
@@ -51,6 +52,7 @@ const Shop = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </>
   )
 }
