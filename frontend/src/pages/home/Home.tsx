@@ -2,6 +2,7 @@ import Blog from '@/components/blog/Blog';
 import OurHistory from '@/shared/ourHistory/OurHistory'
 import SliderBooks from '@/components/sliderBooks/SliderBooks';
 import SubscribeForm from '@/components/subscribeForm/SubscribeForm';
+import Footer from '@/components/footer/Footer';
 
 const Home = () => {
   const sale = [
@@ -143,6 +144,7 @@ const Home = () => {
       <Blog data={blogs} />
       <OurHistory />
       <SubscribeForm />
+      <Footer />
     </div>
   )
 }
