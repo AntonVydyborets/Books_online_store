@@ -1,14 +1,20 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/scss'
-import styles from './Blog.module.scss'
+
 import BlogItem from '../blogItem/BlogItem'
 
+import { BlogItemType } from '@/utils/types/BlogItemType.ts'
+
+// @ts-ignore
+import 'swiper/scss'
+
+import styles from './Blog.module.scss'
+
 interface SliderBlogsProps {
-  data: [];
+  data: BlogItemType[]
 }
 
-const Blog: React.FC<SliderBlogsProps> = ({data}) => {
+const Blog: React.FC<SliderBlogsProps> = ({ data }) => {
   return (
     <div className={styles.container}>
       <h3>Blog</h3>
@@ -27,8 +33,7 @@ const Blog: React.FC<SliderBlogsProps> = ({data}) => {
             slidesPerView: 3,
             spaceBetween: 10,
           },
-        }}
-        >
+        }}>
         {data.map((blog) => (
           <SwiperSlide key={blog.id}>
             <BlogItem blog={blog} />

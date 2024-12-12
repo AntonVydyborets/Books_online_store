@@ -1,14 +1,21 @@
 import React from 'react'
+
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SlideItem from '../slideItem/SlideItem'
 import { Navigation } from 'swiper/modules'
+
+import SlideItem from '../slideItem/SlideItem'
+
+import { BookItemType } from '@/utils/types/BookItemType.ts'
+
+// @ts-ignore
 import 'swiper/scss'
+// @ts-ignore
 import 'swiper/scss/navigation'
 import styles from './SliderBooks.module.scss'
 
 interface SliderBooksProps {
-  title: string;
-  data: []; // Array of Book objects
+  title: string
+  data: BookItemType[]
 }
 
 const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
@@ -35,8 +42,7 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
             slidesPerView: 4,
             spaceBetween: 10,
           },
-        }}
-        >
+        }}>
         {data.map((book) => (
           <SwiperSlide key={book.id}>
             <SlideItem book={book} />
@@ -47,4 +53,4 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
   )
 }
 
-export default SliderBooks;
+export default SliderBooks
