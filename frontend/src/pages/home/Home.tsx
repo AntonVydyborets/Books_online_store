@@ -3,8 +3,6 @@ import SliderBooks from '@/components/sliderBooks/SliderBooks'
 import SubscribeForm from '@/components/subscribeForm/SubscribeForm'
 
 import OurHistory from '@/shared/ourHistory/OurHistory'
-import SliderBooks from '@/components/sliderBooks/SliderBooks';
-import SubscribeForm from '@/components/subscribeForm/SubscribeForm';
 import Footer from '@/components/footer/Footer';
 
 const Home = () => {
