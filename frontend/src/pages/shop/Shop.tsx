@@ -1,6 +1,7 @@
 import Header from '@/components/header/Header'
 import ProductGrid from '@/components/productGrid/ProductGrid'
 import Footer from '@/components/footer/Footer'
+import FilterItem from '@/components/filterItem/FilterItem'
 
 import Container from '@/shared/container/Container'
 
@@ -45,7 +46,9 @@ const Shop = () => {
         </Container>
         <Container>
           <div className={s.shopMain__content}>
-            <div className={s.sidebar}></div>
+            <div className={s.sidebar}>
+              <FilterItem title="Автор" />
+            </div>
             <div className={s.mainContent__inner}>
               <ProductGrid />
             </div>
