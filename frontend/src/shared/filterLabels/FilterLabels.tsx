@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import s from './FilterLabel.module.scss'
+import s from './FilterLabels.module.scss'
 
-interface FilterLabelProps {
+interface FilterLabelsProps {
   items: { id: number; title: string }[]
 }
 
-const FilterLabel: FC<FilterLabelProps> = ({ items }) => {
+const FilterLabels: FC<FilterLabelsProps> = ({ items }) => {
   return (
     <>
       {items.map((item) => (
@@ -19,4 +19,4 @@ const FilterLabel: FC<FilterLabelProps> = ({ items }) => {
   )
 }
 
-export default FilterLabel
+export default FilterLabels

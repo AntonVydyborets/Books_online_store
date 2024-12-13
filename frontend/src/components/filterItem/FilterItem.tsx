@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import FilterLabel from '@/shared/filterLabel/FilterLabel'
+import FilterLabels from '@/shared/filterLabels/FilterLabels'
 
 import BaseInput from '@/ui/baseInput/BaseInput'
 import Typography from '@/ui/typography/Typography'
@@ -12,7 +12,7 @@ interface FilterItemProps {
   title: string
 }
 
-const filterItems = [
+const labels = [
   {
     id: 1,
     title: 'Фентезі',
@@ -36,7 +36,7 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title }) => {
 
       {isSearch && <BaseInput placeholder="Пошук" />}
 
-      <FilterLabel items={filterItems} />
+      <FilterLabels items={labels} />
     </div>
   )
 }
