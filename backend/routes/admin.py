@@ -17,7 +17,9 @@ async def create_book(book: schemas.BookCreate, db: AsyncSession = Depends(get_d
 
 
 @router.put("/admin/books/{book_id}", response_model=schemas.BookResponse)
-async def update_book(book_id: int, book: schemas.BookCreate, db: AsyncSession = Depends(get_db)):
+async def update_book(
+    book_id: int, book: schemas.BookCreate, db: AsyncSession = Depends(get_db)
+):
     result = await db.execute(select(models.Book).filter(models.Book.id == book_id))
     db_book = result.scalars().first()
     if not db_book:
@@ -42,13 +44,17 @@ async def delete_book(book_id: int, db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/admin/orders/", response_model=list[schemas.OrderResponse])
-async def get_orders(skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)):
+async def get_orders(
+    skip: int = 0, limit: int = 10, db: AsyncSession = Depends(get_db)
+):
     result = await db.execute(select(models.Order).offset(skip).limit(limit))
     return result.scalars().all()
 
 
 @router.put("/admin/orders/{order_id}", response_model=schemas.OrderResponse)
-async def update_order_status(order_id: int, status: str, db: AsyncSession = Depends(get_db)):
+async def update_order_status(
+    order_id: int, status: str, db: AsyncSession = Depends(get_db)
+):
     result = await db.execute(select(models.Order).filter(models.Order.id == order_id))
     db_order = result.scalars().first()
     if not db_order:
