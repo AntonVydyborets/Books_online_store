@@ -6,14 +6,21 @@ import s from './FilterLabels.module.scss'
 
 interface FilterLabelsProps {
   items: FilterType[]
+  handleCheckboxChange: (item: FilterType) => void
+  selectedFilters: FilterType[]
 }
 
-const FilterLabels: FC<FilterLabelsProps> = ({ items }) => {
+const FilterLabels: FC<FilterLabelsProps> = ({ items, handleCheckboxChange, selectedFilters }) => {
   return (
     <>
       {items.map((item) => (
         <div key={item.id} className={s.filterItem__label}>
-          <input type="checkbox" id={`check-${item.id}`} />
+          <input
+            type="checkbox"
+            id={`check-${item.id}`}
+            onChange={() => handleCheckboxChange(item)}
+            checked={selectedFilters.some((f) => f.id === item.id)}
+          />
           <label htmlFor={`check-${item.id}`}>{item.title}</label>
         </div>
       ))}

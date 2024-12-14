@@ -3,6 +3,8 @@ import ProductGrid from '@/components/productGrid/ProductGrid'
 import Footer from '@/components/footer/Footer'
 import FilterItem from '@/components/filterItem/FilterItem'
 
+import useFiltersStore from '@/store/useFiltersStore.ts'
+
 import Container from '@/shared/container/Container'
 
 import Typography from '@/ui/typography/Typography'
@@ -10,6 +12,11 @@ import Typography from '@/ui/typography/Typography'
 import s from './Shop.module.scss'
 
 const Shop = () => {
+  const selectedFilters = useFiltersStore((state) => state.selectedFilters)
+  const removeFilter = useFiltersStore((state) => state.removeFilter)
+
+  console.log(selectedFilters)
+
   return (
     <>
       <Header />
@@ -21,18 +28,14 @@ const Shop = () => {
 
           <div className={s.filterList}>
             <div className={s.filterList__items}>
-              <div className={s.filterList__item}>
-                <div>Фентезі</div>
-                <span>x</span>
-              </div>
-              <div className={s.filterList__item}>
-                <div>Пригоди</div>
-                <span>x</span>
-              </div>
-              <div className={s.filterList__item}>
-                <div>Детективи</div>
-                <span>x</span>
-              </div>
+              {selectedFilters.map((i) => {
+                return (
+                  <div key={i.id} className={s.filterList__item} onClick={() => removeFilter(i.id)}>
+                    <div>{i.title}</div>
+                    <span>x</span>
+                  </div>
+                )
+              })}
             </div>
             <div className="filterList__sort">
               <select>

@@ -1,8 +1,7 @@
 import { create } from 'zustand'
-
 import { v4 as uuid } from 'uuid'
 
-import { BookItemType } from '@/utils/types/BookItemType.ts'
+import { BookItemType } from '@/utils/types/BookItemType'
 
 interface StoreState {
   allProducts: BookItemType[]
@@ -65,7 +64,7 @@ const initialState = {
     {
       id: uuid(),
       title: 'За Перекопом є земля 1',
-      cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
+      cover: 'https://laboratory.ua/files/products/za-perekопом-ye-земля-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
       price: '470',
       stock: true,
@@ -73,7 +72,7 @@ const initialState = {
     {
       id: uuid(),
       title: 'За Перекопом є земля 2',
-      cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
+      cover: 'https://laboratory.ua/files/products/za-perekопом-ye-земля-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
       price: '400',
       stock: true,
@@ -81,7 +80,7 @@ const initialState = {
     {
       id: uuid(),
       title: 'За Перекопом є земля 3',
-      cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
+      cover: 'https://laboratory.ua/files/products/za-perekопом-ye-земля-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
       price: '670',
       stock: true,
@@ -89,7 +88,7 @@ const initialState = {
     {
       id: uuid(),
       title: 'За Перекопом є земля 4',
-      cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
+      cover: 'https://laboratory.ua/files/products/za-perekопом-ye-земля-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
       price: '470',
       stock: true,
@@ -97,7 +96,7 @@ const initialState = {
     {
       id: uuid(),
       title: 'За Перекопом є земля 5',
-      cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
+      cover: 'https://laboratory.ua/files/products/za-perekопом-ye-земля-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
       price: '370',
       stock: true,
