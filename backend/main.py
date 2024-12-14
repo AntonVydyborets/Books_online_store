@@ -12,12 +12,12 @@ app = FastAPI(
     title="Books Store API",
     description="API для управління книгами та замовленнями в магазині книг.",
     version="1.0.0",
+    docs_url="/docs",
 )
 
 origins = [
     "http://localhost",
     "http://localhost:8000",
-
 ]
 
 app.add_middleware(

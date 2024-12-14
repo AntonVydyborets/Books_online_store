@@ -29,6 +29,8 @@
 
 -   `make bash` - going to main-app bash console
 -   `make postgres` - going to storages postgres command line
+-   `make makemigrations` - running alembic revision command with `msg` variable
+-   `make migrate` - running alembic upgrade head command
 
 ### Testing Commands
 

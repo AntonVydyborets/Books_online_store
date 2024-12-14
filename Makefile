@@ -32,6 +32,15 @@ postgres:
 bash: 
 	${EXEC} ${APP_CONTAINER} bash
 
+.PHONY: makemigrations
+makemigrations:
+	${EXEC} ${APP_CONTAINER} alembic revision --autogenerate -m "${msg}"
+
+.PHONY: migrate
+migrate:
+	${EXEC} ${APP_CONTAINER} alembic upgrade head
+
+
 
 .PHONY: run-test
 run-test: 
