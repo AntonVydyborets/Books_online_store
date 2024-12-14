@@ -1,12 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.routes import book, order, admin
+
+from backend.routes import (
+    admin,
+    book,
+    order,
+)
 
 
 app = FastAPI(
     title="Books Store API",
     description="API для управління книгами та замовленнями в магазині книг.",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 origins = [

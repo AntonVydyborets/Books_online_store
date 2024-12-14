@@ -10,9 +10,11 @@
 
 2. Install all required packages in `Requirements` section.
 
-3. Run `pip install -c requirement.txt`
+3. Run `pip install poetry`
 
-4. Run `make app`
+4. Run `poetry install`
+
+5. Run `make app`
 
 ### Implemented Commands
 

@@ -1,12 +1,20 @@
-from sqlalchemy import Boolean, Integer, Column, String, Float, ForeignKey, Text
-from sqlalchemy.orm import relationship
 from backend.database import Base
+from sqlalchemy import (
+    Boolean,
+    Column,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Text,
+)
+from sqlalchemy.orm import relationship
 
 
 class Book(Base):
     __tablename__ = "books"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)  # noqa
     name = Column(String(100), index=True, nullable=False)
     author = Column(String(50), nullable=False)
     publisher = Column(String(50), nullable=True)
@@ -25,7 +33,7 @@ class Book(Base):
 class Order(Base):
     __tablename__ = "orders"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)  # noqa
     status = Column(String(50), default="Pending")
     total_price = Column(Float, nullable=False)
     email = Column(String(100), nullable=False)
@@ -37,7 +45,7 @@ class Order(Base):
 class OrderBook(Base):
     __tablename__ = "order_books"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)  # noqa
     order_id = Column(Integer, ForeignKey("orders.id"), nullable=False)
     book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
     quantity = Column(Integer, default=1)

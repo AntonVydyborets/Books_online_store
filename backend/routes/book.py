@@ -1,9 +1,21 @@
-from typing import Optional, List
-from fastapi import APIRouter, Depends, HTTPException
+from typing import (
+    List,
+    Optional,
+)
+
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+)
+
+from backend import (
+    models,
+    schemas,
+)
+from backend.database import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from backend import schemas, models
-from backend.database import get_db
 
 
 router = APIRouter()
@@ -16,7 +28,8 @@ async def get_book(
     max_price: Optional[float] = None,
     skip: int = 0,
     limit: int = 10,
-    db: AsyncSession = Depends(get_db)):
+    db: AsyncSession = Depends(get_db),
+):
 
     query = select(models.Book)
 

@@ -1,7 +1,14 @@
+from backend.models import (
+    Book,
+    Order,
+    OrderBook,
+)
+from backend.schemas import (
+    BookCreate,
+    OrderCreate,
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from backend.models import Book, Order, OrderBook
-from backend.schemas import BookCreate, OrderCreate
 
 
 async def get_book(db: AsyncSession, skip: int = 0, limit: int = 10):
@@ -37,14 +44,14 @@ async def create_order(db: AsyncSession, order: OrderCreate):
         items.append(
             OrderBook(
                 book_id=item.book_id,
-                quantity=item.quantity
-            )
+                quantity=item.quantity,
+            ),
         )
 
     db_order = Order(
         total_price=total_price,
         email=order.email,
-        phone=order.phone
+        phone=order.phone,
     )
     db.add(db_order)
     await db.commit()

@@ -1,5 +1,9 @@
+from typing import (
+    List,
+    Optional,
+)
+
 from pydantic import BaseModel
-from typing import List, Optional
 
 
 class BookBase(BaseModel):
@@ -21,7 +25,7 @@ class BookCreate(BookBase):
 
 
 class BookResponse(BookBase):
-    id: int
+    id: int  # noqa
     rating: Optional[float] = 0.0
 
     class Config:
@@ -49,7 +53,7 @@ class OrderCreate(BaseModel):
 
 
 class OrderResponse(BaseModel):
-    id: int
+    id: int  # noqa
     status: str
     total_price: float
     email: str
