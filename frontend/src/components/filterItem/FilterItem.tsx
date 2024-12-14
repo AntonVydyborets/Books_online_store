@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import { v4 as uuid } from 'uuid'
+
 import FilterLabels from '@/shared/filterLabels/FilterLabels'
 
 import BaseInput from '@/ui/baseInput/BaseInput'
@@ -14,15 +16,15 @@ interface FilterItemProps {
 
 const labels = [
   {
-    id: 1,
+    id: uuid(),
     title: 'Фентезі',
   },
   {
-    id: 2,
+    id: uuid(),
     title: 'Пригоди',
   },
   {
-    id: 3,
+    id: uuid(),
     title: 'Детективи',
   },
 ]

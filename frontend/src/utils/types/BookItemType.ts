@@ -1,5 +1,5 @@
 export interface BookItemType {
-  id: number
+  id: string
   title: string
   cover: string
   genre: string

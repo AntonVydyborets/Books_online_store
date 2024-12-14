@@ -8,7 +8,7 @@ import s from './ProductItem.module.scss'
 
 const ProductItem: FC<BookItemType> = ({ id, genre, price, stock, title, cover }) => {
   return (
-    <div>
+    <div className={`product-${id}`}>
       <div className={s.container}>
         <div className={s['img-wrap']}>
           <img src={cover} alt="title" />

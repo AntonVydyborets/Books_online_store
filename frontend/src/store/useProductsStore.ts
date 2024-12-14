@@ -1,5 +1,7 @@
 import { create } from 'zustand'
 
+import { v4 as uuid } from 'uuid'
+
 import { BookItemType } from '@/utils/types/BookItemType.ts'
 
 interface StoreState {
@@ -11,7 +13,7 @@ interface StoreState {
 const initialState = {
   allProducts: [
     {
-      id: 1,
+      id: uuid(),
       title: 'За Перекопом є земля 1',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -19,7 +21,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 2,
+      id: uuid(),
       title: 'За Перекопом є земля 2',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -27,7 +29,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 3,
+      id: uuid(),
       title: 'За Перекопом є земля 3',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -35,7 +37,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 4,
+      id: uuid(),
       title: 'За Перекопом є земля 4',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -43,7 +45,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 5,
+      id: uuid(),
       title: 'За Перекопом є земля 5',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -51,7 +53,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 6,
+      id: uuid(),
       title: 'За Перекопом є земля 5',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -61,7 +63,7 @@ const initialState = {
   ],
   newBooks: [
     {
-      id: 1,
+      id: uuid(),
       title: 'За Перекопом є земля 1',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -69,7 +71,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 2,
+      id: uuid(),
       title: 'За Перекопом є земля 2',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -77,7 +79,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 3,
+      id: uuid(),
       title: 'За Перекопом є земля 3',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -85,7 +87,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 4,
+      id: uuid(),
       title: 'За Перекопом є земля 4',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -93,7 +95,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 5,
+      id: uuid(),
       title: 'За Перекопом є земля 5',
       cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg',
       genre: 'Fiction',
@@ -103,7 +105,7 @@ const initialState = {
   ],
   sale: [
     {
-      id: 1,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 1',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',
@@ -111,7 +113,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 2,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 2',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',
@@ -119,7 +121,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 3,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 3',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',
@@ -127,7 +129,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 4,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 4',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',
@@ -135,7 +137,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 5,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 5',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',
@@ -143,7 +145,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 6,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 6',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',
@@ -151,7 +153,7 @@ const initialState = {
       stock: true,
     },
     {
-      id: 7,
+      id: uuid(),
       title: 'Закохані в життя, одружені на смерті 7',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
       genre: 'Fiction, Mystery',

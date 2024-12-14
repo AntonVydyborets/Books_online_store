@@ -1,9 +1,11 @@
 import { FC } from 'react'
 
+import { FilterType } from '@/utils/types/FilterType.ts'
+
 import s from './FilterLabels.module.scss'
 
 interface FilterLabelsProps {
-  items: { id: number; title: string }[]
+  items: FilterType[]
 }
 
 const FilterLabels: FC<FilterLabelsProps> = ({ items }) => {
