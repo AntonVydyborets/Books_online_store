@@ -8,12 +8,8 @@ interface StoreState {
   removeFilter: (id: string) => void
 }
 
-const initialState = {
-  allValues: [{ id: '123', title: 'Fiction' }],
-}
-
 const useFiltersStore = create<StoreState>((set) => ({
-  selectedFilters: initialState.allValues,
+  selectedFilters: [],
 
   selectFilter: (value: FilterType) =>
     set((state: StoreState) => ({

@@ -50,7 +50,7 @@ const Shop = () => {
         <Container>
           <div className={s.shopMain__content}>
             <div className={s.sidebar}>
-              <FilterItem title="Автор" />
+              <FilterItem title="Жанр" />
             </div>
             <div className={s.mainContent__inner}>
               <ProductGrid />
