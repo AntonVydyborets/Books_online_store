@@ -1,9 +1,10 @@
-import Header from '@/components/header/Header'
-import ProductGrid from '@/components/productGrid/ProductGrid'
-import Footer from '@/components/footer/Footer'
+import Header from '@/components/layout/header/Header'
+import Footer from '@/components/layout/footer/Footer'
 import FilterItem from '@/components/filterItem/FilterItem'
+import ProductItem from '@/components/productItem/ProductItem.tsx'
 
 import useFiltersStore from '@/store/useFiltersStore.ts'
+import useProductsStore from '@/store/useProductsStore.ts'
 
 import Container from '@/shared/container/Container'
 
@@ -14,8 +15,7 @@ import s from './Shop.module.scss'
 const Shop = () => {
   const selectedFilters = useFiltersStore((state) => state.selectedFilters)
   const removeFilter = useFiltersStore((state) => state.removeFilter)
-
-  console.log(selectedFilters)
+  const allProducts = useProductsStore((state) => state.allProducts)
 
   return (
     <>
@@ -53,7 +53,21 @@ const Shop = () => {
               <FilterItem title="Жанр" />
             </div>
             <div className={s.mainContent__inner}>
-              <ProductGrid />
+              <div className={s.grid}>
+                {allProducts.map((i) => {
+                  return (
+                    <ProductItem
+                      key={i.id}
+                      id={i.id}
+                      title={i.title}
+                      cover={i.cover}
+                      genre={i.genre}
+                      price={i.price}
+                      stock={i.stock}
+                    />
+                  )
+                })}
+              </div>
             </div>
           </div>
         </Container>

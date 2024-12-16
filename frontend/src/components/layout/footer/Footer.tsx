@@ -21,13 +21,13 @@ const Footer = () => {
           </div>
           <p className={styles.email}>shevchenko@gmail.com</p>
           <div className={styles['social-wrap']}>
-            <a href="/">
+            <a href="/frontend/public">
               <img src={facebook} alt="facebook" />
             </a>
-            <a href="/">
+            <a href="/frontend/public">
               <img src={instagram} alt="instagram" />
             </a>
-            <a href="/">
+            <a href="/frontend/public">
               <img src={twitter} alt="twitter" />
             </a>
           </div>

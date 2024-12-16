@@ -1,8 +1,8 @@
 import Blog from '@/components/blog/Blog'
 import SliderBooks from '@/components/sliderBooks/SliderBooks'
 import SubscribeForm from '@/components/subscribeForm/SubscribeForm'
-import Footer from '@/components/footer/Footer'
-import Header from '@/components/header/Header'
+import Footer from '@/components/layout/footer/Footer'
+import Header from '@/components/layout/header/Header'
 
 import useProductsStore from '@/store/useProductsStore.ts'
 

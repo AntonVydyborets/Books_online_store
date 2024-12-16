@@ -6,11 +6,11 @@ import account_icon from '@/assets/images/account.svg'
 import wishlist_icon from '@/assets/images/wishlist.svg'
 import trash_icon from '@/assets/images/trash.svg'
 
-import Container from '@/shared/container/Container'
-import VerticalMenu from '@/shared/verticalMenu/VerticalMenu'
+import Container from '@/shared/container/Container.tsx'
+import VerticalMenu from '@/shared/verticalMenu/VerticalMenu.tsx'
 
-import BaseInput from '@/ui/baseInput/BaseInput'
-import BurgerMenu from '@/ui/burgerMenu/BurgerMenu'
+import BaseInput from '@/ui/baseInput/BaseInput.tsx'
+import BurgerMenu from '@/ui/burgerMenu/BurgerMenu.tsx'
 
 import s from './Header.module.scss'
 
