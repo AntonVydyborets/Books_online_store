@@ -4,8 +4,6 @@ import { v4 as uuid } from 'uuid'
 
 import useFiltersStore from '@/store/useFiltersStore.ts'
 
-import FilterLabels from '@/shared/filterLabels/FilterLabels'
-
 import { FilterType } from '@/utils/types/FilterType.ts'
 
 import BaseInput from '@/ui/baseInput/BaseInput'
@@ -49,7 +47,17 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title }) => {
 
       {isSearch && <BaseInput placeholder="Пошук" />}
 
-      <FilterLabels handleCheckboxChange={handleCheckboxChange} items={labels} selectedFilters={selectedFilters} />
+      {labels.map((item) => (
+          <div key={item.id} className={s.filterItem__label}>
+            <input
+                type="checkbox"
+                id={`check-${item.id}`}
+                onChange={() => handleCheckboxChange(item)}
+                checked={selectedFilters.some((f) => f.id === item.id)}
+            />
+            <label htmlFor={`check-${item.id}`}>{item.title}</label>
+          </div>
+      ))}
     </div>
   )
 }
