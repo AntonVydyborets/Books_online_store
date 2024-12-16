@@ -1,6 +1,6 @@
 import { BookItemType } from './BookItemType'
 
-export interface orderItem {
+export interface OrderItem {
   id: string
   quantity: number
   book: BookItemType
@@ -8,10 +8,16 @@ export interface orderItem {
   updatedAt: string
 }
 
+export enum Status {
+  pending = "pending",
+  completed = "completed",
+  cancelled = "cancelled",
+}
+
 export interface OrderType {
   id: string
-  orderItems: orderItem[]
-  status: 'pending' | 'completed' | 'cancelled'
+  orderItems: OrderItem[]
+  status: Status
   totalPrice: string
   createdAt: string
   updatedAt: string

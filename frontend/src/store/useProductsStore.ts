@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { v4 as uuid } from 'uuid'
 
 import { BookItemType } from '@/utils/types/BookItemType'
-import { OrderType } from '@/utils/types/OrderType'
+import { OrderType, Status } from '@/utils/types/OrderType'
 import { BlogItemType } from '@/utils/types/BlogItemType'
 
 interface StoreState {
@@ -226,7 +226,7 @@ const initialState = {
         updatedAt: '2024-12-16T10:24:41.308Z',
       },
     ],
-    status: ' pending',
+    status: Status.pending,
     totalPrice: '550',
     createdAt: '2024-22-16T10:04:48.224Z',
     updatedAt: '2024-22-16T10:24:41.308Z',
