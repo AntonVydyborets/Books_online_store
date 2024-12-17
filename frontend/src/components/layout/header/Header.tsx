@@ -10,9 +10,9 @@ import Container from '@/shared/container/Container.tsx'
 import VerticalMenu from '@/shared/verticalMenu/VerticalMenu.tsx'
 
 import BaseInput from '@/ui/baseInput/BaseInput.tsx'
-import BurgerMenu from '@/ui/burgerMenu/BurgerMenu.tsx'
 
 import s from './Header.module.scss'
+import burger_menu from '@/assets/images/b_menu.svg'
 
 interface HeaderProps {
   isMenuOpen?: boolean
@@ -74,7 +74,9 @@ const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
       <div className={s.mobile_header}>
         <Container>
           <div className={s.mobile_header__inner}>
-            <BurgerMenu />
+            <div className={s.burger_menu}>
+              <img src={burger_menu} alt="burger" />
+            </div>
             <div className={s.mobile_header__logo}>
               <Link to="/" className={s.mobile_header__logo__link}>
                 <img src={logo} alt="logo" />
