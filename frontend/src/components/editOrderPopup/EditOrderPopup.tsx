@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC } from 'react'
 import s from './EditOrderPopup.module.scss'
 import { FilterType } from '@/utils/types/FilterType'
 
@@ -8,10 +8,10 @@ interface OrderPopupProps {
 }
 const EditOrderPopup: FC<OrderPopupProps> = (props) => {
   console.log('order', props)
-  const { order, toggleModal } = props;
+  const { order, toggleModal } = props
   return (
     <div className={s.container}>
-    <div onClick={() => toggleModal()} className={s.overlay}></div>
+      <div onClick={() => toggleModal()} className={s.overlay}></div>
       <div className={s.wrap}>
         <h4>Кошик</h4>
         <p className={s.close} onClick={() => toggleModal()}>

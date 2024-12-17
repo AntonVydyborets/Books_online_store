@@ -1,12 +1,9 @@
-import Header from '@/components/layout/header/Header'
-import Footer from '@/components/layout/footer/Footer'
-import FilterItem from '@/components/filterItem/FilterItem'
-import ProductItem from '@/components/productItem/ProductItem.tsx'
+import { FilterItem, Footer, Header, ProductItem } from '@/components'
 
 import useFiltersStore from '@/store/useFiltersStore.ts'
 import useProductsStore from '@/store/useProductsStore.ts'
 
-import Container from '@/shared/container/Container'
+import { Container } from '@/shared'
 
 import Typography from '@/ui/typography/Typography'
 

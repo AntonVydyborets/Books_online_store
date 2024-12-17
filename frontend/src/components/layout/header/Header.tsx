@@ -6,8 +6,7 @@ import account_icon from '@/assets/images/account.svg'
 import wishlist_icon from '@/assets/images/wishlist.svg'
 import trash_icon from '@/assets/images/trash.svg'
 
-import Container from '@/shared/container/Container.tsx'
-import VerticalMenu from '@/shared/verticalMenu/VerticalMenu.tsx'
+import { Container, VerticalMenu } from '@/shared'
 
 import BaseInput from '@/ui/baseInput/BaseInput.tsx'
 
