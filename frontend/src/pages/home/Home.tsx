@@ -3,6 +3,8 @@ import { Blog, Footer, Header, SliderBooks, SubscribeForm } from '@/components'
 import useProductsStore from '@/store/useProductsStore.ts'
 
 import s from './Home.module.scss'
+import { VerticalMenu } from '@/shared'
+import HomeSlider from '@/components/homeSlider/HomeSlider'
 
 const Home = () => {
   const saleBooks = useProductsStore((state) => state.saleBooks)
@@ -12,6 +14,14 @@ const Home = () => {
   return (
     <>
       <Header />
+      <section className={s.wrap}>
+        <div className={s['vertical-menu']}>
+          <VerticalMenu />
+        </div>
+        <div className={s['home-slider']}>
+          <HomeSlider />
+        </div>
+      </section>
       <div>
         <SliderBooks data={saleBooks} title="РОЗПРОДАЖ" />
         <SliderBooks data={newBooks} title="НОВИНКИ" />

@@ -1,11 +1,13 @@
 .container {
+  width: 100%;
+  max-width: 1380px;
   margin: 0 auto;
-  padding: 3rem;
+  padding: 0 15px;
 }
 
 .title {
   line-height: 3rem;
-  color: #1E1E1E;
+  color: #1e1e1e;
   margin-bottom: 1rem;
   text-transform: uppercase;
 }
@@ -15,4 +17,26 @@
   letter-spacing: 0.005em;
   text-justify: inter-word;
   margin-bottom: 0.5rem;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 490px;
+  margin-bottom: 50px;
+  @media (max-width: 901px) {
+    grid-template-columns: 1fr;
+  }
+  & .home-slider {
+    overflow: hidden;
+  }
+  & .vertical-menu {
+    @media (max-width: 901px) {
+      display: none;
+    }
+  }
 }
