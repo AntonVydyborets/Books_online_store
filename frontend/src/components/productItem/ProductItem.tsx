@@ -1,23 +1,23 @@
 import { FC } from 'react'
 
-import { BookItemType } from '@/utils/types/BookItemType.ts'
+import { RequiredBookItemTypeApi } from '@/utils/types/BookItemType.ts'
 
 import BaseButton from '@/ui/baseButton/BaseButton'
 
 import s from './ProductItem.module.scss'
 
-const ProductItem: FC<BookItemType> = ({ id, genre, price, stock, title, cover }) => {
+const ProductItem: FC<RequiredBookItemTypeApi> = ({ genre, price, is_available, name }) => {
   return (
-    <div className={`product-${id}`}>
+    <div>
       <div className={s.container}>
         <div className={s['img-wrap']}>
-          <img src={cover} alt="title" />
+          <img src="https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.1800x1200w.jpg" alt="title" />
         </div>
         <div className={s['content-wrap']}>
-          <h6 className={s.title}>{title}</h6>
+          <h6 className={s.title}>{name}</h6>
           <p className={s.genre}>{genre}</p>
           <p className={s.price}>{price} грн.</p>
-          <p className={s.stock}>{stock ? 'В наявності' : 'Out of stock'}</p>
+          <p className={s.stock}>{is_available ? 'В наявності' : 'Out of stock'}</p>
           <div className={s['cost-block']}>
             <BaseButton>Купити</BaseButton>
             <p>icon</p>

@@ -9,16 +9,16 @@ export interface OrderItem {
 }
 
 export enum Status {
-  pending = "pending",
-  completed = "completed",
-  cancelled = "cancelled",
+  pending = 'pending',
+  completed = 'completed',
+  cancelled = 'cancelled',
 }
 
 export interface OrderType {
   id: string
   orderItems: OrderItem[]
   status: Status
-  totalPrice: string
+  totalPrice: number
   createdAt: string
   updatedAt: string
 }

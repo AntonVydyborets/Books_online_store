@@ -19,15 +19,15 @@ interface FilterItemProps {
 const labels = [
   {
     id: uuid(),
-    title: 'Фентезі',
+    title: 'Adventure',
   },
   {
     id: uuid(),
-    title: 'Пригоди',
+    title: 'Cooking',
   },
   {
     id: uuid(),
-    title: 'Детективи',
+    title: 'Technology',
   },
 ]
 
@@ -48,15 +48,15 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title }) => {
       {isSearch && <BaseInput placeholder="Пошук" />}
 
       {labels.map((item) => (
-          <div key={item.id} className={s.filterItem__label}>
-            <input
-                type="checkbox"
-                id={`check-${item.id}`}
-                onChange={() => handleCheckboxChange(item)}
-                checked={selectedFilters.some((f) => f.id === item.id)}
-            />
-            <label htmlFor={`check-${item.id}`}>{item.title}</label>
-          </div>
+        <div key={item.id} className={s.filterItem__label}>
+          <input
+            type="checkbox"
+            id={`check-${item.id}`}
+            onChange={() => handleCheckboxChange(item)}
+            checked={selectedFilters.some((f) => f.id === item.id)}
+          />
+          <label htmlFor={`check-${item.id}`}>{item.title}</label>
+        </div>
       ))}
     </div>
   )

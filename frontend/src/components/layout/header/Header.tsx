@@ -5,13 +5,13 @@ import logo from '@/assets/images/logo.png'
 import account_icon from '@/assets/images/account.svg'
 import wishlist_icon from '@/assets/images/wishlist.svg'
 import trash_icon from '@/assets/images/trash.svg'
+import burger_menu from '@/assets/images/b_menu.svg'
 
 import { Container, VerticalMenu } from '@/shared'
 
 import BaseInput from '@/ui/baseInput/BaseInput.tsx'
 
 import s from './Header.module.scss'
-import burger_menu from '@/assets/images/b_menu.svg'
 
 interface HeaderProps {
   isMenuOpen?: boolean
