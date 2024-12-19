@@ -16,7 +16,7 @@ const Home = () => {
   const blogs = useProductsStore((state) => state.blogs)
 
   const { data, isPending, error } = useQuery({
-    queryKey: ['books'],
+    queryKey: ['books', { limit: 12 }],
     queryFn: fetchBooks,
   })
 

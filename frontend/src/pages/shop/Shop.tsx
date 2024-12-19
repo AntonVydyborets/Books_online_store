@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -16,22 +16,32 @@ import Typography from '@/ui/typography/Typography'
 import s from './Shop.module.scss'
 
 const Shop = () => {
+  const [sort, setSort] = useState('1') // Default sort
+
   const setAllProducts = useProductsStore((state) => state.setAllProducts)
   const allProducts = useProductsStore((state) => state.allProducts)
 
   const selectedFilters = useFiltersStore((state) => state.selectedFilters)
   const removeFilter = useFiltersStore((state) => state.removeFilter)
 
-  const filteredProducts =
-    selectedFilters.length > 0
-      ? allProducts.filter((product) => selectedFilters.some((filter) => product.genre === filter.title))
-      : allProducts
-  console.log(filteredProducts)
-
   const { data, isPending, error } = useQuery({
-    queryKey: ['books'],
+    queryKey: ['books', { limit: 12 }],
     queryFn: fetchBooks,
   })
+
+  const filteredProducts = useMemo(() => {
+    return selectedFilters.length > 0
+      ? allProducts.filter((product) => selectedFilters.some((filter) => product.genre === filter.title))
+      : allProducts
+  }, [allProducts, selectedFilters])
+
+  const sortedProducts = useMemo(() => {
+    if (sort === '1') return filteredProducts
+    if (sort === '2') return [...filteredProducts].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
+    if (sort === '3') return [...filteredProducts].sort((a, b) => a.price - b.price)
+    if (sort === '4') return [...filteredProducts].sort((a, b) => a.name.localeCompare(b.name))
+    return filteredProducts
+  }, [filteredProducts, sort])
 
   useEffect(() => {
     if (data) {
@@ -54,17 +64,20 @@ const Shop = () => {
 
           <div className={s.filterList}>
             <div className={s.filterList__items}>
-              {selectedFilters.map((i) => {
-                return (
-                  <div key={i.id} className={s.filterList__item} onClick={() => removeFilter(i.id)}>
-                    <div>{i.title}</div>
-                    <span>x</span>
-                  </div>
-                )
-              })}
+              {selectedFilters.map((filter) => (
+                <div
+                  key={filter.id}
+                  className={s.filterList__item}
+                  onClick={() => {
+                    removeFilter(filter.id)
+                  }}>
+                  <div>{filter.title}</div>
+                  <span>x</span>
+                </div>
+              ))}
             </div>
             <div className="filterList__sort">
-              <select>
+              <select value={sort} onChange={(e) => setSort(e.target.value)}>
                 <option value="1">Сортувати за</option>
                 <option value="2">Популярністю</option>
                 <option value="3">Ціною</option>
@@ -80,18 +93,9 @@ const Shop = () => {
             </div>
             <div className={s.mainContent__inner}>
               <div className={s.grid}>
-                {filteredProducts.map((i) => {
-                  return (
-                    <ProductItem
-                      key={i.id}
-                      id={i.id}
-                      name={i.name}
-                      genre={i.genre}
-                      price={i.price}
-                      is_available={i.is_available}
-                    />
-                  )
-                })}
+                {sortedProducts.map((product) => (
+                  <ProductItem key={product.id} {...product} />
+                ))}
               </div>
             </div>
           </div>
