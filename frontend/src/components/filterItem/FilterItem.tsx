@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { v4 as uuid } from 'uuid'
 
-import useFiltersStore from '@/store/useFiltersStore.ts'
+import { useFiltersStore } from '@/store/useFiltersStore.ts'
 
 import { FilterType } from '@/utils/types/FilterType.ts'
 

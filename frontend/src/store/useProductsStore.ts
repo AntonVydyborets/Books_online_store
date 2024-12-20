@@ -106,7 +106,7 @@ const initialState = {
   },
 }
 
-const useProductsStore = create<StoreState>((set) => ({
+export const useProductsStore = create<StoreState>((set) => ({
   allProducts: [],
   newBooks: initialState.newBooks,
   saleBooks: initialState.sale,
@@ -117,5 +117,3 @@ const useProductsStore = create<StoreState>((set) => ({
     set((_: StoreState) => ({ allProducts: [...products] }))
   },
 }))
-
-export default useProductsStore

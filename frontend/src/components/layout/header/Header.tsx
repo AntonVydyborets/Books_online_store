@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router'
 
 import logo from '@/assets/images/logo.png'
@@ -9,6 +9,8 @@ import burger_menu from '@/assets/images/b_menu.svg'
 
 import { Container, VerticalMenu } from '@/shared'
 
+import { useProductsStore } from '@/store/useProductsStore.ts'
+
 import BaseInput from '@/ui/baseInput/BaseInput.tsx'
 
 import s from './Header.module.scss'
@@ -18,6 +20,27 @@ interface HeaderProps {
 }
 
 const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
+  const [searchBook, setSearchBook] = useState('')
+  const books = useProductsStore((state) => state.allProducts)
+
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const searchedBooks = books.filter((book) => book.name.toLowerCase().includes(searchBook.toLowerCase()))
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setSearchBook('')
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   return (
     <>
       <div className={s.header}>
@@ -29,8 +52,30 @@ const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
               </Link>
             </div>
             <div className={s.header_top__search}>
-              <BaseInput type="text" placeholder="Пошук" />
+              <BaseInput
+                type="text"
+                placeholder="Пошук"
+                value={searchBook}
+                onChange={(e) => {
+                  setSearchBook(e.currentTarget.value)
+                }}
+              />
+
+              {searchBook && (
+                <div ref={dropdownRef}>
+                  <ul className={s.header_top__search__result}>
+                    {searchedBooks.map((book) => (
+                      <li key={book.id} className={s.header_top__search__result__link}>
+                        <Link to={`/book/${book.id}`}>{book.name}</Link>
+                      </li>
+                    ))}
+
+                    {!searchedBooks.length && <li>Нічого не знайдено...</li>}
+                  </ul>
+                </div>
+              )}
             </div>
+
             <div className={s.header_top__right_menu}>
               <div className={s.header_top__right_menu__lang}>
                 <div>UA</div>

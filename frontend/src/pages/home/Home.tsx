@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { Blog, Footer, Header, SliderBooks, SubscribeForm } from '@/components'
 
-import useProductsStore from '@/store/useProductsStore.ts'
+import { useProductsStore } from '@/store/useProductsStore.ts'
 
 import { fetchBooks } from '@/services/api'
 

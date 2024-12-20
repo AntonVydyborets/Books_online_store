@@ -4,19 +4,19 @@ import { useQuery } from '@tanstack/react-query'
 
 import { FilterItem, Footer, Header, ProductItem } from '@/components'
 
-import useFiltersStore from '@/store/useFiltersStore.ts'
-import useProductsStore from '@/store/useProductsStore.ts'
-
 import { fetchBooks } from '@/services/api.ts'
 
 import { Container } from '@/shared'
+
+import { useFiltersStore } from '@/store/useFiltersStore.ts'
+import { useProductsStore } from '@/store/useProductsStore.ts'
 
 import Typography from '@/ui/typography/Typography'
 
 import s from './Shop.module.scss'
 
 const Shop = () => {
-  const [sort, setSort] = useState('1') // Default sort
+  const [sort, setSort] = useState('1')
 
   const setAllProducts = useProductsStore((state) => state.setAllProducts)
   const allProducts = useProductsStore((state) => state.allProducts)
