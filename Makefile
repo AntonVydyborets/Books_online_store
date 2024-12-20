@@ -6,8 +6,8 @@ APP_CONTAINER = main-app
 
 LOGS = docker logs
 ENV = --env-file .env
-STORAGES_FILE = docker_compose\storages.yaml
-APP_FILE = docker_compose\app.yaml
+STORAGES_FILE = docker_compose/storages.yaml
+APP_FILE = docker_compose/app.yaml
 
 
 
