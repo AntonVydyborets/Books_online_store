@@ -1,7 +1,5 @@
 import { FC } from 'react'
 
-import { v4 as uuid } from 'uuid'
-
 import { useFiltersStore } from '@/store/useFiltersStore.ts'
 
 import { FilterType } from '@/utils/types/FilterType.ts'
@@ -14,24 +12,10 @@ import s from './FilterItem.module.scss'
 interface FilterItemProps {
   isSearch?: boolean
   title: string
+  filterItems: FilterType[]
 }
 
-const labels = [
-  {
-    id: uuid(),
-    title: 'Adventure',
-  },
-  {
-    id: uuid(),
-    title: 'Cooking',
-  },
-  {
-    id: uuid(),
-    title: 'Technology',
-  },
-]
-
-const FilterItem: FC<FilterItemProps> = ({ isSearch, title }) => {
+const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems }) => {
   const selectedFilters = useFiltersStore((state) => state.selectedFilters)
   const selectFilter = useFiltersStore((state) => state.selectFilter)
 
@@ -47,7 +31,7 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title }) => {
 
       {isSearch && <BaseInput placeholder="Пошук" />}
 
-      {labels.map((item) => (
+      {filterItems.map((item) => (
         <div key={item.id} className={s.filterItem__label}>
           <input
             type="checkbox"
