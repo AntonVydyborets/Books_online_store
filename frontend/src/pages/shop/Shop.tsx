@@ -15,8 +15,7 @@ import { Container } from '@/shared'
 import { useFiltersStore } from '@/store/useFiltersStore.ts'
 import { useProductsStore } from '@/store/useProductsStore.ts'
 
-import Typography from '@/ui/typography/Typography'
-import BaseButton from '@/ui/baseButton/BaseButton.tsx'
+import { BaseButton, Typography } from '@/ui'
 
 import s from './Shop.module.scss'
 

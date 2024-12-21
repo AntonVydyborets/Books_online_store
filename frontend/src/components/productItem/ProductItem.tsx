@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { RequiredBookItemTypeApi } from '@/utils/types/BookItemType.ts'
 
-import BaseButton from '@/ui/baseButton/BaseButton'
+import { BaseButton } from '@/ui'
 
 import s from './ProductItem.module.scss'
 

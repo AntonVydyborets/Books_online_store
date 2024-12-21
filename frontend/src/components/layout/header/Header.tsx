@@ -11,7 +11,7 @@ import { Container, VerticalMenu } from '@/shared'
 
 import { useProductsStore } from '@/store/useProductsStore.ts'
 
-import BaseInput from '@/ui/baseInput/BaseInput.tsx'
+import { BaseInput } from '@/ui'
 
 import s from './Header.module.scss'
 

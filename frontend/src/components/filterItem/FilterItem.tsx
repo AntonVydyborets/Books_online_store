@@ -4,8 +4,7 @@ import { useFiltersStore } from '@/store/useFiltersStore.ts'
 
 import { FilterType } from '@/utils/types/FilterType.ts'
 
-import BaseInput from '@/ui/baseInput/BaseInput'
-import Typography from '@/ui/typography/Typography'
+import { BaseInput, Typography } from '@/ui'
 
 import s from './FilterItem.module.scss'
 
