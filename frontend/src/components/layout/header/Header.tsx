@@ -21,10 +21,10 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
   const [searchBook, setSearchBook] = useState('')
+
   const books = useProductsStore((state) => state.allProducts)
 
   const dropdownRef = useRef<HTMLDivElement>(null)
-
   const searchedBooks = books.filter((book) => book.name.toLowerCase().includes(searchBook.toLowerCase()))
 
   const handleClickOutside = (event: MouseEvent) => {

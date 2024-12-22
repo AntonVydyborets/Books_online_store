@@ -33,9 +33,26 @@ const genreFilterItems = [
   },
 ]
 
+enum SORT {
+  DEFAULT = '1',
+  POPULARITY = '2',
+  PRICE = '3',
+  NAME = '4',
+}
+
+enum PRICE {
+  MIN = 0,
+  MAX = 1000,
+}
+
+enum RANGE_PRICE {
+  MIN = 0,
+  MAX = 2000,
+}
+
 const Shop = () => {
-  const [sort, setSort] = useState('1')
-  const [priceRange, setPriceRange] = useState([0, 1000])
+  const [sort, setSort] = useState(SORT.DEFAULT)
+  const [priceRange, setPriceRange] = useState([PRICE.MIN, PRICE.MAX])
   const [priceFilter, setPriceFilter] = useState<number[]>([])
 
   const setAllProducts = useProductsStore((state) => state.setAllProducts)
@@ -59,10 +76,10 @@ const Shop = () => {
   }, [allProducts, selectedFilters])
 
   const sortedProducts = useMemo(() => {
-    if (sort === '1') return filteredProducts
-    if (sort === '2') return [...filteredProducts].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
-    if (sort === '3') return [...filteredProducts].sort((a, b) => a.price - b.price)
-    if (sort === '4') return [...filteredProducts].sort((a, b) => a.name.localeCompare(b.name))
+    if (sort === SORT.DEFAULT) return filteredProducts
+    if (sort === SORT.POPULARITY) return [...filteredProducts].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
+    if (sort === SORT.PRICE) return [...filteredProducts].sort((a, b) => a.price - b.price)
+    if (sort === SORT.NAME) return [...filteredProducts].sort((a, b) => a.name.localeCompare(b.name))
 
     return filteredProducts
   }, [filteredProducts, sort])
@@ -80,11 +97,11 @@ const Shop = () => {
 
     // Set price filters if applied
     if (priceFilter.length > 0) {
-      searchParams.set('min_price', priceFilter[0].toString())
-      searchParams.set('max_price', priceFilter[1].toString())
+      searchParams.set('min-price', priceFilter[0].toString())
+      searchParams.set('max-price', priceFilter[1].toString())
     } else {
-      searchParams.delete('min_price')
-      searchParams.delete('max_price')
+      searchParams.delete('min-price')
+      searchParams.delete('max-price')
     }
 
     // Set selected genres
@@ -96,7 +113,7 @@ const Shop = () => {
     }
 
     // Set sorting preference
-    if (sort !== '1') {
+    if (sort !== SORT.DEFAULT) {
       searchParams.set('sort', sort)
     } else {
       searchParams.delete('sort')
@@ -139,7 +156,7 @@ const Shop = () => {
               ))}
             </div>
             <div className="filterList__sort">
-              <select value={sort} onChange={(e) => setSort(e.target.value)}>
+              <select value={sort} onChange={(e) => setSort(e.currentTarget.value as SORT)}>
                 <option value="1">Сортувати за</option>
                 <option value="2">Популярністю</option>
                 <option value="3">Ціною</option>
@@ -159,8 +176,8 @@ const Shop = () => {
                 <div className={s.range_filter}>
                   <Range
                     step={1}
-                    min={0}
-                    max={2000}
+                    min={RANGE_PRICE.MIN}
+                    max={RANGE_PRICE.MAX}
                     values={priceRange}
                     onChange={handlePriceChange}
                     renderTrack={({ props, children }) => (
