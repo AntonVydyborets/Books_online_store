@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-
 import { useQuery } from '@tanstack/react-query'
 
 import { v4 as uuid } from 'uuid'
@@ -185,9 +184,11 @@ const Shop = () => {
 
             <div className={s.mainContent__inner}>
               <div className={s.grid}>
-                {sortedProducts.map((product) => (
-                  <ProductItem key={product.id} {...product} />
-                ))}
+                {sortedProducts.length > 0 ? (
+                  sortedProducts.map((product) => <ProductItem key={product.id} {...product} />)
+                ) : (
+                  <div>Немає товарів, що відповідають вашим критеріям фільтрації.</div>
+                )}
               </div>
             </div>
           </div>
