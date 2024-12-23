@@ -1,31 +1,70 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { FC, useState } from 'react'
-import EditOrderPopup from '../editOrderPopup/editOrderPopup';
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import EditOrderPopup from '@/components/editOrderPopup/EditOrderPopup'
+import { OrderType } from '@/utils/types/OrderType'
 import s from './СheckoutCard.module.scss'
-import { OrderType } from '@/utils/types/OrderType';
 
-type FormValue = {
+const schemaСheckoutCard = yup.object({
+  firstName: yup.string().required('Please enter your first name'),
+  lastName: yup.string().required('Please enter your last name'),
+  tel: yup.string().required('Please enter your tel'),
+  email: yup.string().email().required('Please enter your email'),
+  legalEntity: yup.boolean(),
+  anotherPerson: yup.boolean(),
+  comment: yup.string(),
+  callback: yup.boolean(),
+})
+interface FormValues {
   firstName: string
   lastName: string
   tel: string
   email: string
   legalEntity: boolean
-  anotherPerson: boolean
-  country: string
-  city: string
-  comment: string
+  anotherPerson?: boolean
+  country?: string
+  city?: string
+  comment?: string
   callback: boolean
 }
+const defaultValue: FormValues = {
+  firstName: '',
+  lastName: '',
+  tel: '',
+  email: '',
+  legalEntity: true,
+  anotherPerson: false,
+  country: '',
+  city: '',
+  comment: '',
+  callback: false,
+}
 
-const СheckoutCard: FC<OrderType> = ({data}) => {
+const СheckoutCard: FC<OrderType> = ({ data }) => {
   console.log('props', data.orderItems)
-  // const {book: books} = data.orderItems;
-  // console.log('book', book)
 
-  const { register, handleSubmit } = useForm<FormValue>()
-  const [edit, setEdit] = useState<boolean>(false);
-  const onSubmit: SubmitHandler<FormValue> = (v) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid, isSubmitted, isSubmitSuccessful, isSubmitting },
+  } = useForm<FormValues>({ defaultValue: {
+    firstName: '',
+    lastName: '',
+    tel: '',
+    email: '',
+    legalEntity: true,
+    anotherPerson: false,
+    country: '',
+    city: '',
+    comment: '',
+    callback: false,
+  }, mode: 'onTouched', resolver: yupResolver<yup.AnyObject>(schemaСheckoutCard) })
+  
+  const [edit, setEdit] = useState<boolean>(false)
+
+  const onSubmit: SubmitHandler<FormValues> = (v) => {
     console.log('handleSubmit >>>> ', v)
   }
   const handle = () => {
@@ -43,27 +82,37 @@ const СheckoutCard: FC<OrderType> = ({data}) => {
               <div className={s.wrap}>
                 <label>
                   <span>Ім’я*</span>
-                  <input name="firstName" type="text" placeholder="Введіть ваше ім’я" {...register} />
+                  <input type="text" placeholder="Введіть ваше ім’я" {...register('firstName')} />
+                  {errors.firstName && errors.firstName.type === 'required' && (
+                    <span className={s.error}>{errors.firstName?.message || 'Error'}</span>
+                  )}
                 </label>
                 <label>
                   <span>Прізвище*</span>
-                  <input name="lastName" type="text" placeholder="Введіть ваше прізвище" {...register} />
+                  <input type="text" placeholder="Введіть ваше прізвище" {...register('lastName')} />
+                  {errors.lastName && errors.lastName.type === 'required' && (
+                    <span className={s.error}>{errors.lastName?.message || 'Error'}</span>
+                  )}
                 </label>
                 <label>
                   <span>Номер телефону*</span>
-                  <input name="tel" type="tel" placeholder="+38" {...register} />
+                  <input type="tel" placeholder="+38" {...register('tel')} />
+                  {errors.tel && <span className={s.error}>{errors.tel?.message || 'Error'}</span>}
                 </label>
                 <label>
                   <span>Електронна пошта*</span>
-                  <input name="email" type="email" placeholder="Введіть ваш email" {...register} />
+                  <input type="email" placeholder="Введіть ваш email" {...register('email')} />
+                  {errors.email && errors.email.type === 'required' && (
+                    <span className={s.error}>{errors.email?.message || 'Error'}</span>
+                  )}
                 </label>
                 <div className={s.checkbox}>
                   <label>
-                    <input name="legalEntity" type="checkbox" {...register} />
+                    <input type="checkbox" {...register('legalEntity')} />
                     <span>Оформити як юридична особа</span>
                   </label>
                   <label>
-                    <input name="anotherPerson" type="checkbox" {...register} />
+                    <input type="checkbox" {...register('anotherPerson')} />
                     <span>Отримувач інша людина</span>
                   </label>
                 </div>
@@ -90,11 +139,11 @@ const СheckoutCard: FC<OrderType> = ({data}) => {
                 </label>
                 <div className={s.checkbox}>
                   <label>
-                    <input type="checkbox" />
+                    <input type="checkbox" {...register} />
                     <span>Оформити як юридична особа</span>
                   </label>
                   <label>
-                    <input type="checkbox" />
+                    <input type="checkbox" {...register} />
                     <span>Отримувач інша людина</span>
                   </label>
                 </div>
@@ -102,26 +151,30 @@ const СheckoutCard: FC<OrderType> = ({data}) => {
             </div>
             <div className={s.comment}>
               <h5>Коментар до замовлення</h5>
-              <textarea name="comment" autoComplete="off"></textarea>
+              <textarea autoComplete="off" {...register('comment')}></textarea>
             </div>
           </div>
           <div className={s.right}>
             <div className={s.order}>
               <div>
                 <p>1 товар у кошику</p>
-                <p className={s.edit} onClick={handle}>Edit</p>
+                <p className={s.edit} onClick={handle}>
+                  Edit
+                </p>
               </div>
-              {data.orderItems.map(({book}) => (<div key={book.id} className={s['order-book']}>
-                <div className={s.cover}>
-                  <img src={book.cover} alt={book.title} />
+              {data.orderItems.map(({ book }) => (
+                <div key={book.id} className={s['order-book']}>
+                  <div className={s.cover}>
+                    <img src={book.cover} alt={book.title} />
+                  </div>
+                  <div className={s.info}>
+                    <p className={s.title}>{book.title}</p>
+                    <p className={s.genre}>{book.genre}</p>
+                    <p className={s.price}>{book.price} грн.</p>
+                    <p className={s.stock}>{book.stock ? 'В наявності' : 'Продано'}</p>
+                  </div>
                 </div>
-                <div className={s.info}>
-                  <p className={s.title}>{book.title}</p>
-                  <p className={s.genre}>{book.genre}</p>
-                  <p className={s.price}>{book.price} грн.</p>
-                  <p className={s.stock}>{book.stock ? 'В наявності' : 'Продано'}</p>
-                </div>
-              </div>))}
+              ))}
               <div>
                 <p>Разом 350 грн</p>
               </div>
@@ -139,10 +192,11 @@ const СheckoutCard: FC<OrderType> = ({data}) => {
               </div>
               <div>
                 <label className={s.callback}>
-                  <input type="checkbox" name="callback" />
+                  <input type="checkbox" {...register('callback')} />
                   <span>Передзвоніть мені</span>
                 </label>
                 <button type="submit" className={s.submit}>
+                  {/* disabled={!isDirty || !isValid || isSubmitting} */}
                   Підтвердити замовлення
                 </button>
               </div>

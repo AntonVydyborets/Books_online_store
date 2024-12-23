@@ -18,6 +18,10 @@
   }
   & label {
     display: block;
+    position: relative;
+    & .error {
+      position: absolute;
+    }
   }
   & input,
   select,
@@ -173,7 +177,13 @@
 .submit {
   width: 100%;
   border-radius: 8px;
+  border: none;
   padding: 0.9rem 1rem;
   background-color: rgba(120, 120, 124, 1);
   color: #fff;
+  &[disabled] {
+    background-color: #fff;
+    color: rgba(120, 120, 124, 1);;
+    cursor: auto;
+  }
 }
