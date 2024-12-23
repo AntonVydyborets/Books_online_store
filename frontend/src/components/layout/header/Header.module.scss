@@ -29,7 +29,44 @@
 }
 
 .header_top__search {
+  position: relative;
+
   flex-grow: 1;
+}
+
+.header_top__search__result {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+
+  padding: 20px;
+  margin-top: 20px;
+
+  box-shadow: 1px 1px 5px 0;
+  border-radius: 12px;
+
+  background-color: #fff;
+
+  z-index: 999;
+
+  .header_top__search__result__link {
+    display: block;
+
+    border-bottom: 1px solid #d9d9d9;
+
+    a {
+      display: block;
+      padding: 10px 5px;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #d9d9d9;
+    }
+  }
 }
 
 .header_top__right_menu,

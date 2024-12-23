@@ -6,8 +6,6 @@ import s from './BaseInput.module.scss'
 
 interface BaseInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-const BaseInput: FC<BaseInputProps> = ({ ...props }) => {
+export const BaseInput: FC<BaseInputProps> = ({ ...props }) => {
   return <input className={clsx(s.baseInput, props.className)} {...props} />
 }
-
-export default BaseInput

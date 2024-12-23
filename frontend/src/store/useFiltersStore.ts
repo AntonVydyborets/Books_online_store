@@ -8,7 +8,7 @@ interface StoreState {
   removeFilter: (id: string) => void
 }
 
-const useFiltersStore = create<StoreState>((set) => ({
+export const useFiltersStore = create<StoreState>((set) => ({
   selectedFilters: [],
 
   selectFilter: (value: FilterType) =>
@@ -20,5 +20,3 @@ const useFiltersStore = create<StoreState>((set) => ({
   removeFilter: (id: string) =>
     set((state: StoreState) => ({ selectedFilters: state.selectedFilters.filter((f) => f.id !== id) })),
 }))
-
-export default useFiltersStore

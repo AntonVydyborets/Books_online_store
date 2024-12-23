@@ -68,6 +68,48 @@
   grid-row-gap: 15px;
 }
 
+.price_filter {
+  margin-bottom: 30px;
+}
+
+.range_btn_max {
+  position: absolute;
+  top: 0;
+  height: 16px;
+  width: 16px;
+  background-color: #007bff;
+  border-radius: 50%;
+  outline: none;
+}
+
+.range_btn_low {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(to right, #ddd, #007bff, #ddd);
+  border-radius: 3px;
+  position: relative;
+}
+
+.range_values {
+  position: absolute;
+  top: -20px;
+  font-size: 12px;
+  color: #007bff;
+}
+
+.range_filter {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.range_filter__button {
+  background-color: red;
+  outline: none;
+  border: 0;
+  padding: 10px;
+}
+
 @media (max-width: 1024px) {
   .sidebar {
     display: none;

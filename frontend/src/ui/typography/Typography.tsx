@@ -6,6 +6,4 @@ interface Typography extends HTMLAttributes<HTMLElement> {
   tag?: TagVariants
 }
 
-const Typography: FC<Typography> = ({ tag: Tag = 'p', ...props }) => <Tag {...props}>{props.children}</Tag>
-
-export default Typography
+export const Typography: FC<Typography> = ({ tag: Tag = 'p', ...props }) => <Tag {...props}>{props.children}</Tag>

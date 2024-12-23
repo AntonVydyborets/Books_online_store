@@ -1,8 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 
-import Home from '../pages/home/Home'
-import Shop from '../pages/shop/Shop'
-import Сheckout from '../pages/сheckout/Сheckout'
+import { ErrorPage, Home, Shop, Сheckout } from '@/pages'
 
 const router = createBrowserRouter([
   {
@@ -16,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '/checkout',
     element: <Сheckout />,
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ])
 
