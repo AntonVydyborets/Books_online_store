@@ -54,14 +54,21 @@ const initialState = {
     },
     {
       id: 3,
-      title: '2 Який рівень англійської потрібен для UX/UI дизайнерів',
+      title: '3 Який рівень англійської потрібен для UX/UI дизайнерів',
       cover: 'https://nashformat.ua/files/slides_resized/2024_11_01_novynka_vid_timoti_snaydera_470h320.640x360.jpg',
       desc: 'Англійська мова в сучасному світі - це перепустка до високооплачуваної роботи. Lorem ipsum dolor sit.',
       date: '14.11.2020',
     },
     {
       id: 4,
-      title: '2 Який рівень англійської потрібен для UX/UI дизайнерів',
+      title: '4 Який рівень англійської потрібен для UX/UI дизайнерів',
+      cover: 'https://nashformat.ua/files/slides_resized/2024_11_01_novynka_vid_timoti_snaydera_470h320.640x360.jpg',
+      desc: 'Англійська мова в сучасному світі - це перепустка до високооплачуваної роботи. Lorem ipsum dolor sit.',
+      date: '14.11.2020',
+    },
+    {
+      id: 5,
+      title: '5 Який рівень англійської потрібен для UX/UI дизайнерів',
       cover: 'https://nashformat.ua/files/slides_resized/2024_11_01_novynka_vid_timoti_snaydera_470h320.640x360.jpg',
       desc: 'Англійська мова в сучасному світі - це перепустка до високооплачуваної роботи. Lorem ipsum dolor sit.',
       date: '14.11.2020',
