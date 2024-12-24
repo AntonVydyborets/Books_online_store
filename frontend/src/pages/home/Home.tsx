@@ -9,7 +9,6 @@ import { useProductsStore } from '@/store/useProductsStore.ts'
 import { fetchBooks } from '@/services/api'
 
 import s from './Home.module.scss'
-import { VerticalMenu } from '@/shared'
 import HomeSlider from '@/components/homeSlider/HomeSlider'
 
 const Home = () => {
@@ -35,14 +34,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <section className={s.wrap}>
-        <div className={s['vertical-menu']}>
-          <VerticalMenu />
-        </div>
-        <div className={s['home-slider']}>
-          <HomeSlider />
-        </div>
-      </section>
+      <HomeSlider />
       <div>
         <SliderBooks data={allBooks} title="РОЗПРОДАЖ" />
         <SliderBooks data={allBooks} title="НОВИНКИ" />

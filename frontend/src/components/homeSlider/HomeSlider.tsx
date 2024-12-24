@@ -15,20 +15,22 @@ const HomeSlider = () => {
     'https://nashformat.ua/files/slides_resized/1170x510_re.1170x510.jpg',
   ]
   return (
-    <Swiper
-      centeredSlides={true}
-      slidesPerView={1}
-      loop={true}
-      autoplay={{ delay: 2500, disableOnInteraction: false }}
-      modules={[Autoplay]}>
-      {slides.map((item) => (
-        <SwiperSlide>
-          <div className={s['img-wrap']}>
-            <img src={item} alt={item} />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className={s.wrap}>
+      <Swiper
+        centeredSlides={true}
+        slidesPerView={1}
+        loop={true}
+        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        modules={[Autoplay]}>
+        {slides.map((item) => (
+          <SwiperSlide>
+            <div className={s['img-wrap']}>
+              <img src={item} alt={item} />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   )
 }
 
