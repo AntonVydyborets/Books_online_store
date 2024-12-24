@@ -20,21 +20,21 @@ const SubscribeForm = () => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <p className={styles.subtitle}>Newsletter</p>
         <p className={styles.text}>Sign up for our newsletter to get the latest updates and special offers!</p>
       </div>
       <div className={styles.right}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles['input-wrap']}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles['form']}>
+          <label>
+            <p>Insert your email</p>
             <input
+              id="email"
               className={styles.input}
               type="email"
               placeholder="Email address"
               {...register('email', { required: 'This field is required', pattern: /^\S+@\S+\.\S+$/ })}
             />
-            {errors.email && <span className={styles.error}>{errors.email.message}</span>}
-          </div>
-
+          </label>
+          {errors.email && <span className={styles.error}>{errors.email.message}</span>}
           <button className={styles['btn-subscribe']}>Subscribe</button>
         </form>
       </div>
