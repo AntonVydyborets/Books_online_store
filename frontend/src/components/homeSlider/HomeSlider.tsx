@@ -1,10 +1,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay } from 'swiper/modules'
+import { Autoplay, Pagination } from 'swiper/modules'
 
 // @ts-ignore
 import 'swiper/scss'
 // @ts-ignore
 import 'swiper/scss/autoplay'
+// @ts-ignore
+import 'swiper/css/pagination';
 
 import s from './HomeSlider.module.scss'
 
@@ -20,12 +22,15 @@ const HomeSlider = () => {
         centeredSlides={true}
         slidesPerView={1}
         loop={true}
+        pagination={{
+          clickable: true,
+        }}
         autoplay={{ delay: 2500, disableOnInteraction: false }}
-        modules={[Autoplay]}>
+        modules={[Autoplay, Pagination]}>
         {slides.map((item) => (
           <SwiperSlide>
             <div className={s['img-wrap']}>
-              <img src={item} alt={item} />
+              <img src={item} alt={item} loading="lazy" />
             </div>
           </SwiperSlide>
         ))}
