@@ -50,8 +50,13 @@ enum RANGE_PRICE {
   MAX = 2000,
 }
 
+enum PAGE {
+  FIRST_PAGE = 1,
+  LIMITED_PRODUCTS = 10,
+}
+
 const Shop = () => {
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(PAGE.FIRST_PAGE)
   const [sort, setSort] = useState(SORT.DEFAULT)
   const [priceRange, setPriceRange] = useState([PRICE.MIN, PRICE.MAX])
   const [priceFilter, setPriceFilter] = useState<number[]>([])
@@ -65,7 +70,7 @@ const Shop = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const limit = 10;
+  const limit = PAGE.LIMITED_PRODUCTS
 
   const { data, isPending, error } = useQuery({
     queryKey: ['books', { skip: (page - 1) * limit, limit, min_price: priceFilter[0], max_price: priceFilter[1] }],
@@ -123,10 +128,10 @@ const Shop = () => {
     }
 
     // Set pages.
-    if (page !== 1) {
-        searchParams.set('page', page.toString())
+    if (page !== PAGE.FIRST_PAGE) {
+      searchParams.set('page', page.toString())
     } else {
-        searchParams.delete('page')
+      searchParams.delete('page')
     }
 
     navigate({ search: searchParams.toString() }, { replace: true })
@@ -143,7 +148,7 @@ const Shop = () => {
   if (error) return <div>Error loading books</div>
 
   // Check if it's the last page
-  const isLastPage = data.length < limit;
+  const isLastPage = data.length < limit
 
   return (
     <>
@@ -215,9 +220,9 @@ const Shop = () => {
             <div className={s.mainContent__inner}>
               <div className={s.grid}>
                 {sortedProducts.length > 0 ? (
-                    sortedProducts.map((product) => <ProductItem key={product.id} {...product} />)
+                  sortedProducts.map((product) => <ProductItem key={product.id} {...product} />)
                 ) : (
-                    <div>Немає товарів, що відповідають вашим критеріям фільтрації.</div>
+                  <div>Немає товарів, що відповідають вашим критеріям фільтрації.</div>
                 )}
               </div>
               <div className={s.pagination}>
@@ -232,7 +237,7 @@ const Shop = () => {
           </div>
         </Container>
       </div>
-      <Footer/>
+      <Footer />
     </>
   )
 }
