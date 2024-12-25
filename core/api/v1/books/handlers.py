@@ -149,5 +149,6 @@ async def delete_book(
         )
 
     return JSONResponse(
-        status_code=200, content={"message": "Book successfully deleted"},
+        status_code=200,
+        content={"message": "Book successfully deleted"},
     )

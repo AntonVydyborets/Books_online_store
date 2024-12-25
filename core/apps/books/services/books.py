@@ -121,6 +121,15 @@ class ORMBookService(BaseBookService):
                 ),
             )
 
+        if filters.genre:
+            query = query.filter(BookModel.genre == filters.genre)
+
+        if filters.min_price is not None:
+            query = query.filter(BookModel.price >= filters.min_price)
+
+        if filters.max_price is not None:
+            query = query.filter(BookModel.price <= filters.max_price)
+
         return query
 
     async def get_book_list(
