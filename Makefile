@@ -40,6 +40,10 @@ makemigrations:
 migrate:
 	${EXEC} ${APP_CONTAINER} alembic upgrade head
 
+.PHONY: migrate-down
+migrate-down:
+	${EXEC} ${APP_CONTAINER} alembic downgrade -1
+
 
 
 .PHONY: run-test

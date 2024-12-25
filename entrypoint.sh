@@ -30,4 +30,4 @@ wait_for_port "$POSTGRES_HOST" "$POSTGRES_PORT"
 alembic upgrade head
 
 # Start application
-uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+uvicorn --factory core.api.main:create_app --host 0.0.0.0 --port 8000 --reload
