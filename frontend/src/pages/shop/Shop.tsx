@@ -51,6 +51,7 @@ enum RANGE_PRICE {
 }
 
 const Shop = () => {
+  const [page, setPage] = useState(1);
   const [sort, setSort] = useState(SORT.DEFAULT)
   const [priceRange, setPriceRange] = useState([PRICE.MIN, PRICE.MAX])
   const [priceFilter, setPriceFilter] = useState<number[]>([])
@@ -64,8 +65,10 @@ const Shop = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
+  const limit = 10;
+
   const { data, isPending, error } = useQuery({
-    queryKey: ['books', { limit: 12, min_price: priceFilter[0], max_price: priceFilter[1] }],
+    queryKey: ['books', { skip: (page - 1) * limit, limit, min_price: priceFilter[0], max_price: priceFilter[1] }],
     queryFn: fetchBooks,
   })
 
@@ -119,8 +122,15 @@ const Shop = () => {
       searchParams.delete('sort')
     }
 
+    // Set pages.
+    if (page !== 1) {
+        searchParams.set('page', page.toString())
+    } else {
+        searchParams.delete('page')
+    }
+
     navigate({ search: searchParams.toString() }, { replace: true })
-  }, [priceFilter, selectedFilters, sort, location.search, navigate])
+  }, [priceFilter, selectedFilters, sort, page, location.search, navigate])
 
   useEffect(() => {
     if (data) {
@@ -131,6 +141,9 @@ const Shop = () => {
   if (isPending) return <div>Loading...</div>
 
   if (error) return <div>Error loading books</div>
+
+  // Check if it's the last page
+  const isLastPage = data.length < limit;
 
   return (
     <>
@@ -202,16 +215,24 @@ const Shop = () => {
             <div className={s.mainContent__inner}>
               <div className={s.grid}>
                 {sortedProducts.length > 0 ? (
-                  sortedProducts.map((product) => <ProductItem key={product.id} {...product} />)
+                    sortedProducts.map((product) => <ProductItem key={product.id} {...product} />)
                 ) : (
-                  <div>Немає товарів, що відповідають вашим критеріям фільтрації.</div>
+                    <div>Немає товарів, що відповідають вашим критеріям фільтрації.</div>
                 )}
+              </div>
+              <div className={s.pagination}>
+                <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+                  Previous
+                </button>
+                <button onClick={() => setPage((prev) => prev + 1)} disabled={isLastPage}>
+                  Next
+                </button>
               </div>
             </div>
           </div>
         </Container>
       </div>
-      <Footer />
+      <Footer/>
     </>
   )
 }
