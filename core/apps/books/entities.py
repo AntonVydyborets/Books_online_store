@@ -24,3 +24,11 @@ class Book:
     is_available: Optional[bool]
     created_at: datetime = datetime.utcnow()
     updated_at: Optional[datetime] = None
+
+
+@dataclass
+class OrderBook:
+    id: Optional[int] = field(default=None, kw_only=True)  # noqa
+    order_id: Optional[int] = field(default=None, kw_only=True)
+    book_id: int = field(kw_only=True)
+    quantity: int = 1

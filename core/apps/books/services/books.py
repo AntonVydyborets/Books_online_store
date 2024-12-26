@@ -143,7 +143,6 @@ class ORMBookService(BaseBookService):
 
         result = await session.execute(query)
 
-        # Получаем все книги
         query_set = result.scalars().all()
 
         return [book.to_entity() for book in query_set]
