@@ -2,13 +2,11 @@ import { useEffect } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { Blog, Footer, Header, SliderBooks, SubscribeForm } from '@/components'
+import { Blog, Footer, Header, SliderBooks, SubscribeForm, BonusProgram, HomeSlider } from '@/components'
 
 import { useProductsStore } from '@/store/useProductsStore.ts'
 
 import { fetchBooks } from '@/services/api'
-
-import HomeSlider from '@/components/homeSlider/HomeSlider'
 
 const Home = () => {
   const setAllProducts = useProductsStore((state) => state.setAllProducts)
@@ -34,13 +32,12 @@ const Home = () => {
     <>
       <Header />
       <HomeSlider />
-      <div>
-        <SliderBooks data={allBooks} title="РОЗПРОДАЖ" />
-        <SliderBooks data={allBooks} title="НОВИНКИ" />
-        <Blog data={blogs} />
-        <SubscribeForm />
-        <Footer />
-      </div>
+      <SliderBooks data={allBooks} title="РОЗПРОДАЖ" />
+      <SliderBooks data={allBooks} title="НОВИНКИ" />
+      <BonusProgram />
+      <Blog data={blogs} />
+      <SubscribeForm />
+      <Footer />
     </>
   )
 }
