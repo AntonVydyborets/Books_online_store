@@ -1,5 +1,5 @@
-export { default as Footer } from './layout/footer/Footer'
-export { default as Header } from './layout/header/Header'
+export { default as Footer } from '../layout/footer/Footer'
+export { default as Header } from '../layout/header/Header'
 export { default as FilterItem } from './filterItem/FilterItem'
 export { default as ProductItem } from './productItem/ProductItem'
 export { default as SliderBooks } from './sliderBooks/SliderBooks'

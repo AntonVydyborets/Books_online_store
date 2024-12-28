@@ -1,25 +1,21 @@
-import { FC, useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router'
 
 import logo from '@/assets/images/logo.png'
-import account_icon from '@/assets/images/account.svg'
-import wishlist_icon from '@/assets/images/wishlist.svg'
-import trash_icon from '@/assets/images/trash.svg'
+import account_icon from '@/assets/images/header/language.svg'
+import wishlist_icon from '@/assets/images/header/user.svg'
+import trash_icon from '@/assets/images/header/bag-2.svg'
 import burger_menu from '@/assets/images/b_menu.svg'
 
-import { Container, VerticalMenu } from '@/shared'
+import { Container } from '@/shared'
 
 import { useProductsStore } from '@/store/useProductsStore.ts'
 
-import { BaseInput } from '@/ui'
+import { BaseInput, Typography } from '@/ui'
 
 import s from './Header.module.scss'
 
-interface HeaderProps {
-  isMenuOpen?: boolean
-}
-
-const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
+const Header = () => {
   const [searchBook, setSearchBook] = useState('')
 
   const books = useProductsStore((state) => state.allProducts)
@@ -51,11 +47,58 @@ const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
                 <img src={logo} alt="logo" />
               </Link>
             </div>
-            <VerticalMenu isMenuOpen={isMenuOpen} />
+
+            <div className={s.verticalNavigation}>
+              <div className={s.verticalNavigation__title}>Catalog</div>
+              <div className={s.mega_menu__content}>
+                <div className={s.mega_menu__contnet__item}>
+                  <Typography tag="h4">Genres</Typography>
+                  <ul>
+                    <li>Fiction</li>
+                    <li>Non-Fiction</li>
+                    <li>Educational</li>
+                    <li>Children's </li>
+                  </ul>
+                </div>
+
+                <div className={s.mega_menu__contnet__item}>
+                  <Typography tag="h4">Gift offers</Typography>
+                  <ul>
+                    <li>Gift Certificates</li>
+                    <li>Gifts for kids</li>
+                    <li>Packed Sets</li>
+                    <li>For women</li>
+                    <li>For men</li>
+                  </ul>
+                </div>
+
+                <ul className={s.mega_menu__contnet__main}>
+                  <li>
+                    <Link to="/shop">Shop</Link>
+                  </li>
+                  <li>
+                    <Link to="/shop">Books of the year</Link>
+                  </li>
+                  <li>
+                    <Link to="/shop">New comings</Link>
+                  </li>
+                  <li>
+                    <Link to="/shop">Blog</Link>
+                  </li>
+                  <li>
+                    <Link to="/shop">Telegram book club</Link>
+                  </li>
+                  <li>
+                    <Link to="/shop">Free shipping program</Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
             <div className={s.header_top__search}>
               <BaseInput
                 type="text"
-                placeholder="Пошук"
+                placeholder="Search for books, authors, or categories..."
                 value={searchBook}
                 onChange={(e) => {
                   setSearchBook(e.currentTarget.value)
@@ -71,7 +114,7 @@ const Header: FC<HeaderProps> = ({ isMenuOpen }) => {
                       </li>
                     ))}
 
-                    {!searchedBooks.length && <li>Нічого не знайдено...</li>}
+                    {!searchedBooks.length && <li>Nothing found...</li>}
                   </ul>
                 </div>
               )}

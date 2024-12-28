@@ -14,7 +14,7 @@ interface VerticalMenuProps {
 const VerticalMenu: FC<VerticalMenuProps> = ({ isMenuOpen }) => {
   return (
     <div className={clsx(s.verticalNavigation, { [s.isOpen]: isMenuOpen })}>
-      <div className={s.verticalNavigation__title}>Каталог</div>
+      <div className={s.verticalNavigation__title}>Catalog</div>
       <div className={s.verticalNavigation__additionalContent}>
         <ul className="additionalContent__menu">
           <li className={s.additionalContent__menu__item}>
