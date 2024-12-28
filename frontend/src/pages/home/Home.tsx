@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
-import { Blog, Footer, Header, SliderBooks, SubscribeForm, BonusProgram, HomeSlider } from '@/components'
+import { Blog, Footer, Header, SliderBooks, SubscribeForm, BonusProgram, HomeSlider, ChooseCategory } from '@/components'
 
 import { useProductsStore } from '@/store/useProductsStore.ts'
 
@@ -34,6 +34,7 @@ const Home = () => {
       <HomeSlider />
       <SliderBooks data={allBooks} title="РОЗПРОДАЖ" />
       <SliderBooks data={allBooks} title="НОВИНКИ" />
+      <ChooseCategory />
       <BonusProgram />
       <Blog data={blogs} />
       <SubscribeForm />

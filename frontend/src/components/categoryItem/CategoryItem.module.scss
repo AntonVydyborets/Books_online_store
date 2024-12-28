@@ -1,0 +1,48 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 1rem;
+  & ul {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  & .img-wrap {
+    & img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+}
+
+.title {
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.link {
+  font-size: 1rem;
+  line-height: 1.3rem;
+  color: #2c2c2c;
+  display: block;
+  margin-bottom: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  & span {
+    background-image: url('right-arrow.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 15px;
+    height: 15px;
+    margin-left: 1rem;
+  }
+  &:hover {
+    color: #7b0780;
+    text-decoration: underline;
+  }
+}
