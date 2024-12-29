@@ -173,6 +173,7 @@ const Shop = () => {
                 </div>
               ))}
             </div>
+
             <div className="filterList__sort">
               <select value={sort} onChange={(e) => setSort(e.currentTarget.value as SORT)}>
                 <option value="1">Сортувати за</option>

@@ -10,9 +10,11 @@ export interface BookItemType {
 export interface RequiredBookItemTypeApi {
   id: string
   name: string
-  genre: string
+  rating: number
+  author: string
   price: number
   is_available: boolean
+  genre?: string
 }
 
 export interface OptionalBookItemTypeApi {
