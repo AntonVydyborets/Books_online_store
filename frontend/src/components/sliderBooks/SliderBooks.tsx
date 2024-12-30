@@ -16,8 +16,8 @@ import styles from './SliderBooks.module.scss'
 
 interface SliderBooksProps {
   title: string
-  data: RequiredBookItemTypeApi[] | string
-  link: string | null
+  data: RequiredBookItemTypeApi[]
+  link?: string | null
 }
 
 const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
