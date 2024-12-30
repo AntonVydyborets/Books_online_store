@@ -2,7 +2,11 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Link } from 'react-router-dom'
 import { Navigation } from 'swiper/modules'
+
+import { Container } from '@/shared'
+
 import SlideItem from '../slideItem/SlideItem'
+
 import { RequiredBookItemTypeApi } from '@/utils/types/BookItemType.ts'
 // @ts-ignore
 import 'swiper/scss'
@@ -17,12 +21,15 @@ interface SliderBooksProps {
 }
 
 const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
-  const slidesPerView = data.length < 4 ? data.length : 4
-  const loop = data.length >= 4
+  const slidesPerView = data.length < 5 ? data.length : 5
+  const loop = data.length >= 5
 
   return (
-    <div className={styles.container}>
-      <h3 className={styles.title}>{title}<Link to='/'>{link || null}</Link></h3>
+    <Container>
+      <h3 className={styles.title}>
+        {title}
+        <Link to="/">{link || null}</Link>
+      </h3>
       <Swiper
         spaceBetween={10}
         slidesPerView={slidesPerView}
@@ -40,17 +47,17 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
             slidesPerView: 3,
           },
           1117: {
-            slidesPerView: 4,
-            spaceBetween: 10,
+            slidesPerView: 5,
+            spaceBetween: 50,
           },
         }}>
         {data.map((book) => (
-          <SwiperSlide key={book.id}>
+          <SwiperSlide key={book.id} className={styles.swiper_slide}>
             <SlideItem book={book} />
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </Container>
   )
 }
 

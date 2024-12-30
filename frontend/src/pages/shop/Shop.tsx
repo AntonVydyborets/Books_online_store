@@ -227,10 +227,14 @@ const Shop = () => {
                 )}
               </div>
               <div className={s.pagination}>
-                <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+                <button
+                  className={s.nav_button}
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1}>
                   Previous
                 </button>
-                <button onClick={() => setPage((prev) => prev + 1)} disabled={isLastPage}>
+
+                <button className={s.nav_button} onClick={() => setPage((prev) => prev + 1)} disabled={isLastPage}>
                   Next
                 </button>
               </div>
