@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
-import { v4 as uuid } from 'uuid'
 import { Range } from 'react-range'
+import clsx from 'clsx'
+
+import { genreFilterItems } from '@/pages/shop/data.ts'
 
 import { FilterItem, Footer, Header, ProductItem } from '@/components'
 
@@ -17,21 +19,6 @@ import { useProductsStore } from '@/store/useProductsStore.ts'
 import { BaseButton, Typography } from '@/ui'
 
 import s from './Shop.module.scss'
-
-const genreFilterItems = [
-  {
-    id: uuid(),
-    title: 'Adventure',
-  },
-  {
-    id: uuid(),
-    title: 'Cooking',
-  },
-  {
-    id: uuid(),
-    title: 'Technology',
-  },
-]
 
 enum SORT {
   DEFAULT = '1',
@@ -98,6 +85,16 @@ const Shop = () => {
 
   const applyPriceFilter = () => {
     setPriceFilter([priceRange[0], priceRange[1]])
+  }
+
+  const getTrackBackground = () => {
+    const [min, max] = priceRange
+
+    const rangeDiff = RANGE_PRICE.MAX - RANGE_PRICE.MIN
+    const left = ((min - RANGE_PRICE.MIN) / rangeDiff) * 100
+    const right = ((max - RANGE_PRICE.MIN) / rangeDiff) * 100
+
+    return `linear-gradient(to right, #ccc ${left}%, #404040 ${left}%, #404040 ${right}%, #ccc ${right}%)`
   }
 
   useEffect(() => {
@@ -188,8 +185,8 @@ const Shop = () => {
           <div className={s.shopMain__content}>
             <div className={s.sidebar}>
               <div className={s.price_filter}>
-                <Typography className={s.filterItem__title} tag="h5">
-                  Ціна
+                <Typography className={s.filter_item__title} tag="h5">
+                  Price Range
                 </Typography>
 
                 <div className={s.range_filter}>
@@ -200,22 +197,29 @@ const Shop = () => {
                     values={priceRange}
                     onChange={handlePriceChange}
                     renderTrack={({ props, children }) => (
-                      <div {...props} className={s.range_btn_low}>
+                      <div
+                        {...props}
+                        className={s.range_btn_low}
+                        style={{
+                          background: getTrackBackground(),
+                        }}>
                         {children}
                       </div>
                     )}
-                    renderThumb={({ props, index }) => (
-                      <div className={s.range_btn_max} {...props} key={uuid()}>
-                        <div className={s.range_values}>₴{priceRange[index]}</div>
-                      </div>
-                    )}
+                    renderThumb={({ props }) => <div className={s.range_btn_max} {...props} />}
                   />
-                  <BaseButton onClick={() => applyPriceFilter()} className={s.range_filter__button}>
-                    Застосувати
-                  </BaseButton>
+
+                  <div className={s.range_values_container}>
+                    <span>Price: </span>
+                    <div className={s.range_value}>{priceRange[0]} UAN</div>
+                    <span>-</span>
+                    <div className={clsx(s.range_value, s.last_range_value)}>{priceRange[1]} UAN</div>
+                    <BaseButton onClick={applyPriceFilter}>Filter</BaseButton>
+                  </div>
                 </div>
               </div>
-              <FilterItem title="Жанр" filterItems={genreFilterItems} />
+
+              <FilterItem title="Жанр" filterItems={genreFilterItems} className={s.filter_item__title} />
             </div>
 
             <div className={s.mainContent__inner}>

@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import clsx from 'clsx'
+
 import { useFiltersStore } from '@/store/useFiltersStore.ts'
 
 import { FilterType } from '@/utils/types/FilterType.ts'
@@ -12,9 +14,10 @@ interface FilterItemProps {
   isSearch?: boolean
   title: string
   filterItems: FilterType[]
+  className?: string
 }
 
-const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems }) => {
+const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems, className }) => {
   const selectedFilters = useFiltersStore((state) => state.selectedFilters)
   const selectFilter = useFiltersStore((state) => state.selectFilter)
 
@@ -24,7 +27,7 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems }) => {
 
   return (
     <div className={s.filterItem}>
-      <Typography className={s.filterItem__title} tag="h5">
+      <Typography className={clsx(s.filterItem__title, className)} tag="h5">
         {title}
       </Typography>
 
