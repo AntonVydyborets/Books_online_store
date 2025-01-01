@@ -11,35 +11,28 @@ const schemaСheckoutCard = yup.object({
   firstName: yup.string().required('Please enter your first name'),
   lastName: yup.string().required('Please enter your last name'),
   tel: yup.string().required('Please enter your tel'),
-  email: yup.string().email().required('Please enter your email'),
-  legalEntity: yup.boolean(),
-  anotherPerson: yup.boolean(),
-  comment: yup.string(),
-  callback: yup.boolean(),
+  delivery_new_post: yup.string().required().oneOf(['0', '1', '2'], 'Оберіть метод доставки'),
+  payment: yup.string().required().oneOf(['1', '2'], 'Оберіть метод оплати'),
+  wareHouse: yup.string().required('Please enter your ware house'),
+  city: yup.string().required('Please enter your city'),
 })
 interface FormValues {
   firstName: string
   lastName: string
   tel: string
-  email: string
-  legalEntity: boolean
-  anotherPerson?: boolean
-  country?: string
-  city?: string
-  comment?: string
-  callback: boolean
+  delivery_new_post: '0' | '1' | '2'
+  payment: '1' | '2'
+  wareHouse: string
+  city: string
 }
 const defaultValue: FormValues = {
   firstName: '',
   lastName: '',
   tel: '',
-  email: '',
-  legalEntity: true,
-  anotherPerson: false,
-  country: '',
+  delivery_new_post: '1',
+  payment: '1',
+  wareHouse: '',
   city: '',
-  comment: '',
-  callback: false,
 }
 
 const СheckoutCard: FC<OrderType> = ({ data }) => {
@@ -49,19 +42,14 @@ const СheckoutCard: FC<OrderType> = ({ data }) => {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid, isSubmitted, isSubmitSuccessful, isSubmitting },
-  } = useForm<FormValues>({ defaultValue: {
-    firstName: '',
-    lastName: '',
-    tel: '',
-    email: '',
-    legalEntity: true,
-    anotherPerson: false,
-    country: '',
-    city: '',
-    comment: '',
-    callback: false,
-  }, mode: 'onTouched', resolver: yupResolver<yup.AnyObject>(schemaСheckoutCard) })
-  
+  } = useForm<FormValues>({
+    defaultValues: {
+      ...defaultValue,
+    },
+    mode: 'onTouched',
+    resolver: yupResolver<typeof defaultValue>(schemaСheckoutCard),
+  })
+
   const [edit, setEdit] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<FormValues> = (v) => {
@@ -73,95 +61,85 @@ const СheckoutCard: FC<OrderType> = ({ data }) => {
   return (
     <>
       <section className={s.container}>
-        <h1>Оформлення замовлення</h1>
         {edit && <EditOrderPopup order={data.orderItems} toggleModal={handle} />}
         <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={s.left}>
             <div className={s.customer}>
-              <h5>Контактні дані</h5>
+              <h5>Введіть Ваші персональні дані</h5>
               <div className={s.wrap}>
                 <label>
-                  <span>Ім’я*</span>
+                  <span>Введіть Ваше ім’я*</span>
                   <input type="text" placeholder="Введіть ваше ім’я" {...register('firstName')} />
                   {errors.firstName && errors.firstName.type === 'required' && (
                     <span className={s.error}>{errors.firstName?.message || 'Error'}</span>
                   )}
                 </label>
                 <label>
-                  <span>Прізвище*</span>
+                  <span>Введіть Ваше прізвище*</span>
                   <input type="text" placeholder="Введіть ваше прізвище" {...register('lastName')} />
                   {errors.lastName && errors.lastName.type === 'required' && (
                     <span className={s.error}>{errors.lastName?.message || 'Error'}</span>
                   )}
                 </label>
                 <label>
-                  <span>Номер телефону*</span>
+                  <span>Введіть Ваше номер телефону*</span>
                   <input type="tel" placeholder="+38" {...register('tel')} />
                   {errors.tel && <span className={s.error}>{errors.tel?.message || 'Error'}</span>}
                 </label>
                 <label>
-                  <span>Електронна пошта*</span>
-                  <input type="email" placeholder="Введіть ваш email" {...register('email')} />
-                  {errors.email && errors.email.type === 'required' && (
-                    <span className={s.error}>{errors.email?.message || 'Error'}</span>
-                  )}
-                </label>
-                <div className={s.checkbox}>
-                  <label>
-                    <input type="checkbox" {...register('legalEntity')} />
-                    <span>Оформити як юридична особа</span>
-                  </label>
-                  <label>
-                    <input type="checkbox" {...register('anotherPerson')} />
-                    <span>Отримувач інша людина</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className={s.shipping}>
-              <h5>Доставка</h5>
-              <div className={s.wrap}>
-                <label>
-                  <span>Країна*</span>
-                  <select name="country" defaultValue="Ukraine">
-                    <option value="Ukraine">Ukraine</option>
-                    <option value="United States">United States</option>
-                    <option value="Great Britain">Great Britain</option>
-                  </select>
-                </label>
-                <label>
                   <span>Місто*</span>
-                  <select name="city" defaultValue="Kremenchyk">
+                  <select name="city" defaultValue="Kyiv">
                     <option value="Kyiv">Kyiv</option>
                     <option value="Lviv">Lviv</option>
                     <option value="Kremenchyk">Kremenchyk</option>
                   </select>
                 </label>
-                <div className={s.checkbox}>
-                  <label>
-                    <input type="checkbox" {...register} />
-                    <span>Оформити як юридична особа</span>
-                  </label>
-                  <label>
-                    <input type="checkbox" {...register} />
-                    <span>Отримувач інша людина</span>
-                  </label>
-                </div>
               </div>
             </div>
-            <div className={s.comment}>
-              <h5>Коментар до замовлення</h5>
-              <textarea autoComplete="off" {...register('comment')}></textarea>
+            <div className={s.shipping}>
+              <h5>Оберіть метод доставки</h5>
+              <div className={s.checkbox}>
+                <label>
+                  <input value="0" type="radio" {...register('delivery_new_post')} />
+                  <span>Самовивіз</span>
+                </label>
+                <label>
+                  <input value="1" type="radio" {...register('delivery_new_post')} />
+                  <span>Доставка Новою Поштою</span>
+                </label>
+              </div>
+              <label className={s.wareHouse}>
+                <span>Оберіть відділення</span>
+                <select name="wareHouse" defaultValue="Відділення 1">
+                  <option value="Відділення 1">Відділення 1</option>
+                  <option value="Відділення 2">Відділення 2</option>
+                  <option value="Відділення 3">Відділення 3</option>
+                </select>
+              </label>
+              <div className={s.checkbox}>
+                <label>
+                  <input value="2" type="radio" {...register('delivery_new_post')} />
+                  <span>Кур'єрська доставка</span>
+                </label>
+              </div>
+            </div>
+            <div className={s.payment}>
+              <h5>Оберіть метод оплати</h5>
+              <div className={s.checkbox}>
+                <label>
+                  <input value="1" type="radio" {...register('payment')} />
+                  <span>Онлайн оплата</span>
+                </label>
+                <label>
+                  <input value="2" type="radio" {...register('payment')} />
+                  <span>Післяплата</span>
+                </label>
+              </div>
             </div>
           </div>
           <div className={s.right}>
             <div className={s.order}>
-              <div>
-                <p>1 товар у кошику</p>
-                <p className={s.edit} onClick={handle}>
-                  Edit
-                </p>
-              </div>
+              <h3>Замовлення</h3>
               {data.orderItems.map(({ book }) => (
                 <div key={book.id} className={s['order-book']}>
                   <div className={s.cover}>
@@ -169,12 +147,16 @@ const СheckoutCard: FC<OrderType> = ({ data }) => {
                   </div>
                   <div className={s.info}>
                     <p className={s.title}>{book.title}</p>
-                    <p className={s.genre}>{book.genre}</p>
-                    <p className={s.price}>{book.price} грн.</p>
-                    <p className={s.stock}>{book.stock ? 'В наявності' : 'Продано'}</p>
+                    <p className={s.author}>{book.author}</p>
                   </div>
                 </div>
               ))}
+              <div>
+                <p>1 товар у кошику</p>
+                <p className={s.edit} onClick={handle}>
+                  Edit
+                </p>
+              </div>
               <div>
                 <p>Разом 350 грн</p>
               </div>
@@ -187,21 +169,14 @@ const СheckoutCard: FC<OrderType> = ({ data }) => {
                 </Link>
               </div>
               <div>
-                <p>До сплати</p>
+                <p>Загальна сума</p>
                 <p>350 грн</p>
-              </div>
-              <div>
-                <label className={s.callback}>
-                  <input type="checkbox" {...register('callback')} />
-                  <span>Передзвоніть мені</span>
-                </label>
-                <button type="submit" className={s.submit}>
-                  {/* disabled={!isDirty || !isValid || isSubmitting} */}
-                  Підтвердити замовлення
-                </button>
               </div>
             </div>
           </div>
+          <button type="submit" className={s.submit} disabled={!isDirty || !isValid || isSubmitting}>
+            Підтвердити
+          </button>
         </form>
       </section>
     </>
