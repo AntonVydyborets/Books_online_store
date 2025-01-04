@@ -3,6 +3,7 @@ export interface BookItemType {
   title: string
   cover: string
   genre: string
+  author: string
   price: number
   stock: boolean
 }
