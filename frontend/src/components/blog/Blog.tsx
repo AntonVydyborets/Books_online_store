@@ -15,7 +15,7 @@ const Blog: React.FC<BlogsProps> = ({ data }) => {
       <h3>Blog</h3>
       <div className={styles.wrap}>
         {data.map((blog) => (
-          <BlogItem blog={blog} />
+          <BlogItem key={blog.id} blog={blog} />
         ))}
         <button className={styles['link-more']}>Читати</button>
       </div>

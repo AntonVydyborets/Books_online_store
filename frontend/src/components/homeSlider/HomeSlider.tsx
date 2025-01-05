@@ -28,7 +28,7 @@ const HomeSlider = () => {
         autoplay={{ delay: 2500, disableOnInteraction: false }}
         modules={[Autoplay, Pagination]}>
         {slides.map((item) => (
-          <SwiperSlide>
+          <SwiperSlide key={item}>
             <div className={s['img-wrap']}>
               <img src={item} alt={item} loading="lazy" />
             </div>
