@@ -8,17 +8,27 @@
   align-items: stretch;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 437px;
-  gap: 0 5rem;
+// .wrapper {
+//   display: grid;
+//   grid-template-columns: 1fr 437px;
+//   gap: 0 5rem;
+//   @media (max-width: 1280px) {
+//     grid-template-columns: 1fr;
+//     grid-template-rows: auto;
+//   }
+// }
+.wrapper {
+  display: flex;
+  gap: 5rem;
+  justify-content: space-between;
+  align-items: flex-start;
   @media (max-width: 1280px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+    flex-direction: column;
   }
 }
 .left {
   padding: 40px 10px;
+  flex-grow: 1;
 }
 .form {
   & h5 {
@@ -96,6 +106,7 @@ label {
 .right {
   background-color: rgba(232, 232, 232, 1);
   padding: 3rem 2rem;
+  flex: 0 0 437px;
   & .btn {
     width: 100%;
     display: block;
