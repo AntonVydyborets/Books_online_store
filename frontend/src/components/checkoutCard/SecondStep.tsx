@@ -8,7 +8,7 @@ interface FormValues {
   firstName: string
   lastName: string
   tel: string
-  delivery_new_post: 'Самовивіз' | 'Доставка Новою Поштою' | 'Кур\'єрська доставка'
+  delivery_new_post: 'Самовивіз' | 'Доставка Новою Поштою' | "Кур'єрська доставка"
   payment: 'Онлайн оплата' | 'Післяплата'
   city: string
 }
@@ -26,8 +26,11 @@ const schemaСheckoutCard = yup.object({
   firstName: yup.string().required('Please enter your first name'),
   lastName: yup.string().required('Please enter your last name'),
   tel: yup.string().required('Please enter your tel'),
-  delivery_new_post: yup.string().required().oneOf(['0', '1', '2'], 'Оберіть метод доставки'),
-  payment: yup.string().required().oneOf(['1', '2'], 'Оберіть метод оплати'),
+  delivery_new_post: yup
+    .string()
+    .required()
+    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"], 'Оберіть метод доставки'),
+  payment: yup.string().required().oneOf(['Онлайн оплата', 'Післяплата'], 'Оберіть метод оплати'),
   city: yup.string().required('Please enter your city'),
 })
 
@@ -131,6 +134,7 @@ const SecondStep = (props: { nextStep: unknown }) => {
       <button type="submit" className={s.submit}>
         Підтвердити
       </button>
+      {/* <BaseButton type="submit" className={s.submit}>Підтвердити</BaseButton> */}
     </form>
   )
 }

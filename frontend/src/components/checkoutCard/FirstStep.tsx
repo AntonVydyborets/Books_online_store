@@ -11,6 +11,7 @@ function FirstStep(props) {
         {order.orderItems.map(({ book }) => (
           <Book key={book.id} book={book} />
         ))}
+        
         <Link to="/" className={s['to-catalog']} onClick={() => {}}>
           <span>&#8592;</span> До каталогу
         </Link>

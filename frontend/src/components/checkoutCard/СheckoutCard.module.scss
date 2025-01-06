@@ -245,3 +245,23 @@ label {
     }
   }
 }
+
+.conditions {
+  & .row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    & img {
+      width: 24px;
+      margin-right: 1.3rem;
+    }
+    & p {
+      text-transform: uppercase;
+      line-height: 1.2rem;
+    }
+  }
+}
