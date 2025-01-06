@@ -69,6 +69,9 @@ const СheckoutCard = () => {
             </div>
           </div>
         </div>
+        <div className={s.bottom}>
+          <p>БЕЗКОШТОВНА ДОСТАВКА ДЛЯ ЗАМОВЛЕНЬ НА СУМУ ВІД 2000 ГРН</p>
+        </div>
       </section>
     </>
   )
