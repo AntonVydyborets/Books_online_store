@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import InputControl from '@/components/inputControl/InputControl'
 import s from './СheckoutCard.module.scss'
+import { OrderItem } from '@/utils/types/OrderType'
 
+interface BookProps {
+  book: OrderItem[]
+}
 
-const Book = ({ book }) => {
+const Book: FC<BookProps> = ({ book }) => {
   const [count, setCount] = useState(book.quantity)
   const [price, setPrice] = useState(book.price)
 
