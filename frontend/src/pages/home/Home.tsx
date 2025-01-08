@@ -27,9 +27,10 @@ const Home = () => {
     queryKey: ['books', { limit: 12 }],
     queryFn: fetchBooks,
   })
+
   useEffect(() => {
-    if (data) {
-      setAllProducts(data)
+    if (data && data.data.items) {
+      setAllProducts(data.data.items)
     }
   }, [data, setAllProducts])
 

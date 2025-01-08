@@ -7,7 +7,7 @@ import { Container } from '@/shared'
 
 import SlideItem from '../slideItem/SlideItem'
 
-import { RequiredBookItemTypeApi } from '@/utils/types/BookItemType.ts'
+import { BookItem } from '@/utils/types/BookItemType.ts'
 // @ts-ignore
 import 'swiper/scss'
 // @ts-ignore
@@ -16,7 +16,7 @@ import styles from './SliderBooks.module.scss'
 
 interface SliderBooksProps {
   title: string
-  data: RequiredBookItemTypeApi[]
+  data: BookItem[]
   link?: string | null
 }
 

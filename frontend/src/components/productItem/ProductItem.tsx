@@ -5,13 +5,13 @@ import star_icon from '@/assets/images/product/star.svg'
 import product_img from '@/assets/images/product_default_img.jpg'
 import cart_icon from '@/assets/images/header/bag-2.svg'
 
-import { RequiredBookItemTypeApi } from '@/utils/types/BookItemType.ts'
+import { BookItem } from '@/utils/types/BookItemType.ts'
 
 import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
 
-const ProductItem: FC<RequiredBookItemTypeApi> = ({ author, price, name, rating }) => {
+const ProductItem: FC<BookItem> = ({ author, price, title, rating }) => {
   return (
     <div className={s.product_grid_item}>
       <div className={s.product_grid_item__top}>
@@ -27,7 +27,7 @@ const ProductItem: FC<RequiredBookItemTypeApi> = ({ author, price, name, rating 
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">
-          <Link to={'/'}>{name}</Link>
+          <Link to={'/'}>{title}</Link>
         </Typography>
         <p className={s.product_grid_item__bottom__author}>{author}</p>
         <div className={s.product_grid_item__bottom__rating}>

@@ -21,7 +21,7 @@ const Header = () => {
   const books = useProductsStore((state) => state.allProducts)
 
   const dropdownRef = useRef<HTMLDivElement>(null)
-  const searchedBooks = books.filter((book) => book.name.toLowerCase().includes(searchBook.toLowerCase()))
+  const searchedBooks = books.filter((book) => book.title.toLowerCase().includes(searchBook.toLowerCase()))
 
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -110,7 +110,7 @@ const Header = () => {
                   <ul className={s.header_top__search__result}>
                     {searchedBooks.map((book) => (
                       <li key={book.id} className={s.header_top__search__result__link}>
-                        <Link to={`/book/${book.id}`}>{book.name}</Link>
+                        <Link to={`/book/${book.id}`}>{book.title}</Link>
                       </li>
                     ))}
 

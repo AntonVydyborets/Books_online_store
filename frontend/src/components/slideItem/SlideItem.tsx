@@ -2,12 +2,12 @@ import React from 'react'
 
 import { ProductItem } from '@/components'
 
-import { RequiredBookItemTypeApi } from '@/utils/types/BookItemType.ts'
+import { BookItem } from '@/utils/types/BookItemType.ts'
 
 // import styles from './SlideItem.module.scss'
 
 interface SlideItemProps {
-  book: RequiredBookItemTypeApi | null
+  book: BookItem | null
 }
 
 const SlideItem: React.FC<SlideItemProps> = ({ book }) => {

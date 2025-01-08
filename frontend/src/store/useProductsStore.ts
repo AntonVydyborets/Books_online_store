@@ -1,16 +1,16 @@
 import { create } from 'zustand'
 import { v4 as uuid } from 'uuid'
 
-import { BookItemType, BookItemTypeApi } from '@/utils/types/BookItemType'
-import { BlogItemType } from '@/utils/types/BlogItemType'
+import { BookItem, BookItemType } from '@/utils/types/BookItemType'
+import { BlogItemType } from '@/utils/types/BlogItemType.ts'
 
 interface StoreState {
-  allProducts: BookItemTypeApi[]
+  allProducts: BookItem[]
   newBooks: BookItemType[]
   saleBooks: BookItemType[]
   blogs: BlogItemType[]
 
-  setAllProducts: (products: BookItemTypeApi[]) => void
+  setAllProducts: (products: BookItem[]) => void
 }
 
 const initialState = {
@@ -80,7 +80,7 @@ export const useProductsStore = create<StoreState>((set) => ({
   saleBooks: initialState.sale,
   blogs: initialState.blogs,
 
-  setAllProducts: (products: BookItemTypeApi[]) => {
+  setAllProducts: (products: BookItem[]) => {
     set((_: StoreState) => ({ allProducts: [...products] }))
   },
 }))

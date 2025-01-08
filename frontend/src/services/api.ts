@@ -2,7 +2,7 @@ import { QueryFunctionContext } from '@tanstack/react-query'
 
 import axios, { AxiosResponse } from 'axios'
 
-import { BookItemTypeApi } from '@/utils/types/BookItemType'
+import { ApiResponse } from '@/utils/types/BookItemType'
 
 interface BooksQueryParams {
   genre?: string
@@ -21,11 +21,11 @@ const instance = axios.create({
 
 export const fetchBooks = async ({
   queryKey,
-}: QueryFunctionContext<[string, BooksQueryParams]>): Promise<BookItemTypeApi[]> => {
+}: QueryFunctionContext<[string, BooksQueryParams]>): Promise<ApiResponse> => {
   const [, params] = queryKey
 
   try {
-    const res: AxiosResponse<BookItemTypeApi[]> = await instance.get('/books', { params })
+    const res: AxiosResponse<ApiResponse> = await instance.get('/books', { params })
     return res.data
   } catch (error) {
     console.error('Error fetching books:', error)

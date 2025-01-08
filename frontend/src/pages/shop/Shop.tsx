@@ -74,7 +74,7 @@ const Shop = () => {
     if (sort === SORT.DEFAULT) return filteredProducts
     if (sort === SORT.POPULARITY) return [...filteredProducts].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
     if (sort === SORT.PRICE) return [...filteredProducts].sort((a, b) => a.price - b.price)
-    if (sort === SORT.NAME) return [...filteredProducts].sort((a, b) => a.name.localeCompare(b.name))
+    if (sort === SORT.NAME) return [...filteredProducts].sort((a, b) => a.title.localeCompare(b.title))
 
     return filteredProducts
   }, [filteredProducts, sort])
@@ -134,9 +134,11 @@ const Shop = () => {
     navigate({ search: searchParams.toString() }, { replace: true })
   }, [priceFilter, selectedFilters, sort, page, location.search, navigate])
 
+  console.log(data?.data.items)
+
   useEffect(() => {
-    if (data) {
-      setAllProducts(data)
+    if (data && data.data.items) {
+      setAllProducts(data.data.items)
     }
   }, [data, setAllProducts])
 
@@ -145,7 +147,7 @@ const Shop = () => {
   if (error) return <div>Error loading books</div>
 
   // Check if it's the last page
-  const isLastPage = data.length < limit
+  const isLastPage = data?.data.items.length < limit
 
   return (
     <>
