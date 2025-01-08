@@ -1,19 +1,23 @@
 import { FC, useEffect, useState } from 'react'
 import InputControl from '@/components/inputControl/InputControl'
 import s from './СheckoutCard.module.scss'
-import { OrderItem } from '@/utils/types/OrderType'
+import { BookItemType } from '@/utils/types/BookItemType'
+import { useOrdersStore } from '@/store/useOrdersStore'
 
 interface BookProps {
-  book: OrderItem[]
+  book: BookItemType
 }
 
 const Book: FC<BookProps> = ({ book }) => {
+  const setQuantity = useOrdersStore((state) => state.setQuantity)
+  
   const [count, setCount] = useState(book.quantity)
   const [price, setPrice] = useState(book.price)
-
+console.log('book.id', book.id)
   useEffect(() => {
     setCount(book.quantity || 1)
     setPrice(book.quantity * book.price || 0)
+    setQuantity(book.id)
   }, [book])
 
   useEffect(() => {

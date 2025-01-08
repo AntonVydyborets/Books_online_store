@@ -1,29 +1,46 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 import ThirdStep from './ThirdStep'
-import { useProductsStore } from '@/store/useProductsStore.ts'
+import { useOrdersStore } from '@/store/useOrdersStore.ts'
 import s from './СheckoutCard.module.scss'
 import iconsReturning from '@/assets/images/icons-returning.svg'
 import iconsFreeDeliver from '@/assets/images/icons-free-deliver.svg'
 import iconSafety from '@/assets/images/icon-safety.svg'
+import { OrderType, Status } from '@/utils/types/OrderType'
 
-const СheckoutCard = () => {
-  const orders = useProductsStore((state) => state.orders)
+enum BONUS {
+  DISCOUNT = 150,
+}
+
+interface OrderType {
+  id: string
+  orderItems: OrderItem[]
+  status: Status
+  totalPrice: number
+  createdAt: string
+  updatedAt: string
+}
+
+const СheckoutCard: FC = () => {
+  const order = useOrdersStore((state) => state.orders)
   const [step, setStep] = useState<number>(1)
-  const [order, setOrder] = useState(orders)
-  const [totalPrice, setTotalPrice] = useState<number>(0)
-  const countPrice = (arr) => {
-    let res: number = 0;
-    arr?.orderItems.forEach(item => res += item?.book?.price)
-    return setTotalPrice(res)
+
+  const countTotal = useOrdersStore((state) => state.setTotalPrice)
+
+  const totalPrice = (arr: OrderType) => {
+    let res: number = 0
+    arr?.orderItems.forEach((item) => (res += item?.book?.price))
+    console.log('res', res)
+    return countTotal(res)
   }
+
   const nextStep = () => {
     setStep((step) => step + 1)
   }
 
   useEffect(() => {
-    countPrice(order)
+    totalPrice(order)
   }, [order])
 
   return (
@@ -45,12 +62,12 @@ const СheckoutCard = () => {
                 </div>
                 <div>
                   <p>Знижка</p>
-                  <p>150 грн</p>
+                  <p>{BONUS.DISCOUNT} грн</p>
                 </div>
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>
-                <p>{totalPrice} грн</p>
+                <p>{order.totalPrice || '0'} грн</p>
               </div>
             </div>
             {step === 1 && (
