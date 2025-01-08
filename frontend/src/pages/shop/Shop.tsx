@@ -7,6 +7,9 @@ import clsx from 'clsx'
 
 import { genreFilterItems } from '@/pages/shop/data.ts'
 
+import arrow_left from '@/assets/images/pagination/arrow_left.svg'
+import arrow_right from '@/assets/images/pagination/arrow_right.svg'
+
 import { FilterItem, Footer, Header, ProductItem } from '@/components'
 
 import { fetchBooks } from '@/services/api.ts'
@@ -18,29 +21,9 @@ import { useProductsStore } from '@/store/useProductsStore.ts'
 
 import { BaseButton, Typography } from '@/ui'
 
+import { PAGE, PRICE, RANGE_PRICE, SORT } from '@/utils/enums/shopEnums'
+
 import s from './Shop.module.scss'
-
-enum SORT {
-  DEFAULT = '1',
-  POPULARITY = '2',
-  PRICE = '3',
-  NAME = '4',
-}
-
-enum PRICE {
-  MIN = 0,
-  MAX = 1000,
-}
-
-enum RANGE_PRICE {
-  MIN = 0,
-  MAX = 2000,
-}
-
-enum PAGE {
-  FIRST_PAGE = 1,
-  LIMITED_PRODUCTS = 10,
-}
 
 const Shop = () => {
   const [page, setPage] = useState<number>(PAGE.FIRST_PAGE)
@@ -60,8 +43,18 @@ const Shop = () => {
   const limit = PAGE.LIMITED_PRODUCTS
 
   const { data, isPending, error } = useQuery({
-    queryKey: ['books', { skip: (page - 1) * limit, limit, min_price: priceFilter[0], max_price: priceFilter[1] }],
+    queryKey: [
+      'books',
+      {
+        offset: (page - 1) * limit,
+        limit,
+        min_price: priceFilter[0],
+        max_price: priceFilter[1],
+      },
+    ],
     queryFn: fetchBooks,
+    // keepPreviousData: true, // Keeps the previous data while fetching new results
+    // staleTime: 1000 * 60 * 5, // Optional: Cache data for 5 minutes
   })
 
   const filteredProducts = useMemo(() => {
@@ -134,8 +127,6 @@ const Shop = () => {
     navigate({ search: searchParams.toString() }, { replace: true })
   }, [priceFilter, selectedFilters, sort, page, location.search, navigate])
 
-  console.log(data?.data.items)
-
   useEffect(() => {
     if (data && data.data.items) {
       setAllProducts(data.data.items)
@@ -148,6 +139,13 @@ const Shop = () => {
 
   // Check if it's the last page
   const isLastPage = data?.data.items.length < limit
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const totalItems = data?.data.pagination.total || 0 // Assuming totalItems comes from the API
+  const totalPages = Math.ceil(totalItems / limit)
 
   return (
     <>
@@ -233,16 +231,33 @@ const Shop = () => {
                 )}
               </div>
               <div className={s.pagination}>
-                <button
-                  className={s.nav_button}
-                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-                  disabled={page === 1}>
-                  Previous
-                </button>
+                {page > 1 && (
+                  <button
+                    className={s.nav_button}
+                    onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={page === 1}>
+                    <img src={arrow_left} alt="arrow left" />
+                    Previous
+                  </button>
+                )}
 
-                <button className={s.nav_button} onClick={() => setPage((prev) => prev + 1)} disabled={isLastPage}>
-                  Next
-                </button>
+                <ul className={s.pagination_list}>
+                  {Array.from({ length: totalPages }, (_, index) => (
+                    <li
+                      key={index + 1}
+                      className={clsx(s.page_number, { [s.active_page_number]: page === index + 1 })}
+                      onClick={() => handlePageChange(index + 1)}>
+                      {index + 1}
+                    </li>
+                  ))}
+                </ul>
+
+                {!isLastPage && (
+                  <button className={s.nav_button} onClick={() => setPage((prev) => prev + 1)} disabled={isLastPage}>
+                    Next
+                    <img src={arrow_right} alt="arrow right" />
+                  </button>
+                )}
               </div>
             </div>
           </div>
