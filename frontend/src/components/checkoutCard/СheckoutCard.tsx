@@ -7,7 +7,8 @@ import s from './СheckoutCard.module.scss'
 import iconsReturning from '@/assets/images/icons-returning.svg'
 import iconsFreeDeliver from '@/assets/images/icons-free-deliver.svg'
 import iconSafety from '@/assets/images/icon-safety.svg'
-import { OrderType, Status } from '@/utils/types/OrderType'
+import { OrderItem, Status } from '@/utils/types/OrderType'
+import Breadcrumbs from '../breadcrumbs/Breadcrumbs'
 
 enum BONUS {
   DISCOUNT = 150,
@@ -46,6 +47,7 @@ const СheckoutCard: FC = () => {
   return (
     <>
       <section className={s.container}>
+      <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
             {step === 1 && <FirstStep order={order} nextStep={nextStep} />}
