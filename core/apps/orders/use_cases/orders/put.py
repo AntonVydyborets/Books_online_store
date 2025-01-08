@@ -1,20 +1,17 @@
 from dataclasses import dataclass
-from datetime import datetime
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.apps.orders.entities import Order as OrderEntity
-from core.apps.orders.services.orders import (
-    BaseOderService,
-    BaseOrderValidatorService,
-    OrderExistValidatorService,
-)
+from core.apps.orders.services.orders import BaseOderService
+from core.apps.orders.services.validators.main import BaseOrderValidatorService
+from core.apps.orders.services.validators.orders import OrderExistValidatorService
 
 
 @dataclass
 class UpdateOrderUseCase:
     order_service: BaseOderService
-    validator_service: BaseOrderValidatorService
+    main_validator_service: BaseOrderValidatorService
     order_exists_validation_service: OrderExistValidatorService
 
     async def execute(
@@ -23,21 +20,22 @@ class UpdateOrderUseCase:
         session: AsyncSession,
     ) -> OrderEntity:
 
-        # TODO think more about update realization
-        order.updated_at = datetime.utcnow()
-
         await self.order_exists_validation_service.validate(
             order=order,
             session=session,
         )
 
-        await self.validator_service.validate(
+        await self.main_validator_service.validate(
             order=order,
             session=session,
         )
 
-        updated_order = await self.order_service.update_order(
+        await self.order_service.update_order(
             order=order,
             session=session,
+        )
+
+        updated_order = await self.order_service.get_by_id(
+            order_id=order.id, session=session,
         )
         return updated_order

@@ -2,11 +2,8 @@ from dataclasses import dataclass
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.apps.books.entities import Book as BookEntity
-from core.apps.books.services.books import (
-    BaseBookService,
-    BookExistValidatorService,
-)
+from core.apps.books.services.books import BaseBookService
+from core.apps.books.services.validators import BookExistValidatorService
 
 
 @dataclass
@@ -16,16 +13,11 @@ class DeleteBookUseCase:
 
     async def execute(
         self,
-        book: BookEntity,
+        book_id: int,
         session: AsyncSession,
     ) -> None:
 
-        await self.book_exists_validation_service.validate(
-            book=book,
-            session=session,
-        )
-
         await self.book_service.delete_book(
-            book=book,
+            book_id=book_id,
             session=session,
         )

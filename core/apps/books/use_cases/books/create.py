@@ -3,16 +3,18 @@ from dataclasses import dataclass
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.apps.books.entities import Book as BookEntity
-from core.apps.books.services.books import (
-    BaseBookService,
+from core.apps.books.services.books import BaseBookService
+from core.apps.books.services.validators import (
     BaseBookValidatorService,
+    SingleBookValidatorService,
 )
 
 
 @dataclass
 class CreateBookUseCase:
     book_service: BaseBookService
-    validator_service: BaseBookValidatorService
+    single_book_validator_service: SingleBookValidatorService
+    main_validator_service: BaseBookValidatorService
 
     async def execute(
         self,
@@ -20,7 +22,12 @@ class CreateBookUseCase:
         session: AsyncSession,
     ) -> BookEntity:
 
-        await self.validator_service.validate(
+        await self.single_book_validator_service.validate(
+            book=book,
+            session=session,
+        )
+
+        await self.main_validator_service.validate(
             book=book,
             session=session,
         )

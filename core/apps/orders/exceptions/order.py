@@ -75,3 +75,14 @@ class NotValidOrderItemsQuantity(ServiceException):
     @property
     def message(self):
         return "A quantity of order items is not valid"
+
+
+@dataclass
+class IncorrectOrderTotalPrice(ServiceException):
+    order: OrderEntity
+    expected_total_price: float
+    actual_total_price: float
+
+    @property
+    def message(self):
+        return "Order total price is not correct"

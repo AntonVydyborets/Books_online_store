@@ -26,13 +26,6 @@ class GetBookListUseCase:
         session: AsyncSession,
     ) -> Tuple[Iterable[BookEntity], PaginationOut]:
 
-        filters = BookFiltersEntity(
-            search=filters.search,
-            genre=filters.genre,
-            min_price=filters.min_price,
-            max_price=filters.max_price,
-        )
-
         book_list = await self.book_service.get_book_list(
             filters=filters,
             pagination=pagination_in,

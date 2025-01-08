@@ -40,3 +40,30 @@ class BookDoesNotExistError(ServiceException):
     @property
     def message(self):
         return "Book does not exists"
+
+
+@dataclass(eq=False)
+class BookInvalidAuthorError(ServiceException):
+    book: BookEntity
+
+    @property
+    def message(self):
+        return "Book author is not valid"
+
+
+@dataclass(eq=False)
+class BookInvalidPriceError(ServiceException):
+    book: BookEntity
+
+    @property
+    def message(self):
+        return "Book price is not valid"
+
+
+@dataclass(eq=False)
+class BookInvalidTextLanguageError(ServiceException):
+    book: BookEntity
+
+    @property
+    def message(self):
+        return "Book language text is not valid"

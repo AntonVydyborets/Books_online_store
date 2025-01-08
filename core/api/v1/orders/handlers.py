@@ -22,7 +22,7 @@ from core.apps.orders.use_cases.orders.get import (
     GetOrderUseCase,
 )
 from core.apps.orders.use_cases.orders.put import UpdateOrderUseCase
-from core.project.containers import get_container
+from core.project.container.containers import get_container
 from core.project.database import get_session
 
 

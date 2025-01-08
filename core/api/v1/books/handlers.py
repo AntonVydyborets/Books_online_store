@@ -26,7 +26,7 @@ from core.apps.books.use_cases.books.get import (
 )
 from core.apps.books.use_cases.books.put import UpdateBookUseCase
 from core.apps.common.exceptions import ServiceException
-from core.project.containers import get_container
+from core.project.container.containers import get_container
 from core.project.database import get_session
 
 
@@ -50,9 +50,17 @@ async def get_book_list_handler(
         items, pagination_out = await use_case.execute(
             filters=BookFiltersEntity(
                 search=filters.search,
-                genre=filters.genre,
                 min_price=filters.min_price,
                 max_price=filters.max_price,
+                genre=filters.genre,
+                author=filters.author,
+                publisher=filters.publisher,
+                country_of_origin=filters.country_of_origin,
+                text_language=filters.text_language,
+                min_publication_year=filters.min_publication_year,
+                max_publication_year=filters.max_publication_year,
+                min_rating=filters.min_rating,
+                max_rating=filters.max_rating,
             ),
             pagination_in=pagination_in,
             session=session,
@@ -142,9 +150,9 @@ async def update_book(
     return APIResponse(data=BookOutSchema.from_entity(entity=result))
 
 
-@router.delete("/")
+@router.delete("/{book_id}")
 async def delete_book(
-    schema: BookInSchema,
+    book_id: int,
     session: AsyncSession = Depends(get_session),
 ):
     container = get_container()
@@ -152,7 +160,7 @@ async def delete_book(
 
     try:
         await use_case.execute(
-            book=schema.to_entity(),
+            book_id=book_id,
             session=session,
         )
     except ServiceException as error:

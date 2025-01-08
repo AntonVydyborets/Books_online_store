@@ -2,13 +2,10 @@ from abc import (
     ABC,
     abstractmethod,
 )
-from dataclasses import dataclass
-from typing import (
-    Iterable,
-    List,
-)
+from typing import Iterable
 
 from sqlalchemy import (
+    delete,
     func,
     or_,
     select,
@@ -18,12 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.api.filters import PaginationIn
 from core.apps.books.entities import Book as BookEntity
-from core.apps.books.exceptions.books import (
-    BookDoesNotExistError,
-    BookInvalidRating,
-    BookNotFound,
-    SingleBookError,
-)
+from core.apps.books.exceptions.books import BookNotFound
 from core.apps.books.filters.books import BookFilters
 from core.apps.books.models import Book as BookModel
 
@@ -85,23 +77,14 @@ class BaseBookService(ABC):
         self,
         book: BookEntity,
         session: AsyncSession,
-    ) -> BookEntity: ...
+    ) -> None: ...
 
     @abstractmethod
     async def delete_book(
         self,
-        book: BookEntity,
+        book_id: int,
         session: AsyncSession,
     ) -> None: ...
-
-
-class BaseBookValidatorService(ABC):
-
-    async def validate(
-        self,
-        book: BookEntity,
-        session: AsyncSession,
-    ): ...
 
 
 # Implementation of SQLAlchemy services
@@ -110,7 +93,6 @@ class ORMBookService(BaseBookService):
     async def _build_book_query(
         self,
         filters: BookFilters,
-        session: AsyncSession,
     ) -> "select":
         query = select(BookModel).filter(BookModel.is_available)
         if filters.search:
@@ -130,6 +112,38 @@ class ORMBookService(BaseBookService):
         if filters.max_price is not None:
             query = query.filter(BookModel.price <= filters.max_price)
 
+        if filters.author:
+            query = query.filter(BookModel.author == filters.author)
+
+        if filters.publisher:
+            query = query.filter(BookModel.publisher == filters.publisher)
+
+        if filters.country_of_origin:
+            query = query.filter(
+                BookModel.country_of_origin == filters.country_of_origin,
+            )
+
+        if filters.text_language:
+            query = query.filter(
+                BookModel.text_language == filters.text_language,
+            )
+
+        if filters.min_publication_year is not None:
+            query = query.filter(
+                BookModel.publication_year >= filters.min_publication_year,
+            )
+
+        if filters.max_publication_year is not None:
+            query = query.filter(
+                BookModel.publication_year <= filters.max_publication_year,
+            )
+
+        if filters.min_rating is not None:
+            query = query.filter(BookModel.rating >= filters.min_rating)
+
+        if filters.max_rating is not None:
+            query = query.filter(BookModel.rating <= filters.max_rating)
+
         return query
 
     async def get_book_list(
@@ -138,7 +152,7 @@ class ORMBookService(BaseBookService):
         pagination: PaginationIn,
         session: AsyncSession,
     ) -> Iterable[BookEntity]:
-        query = await self._build_book_query(filters, session)
+        query = await self._build_book_query(filters)
         query = query.offset(pagination.offset).limit(pagination.limit)
 
         result = await session.execute(query)
@@ -152,7 +166,7 @@ class ORMBookService(BaseBookService):
         filters: BookFilters,
         session: AsyncSession,
     ) -> int:
-        query = await self._build_book_query(filters, session)
+        query = await self._build_book_query(filters)
 
         result = await session.execute(select(func.count()).select_from(query))
         count = result.scalar()
@@ -232,16 +246,11 @@ class ORMBookService(BaseBookService):
 
         return book_dto.to_entity()
 
-    # TODO think more about update realization
     async def update_book(
         self,
         book: BookEntity,
         session: AsyncSession,
-    ) -> BookEntity:
-        existing_book = await session.execute(
-            select(BookModel).filter(BookModel.id == book.id),
-        )
-        existing_book = existing_book.scalars().first()
+    ) -> None:
 
         updated_data = {
             key: value
@@ -252,90 +261,21 @@ class ORMBookService(BaseBookService):
         query = (
             update(BookModel)
             .where(BookModel.id == book.id)
-            .values(updated_data)
+            .values(
+                **updated_data, updated_at=func.now(),
+            )  # Use func.now() for updating time of updation
             .execution_options(synchronize_session="fetch")
         )
 
         await session.execute(query)
         await session.commit()
 
-        updated_book = await session.execute(
-            select(BookModel).filter(BookModel.id == book.id),
-        )
-        updated_book = updated_book.scalars().first()
-        return updated_book.to_entity()
-
     async def delete_book(
         self,
-        book: BookEntity,
+        book_id: int,
         session: AsyncSession,
     ) -> None:
-        existing_book = await session.execute(
-            select(BookModel).filter(BookModel.id == book.id),
-        )
-        existing_book = existing_book.scalars().first()
+        query = delete(BookModel).where(BookModel.id == book_id)
 
-        await session.delete(existing_book)
+        await session.execute(query)
         await session.commit()
-
-
-class BookRatingValidatorService(BaseBookValidatorService):
-    async def validate(
-        self,
-        book: BookEntity,
-        *args,
-        **kwargs,
-    ):
-        # TODO: Use constants
-        if not 0 <= book.rating <= 5:
-            raise BookInvalidRating(rating=book.rating)
-
-
-@dataclass
-class SingleBookValidatorService(BaseBookValidatorService):
-    service: BaseBookService
-
-    async def validate(
-        self,
-        book: BookEntity,
-        session: AsyncSession,
-        *args,
-        **kwargs,
-    ):
-        if await self.service.check_book_exists_by_title(
-            book=book,
-            session=session,
-        ):
-            raise SingleBookError(book=book)
-
-
-@dataclass
-class BookExistValidatorService(BaseBookValidatorService):
-    service: BaseBookService
-
-    async def validate(
-        self,
-        book: BookEntity,
-        session: AsyncSession,
-        *args,
-        **kwargs,
-    ):
-        if not await self.service.check_book_exists_by_id(
-            book_id=book.id,
-            session=session,
-        ):
-            raise BookDoesNotExistError(book=book)
-
-
-# Composed Services
-@dataclass
-class ComposedBookValidatorService(BaseBookValidatorService):
-    validators: List[BaseBookValidatorService]
-
-    async def validate(
-        self,
-        book: BookEntity,
-        session: AsyncSession,
-    ):
-        for validator in self.validators:
-            await validator.validate(book=book, session=session)

@@ -3,10 +3,8 @@ from dataclasses import dataclass
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.apps.orders.entities import Order as OrderEntity
-from core.apps.orders.services.orders import (
-    BaseOderService,
-    BaseOrderValidatorService,
-)
+from core.apps.orders.services.orders import BaseOderService
+from core.apps.orders.services.validators.main import BaseOrderValidatorService
 
 
 @dataclass
@@ -20,7 +18,6 @@ class CreateOrderUseCase:
         session: AsyncSession,
     ) -> OrderEntity:
 
-        # TODO Make isolated order.items validator and total_price validator
         await self.validator_service.validate(
             order=order,
             session=session,
