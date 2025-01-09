@@ -6,6 +6,7 @@ import { Range } from 'react-range'
 import clsx from 'clsx'
 
 import { genreFilterItems } from '@/pages/shop/data.ts'
+import { ErrorPage } from '../errorPage/ErrorPage'
 
 import arrow_left from '@/assets/images/pagination/arrow_left.svg'
 import arrow_right from '@/assets/images/pagination/arrow_right.svg'
@@ -14,7 +15,7 @@ import { FilterItem, Footer, Header, ProductItem } from '@/components'
 
 import { fetchBooks } from '@/services/api.ts'
 
-import { Container } from '@/shared'
+import { Container, CircleProgress } from '@/shared'
 
 import { useFiltersStore } from '@/store/useFiltersStore.ts'
 import { useProductsStore } from '@/store/useProductsStore.ts'
@@ -38,6 +39,7 @@ const Shop = () => {
   const removeFilter = useFiltersStore((state) => state.removeFilter)
 
   const location = useLocation()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
 
   const limit = PAGE.LIMITED_PRODUCTS
@@ -133,9 +135,13 @@ const Shop = () => {
     }
   }, [data, setAllProducts])
 
-  if (isPending) return <div>Loading...</div>
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname, page])
 
-  if (error) return <div>Error loading books</div>
+  if (isPending) return <CircleProgress />
+
+  if (error) return <ErrorPage text="An error occurred" error={error} />
 
   // Check if it's the last page
   const isLastPage = data?.data.items.length < limit
@@ -152,10 +158,6 @@ const Shop = () => {
       <Header />
       <div className={s.shopMain}>
         <Container>
-          <Typography className={s.title} tag="h2">
-            Книга року
-          </Typography>
-
           <div className={s.filterList}>
             <div className={s.filterList__items}>
               {selectedFilters.map((filter) => (
@@ -219,7 +221,7 @@ const Shop = () => {
                 </div>
               </div>
 
-              <FilterItem title="Жанр" filterItems={genreFilterItems} className={s.filter_item__title} />
+              <FilterItem title="Genres" filterItems={genreFilterItems} className={s.filter_item__title} />
             </div>
 
             <div className={s.mainContent__inner}>

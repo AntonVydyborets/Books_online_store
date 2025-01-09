@@ -1,11 +1,40 @@
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-export const ErrorPage = () => {
+import { Header } from '@/components'
+
+import error_image from '@/assets/images/404/error_404.jpg'
+
+import s from './ErrorPage.module.scss'
+
+interface ErrorPageProps {
+  text: string
+  error?: {
+    message: string
+    status?: number
+  }
+}
+
+export const ErrorPage: FC<ErrorPageProps> = ({ text, error }) => {
   return (
-    <div>
-      <h1>404</h1>
-      <p>The page you’re looking for doesn’t exist.</p>
-      <Link to="/">Go back to the home page</Link>
-    </div>
+    <>
+      <Header />
+      <div className={s.error_page}>
+        <div className={s.error_page__inner}>
+          <img src={error_image} alt="error image" />
+        </div>
+        <div className={s.error_page__text}>{text}</div>
+        {error && (
+          <div className={s.error_page__details}>
+            <p>Error: {error.message}</p>
+            {error.status && <p>Status Code: {error.status}</p>}
+          </div>
+        )}
+
+        {!error && <div className={s.error_page__not_found}>Not Found</div>}
+
+        <Link to="/">Go back to the home page</Link>
+      </div>
+    </>
   )
 }
