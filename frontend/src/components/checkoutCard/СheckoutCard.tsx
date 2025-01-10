@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import FirstStep from './FirstStep'
 import SecondStep from './SecondStep'
 import ThirdStep from './ThirdStep'
@@ -24,25 +24,23 @@ interface OrderType {
 }
 
 const СheckoutCard: FC = () => {
-  const order = useOrdersStore((state) => state.orders)
+  const {orders, setTotalPrice} = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
 
-  const countTotal = useOrdersStore((state) => state.setTotalPrice)
-
-  const totalPrice = (arr: OrderType) => {
+  const totalPrice = useCallback((arr: OrderType) => {
     let res: number = 0
-    arr?.orderItems.forEach((item) => (res += item?.book?.price))
+    arr?.orderItems.forEach((item) => (res += (item?.book?.price * item.quantity)))
     console.log('res', res)
-    return countTotal(res)
-  }
+    setTotalPrice(res)
+  }, [setTotalPrice])
 
   const nextStep = () => {
     setStep((step) => step + 1)
   }
 
-  useEffect(() => {
-    totalPrice(order)
-  }, [order])
+  // useEffect(() => {
+  //   totalPrice(orders)
+  // }, [orders])
 
   return (
     <>
@@ -50,7 +48,7 @@ const СheckoutCard: FC = () => {
       <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
-            {step === 1 && <FirstStep order={order} nextStep={nextStep} />}
+            {step === 1 && <FirstStep order={orders} nextStep={nextStep} />}
             {step === 2 && <SecondStep nextStep={nextStep} />}
             {step === 3 && <ThirdStep />}
           </div>
@@ -59,7 +57,7 @@ const СheckoutCard: FC = () => {
             <div className={s['checkout-sidebar']}>
               <div className={s['checkout-totals']}>
                 <div>
-                  <p>Сума ({order.orderItems.length} позиції)</p>
+                  <p>Сума ({orders.orderItems.length} позиції)</p>
                   <p>1050 грн</p>
                 </div>
                 <div>
@@ -69,7 +67,7 @@ const СheckoutCard: FC = () => {
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>
-                <p>{order.totalPrice || '0'} грн</p>
+                <p>{orders.totalPrice || '0'} грн</p>
               </div>
             </div>
             {step === 1 && (

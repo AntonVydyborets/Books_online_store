@@ -9,21 +9,25 @@ interface BookProps {
 }
 
 const Book: FC<BookProps> = ({ book }) => {
-  const setQuantity = useOrdersStore((state) => state.setQuantity)
+  const { setQuantity } = useOrdersStore((state) => state)
 
   const [count, setCount] = useState(book.quantity)
   const [price, setPrice] = useState(book.price)
-  console.log('book.id', book.id)
+
   useEffect(() => {
     setCount(book.quantity || 1)
     setPrice(book.quantity * book.price || 0)
-    setQuantity(book.id)
   }, [book])
 
   useEffect(() => {
     if (count < 1) setCount(1)
     setPrice(Number(count) * Number(book.price))
   }, [count, book.price])
+
+  useEffect(() => {
+    setQuantity(book.id, Number(count))
+  }, [count, book.id, setQuantity])
+
   const plus = () => {
     setCount((prevState: number) => Number(prevState) + 1)
   }
