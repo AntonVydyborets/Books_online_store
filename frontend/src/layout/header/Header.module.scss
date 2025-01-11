@@ -26,6 +26,8 @@
 .header_top__search {
   position: relative;
 
+  display: flex;
+
   flex-grow: 1;
 
   input {
@@ -34,6 +36,21 @@
     background-color: transparent;
 
     border-radius: 8px;
+  }
+
+  .header_top__search__button {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+
+    padding: 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    background-color: transparent;
   }
 }
 

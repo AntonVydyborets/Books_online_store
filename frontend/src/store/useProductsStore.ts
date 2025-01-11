@@ -10,6 +10,8 @@ interface StoreState {
   saleBooks: BookItemType[]
   blogs: BlogItemType[]
 
+  searchKeywords: string
+  setSearchKeywords: (keywords: string) => void
   setAllProducts: (products: BookItem[]) => void
 }
 
@@ -72,6 +74,7 @@ const initialState = {
       date: '14.11.2020',
     },
   ],
+  searchKeywords: '',
 }
 
 export const useProductsStore = create<StoreState>((set) => ({
@@ -79,8 +82,12 @@ export const useProductsStore = create<StoreState>((set) => ({
   newBooks: initialState.newBooks,
   saleBooks: initialState.sale,
   blogs: initialState.blogs,
+  searchKeywords: initialState.searchKeywords,
 
   setAllProducts: (products: BookItem[]) => {
     set((_: StoreState) => ({ allProducts: [...products] }))
+  },
+  setSearchKeywords: (keywords: string) => {
+    set({ searchKeywords: keywords })
   },
 }))

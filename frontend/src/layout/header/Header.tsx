@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 import logo from '@/assets/images/header/main_logo.svg'
 import account_icon from '@/assets/images/header/language.svg'
 import wishlist_icon from '@/assets/images/header/user.svg'
 import trash_icon from '@/assets/images/header/bag-2.svg'
 import burger_menu from '@/assets/images/b_menu.svg'
+import search_icon from '../../assets/images/header/search-sm.svg'
 
 import { Container } from '@/shared'
+
+import { useProductsStore } from '@/store/useProductsStore'
 
 import { BaseInput, Typography } from '@/ui'
 
@@ -15,6 +18,15 @@ import s from './Header.module.scss'
 
 const Header = () => {
   const [searchBook, setSearchBook] = useState('')
+
+  const setSearchValue = useProductsStore((state) => state.setSearchKeywords)
+
+  const navigate = useNavigate()
+
+  const handleSearch = () => {
+    setSearchValue(searchBook)
+    navigate('/shop')
+  }
 
   return (
     <>
@@ -83,6 +95,16 @@ const Header = () => {
                   setSearchBook(e.currentTarget.value)
                 }}
               />
+              <a
+                href="#"
+                className={s.header_top__search__button}
+                onClick={(e) => {
+                  e.preventDefault()
+
+                  handleSearch()
+                }}>
+                <img src={search_icon} alt="search icon" />
+              </a>
             </div>
 
             <div className={s.header_top__right_menu}>

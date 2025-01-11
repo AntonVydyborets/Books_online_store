@@ -25,6 +25,7 @@ import { BaseButton, Typography } from '@/ui'
 import { PAGE, PRICE, RANGE_PRICE, SORT } from '@/utils/enums/shopEnums'
 
 import s from './Shop.module.scss'
+import { Link } from 'react-router-dom'
 
 const Shop = () => {
   const [page, setPage] = useState<number>(PAGE.FIRST_PAGE)
@@ -38,12 +39,15 @@ const Shop = () => {
   const selectedFilters = useFiltersStore((state) => state.selectedFilters)
   const removeFilter = useFiltersStore((state) => state.removeFilter)
 
+  const searchKeywords = useProductsStore((state) => state.searchKeywords)
+
   const location = useLocation()
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
   const limit = PAGE.LIMITED_PRODUCTS
 
+  // Frist useQuery for fetching books.
   const { data, isLoading, error } = useQuery({
     queryKey: [
       'books',
@@ -55,6 +59,18 @@ const Shop = () => {
       },
     ],
     queryFn: fetchBooks,
+    enabled: !searchKeywords,
+  })
+
+  // Second useQuery for fetching searched books.
+  const {
+    data: searchedBooks,
+    isLoading: isSearchedBooksLoading,
+    error: searchedBooksError,
+  } = useQuery({
+    queryKey: ['searched_books', { search: searchKeywords }],
+    queryFn: fetchBooks,
+    enabled: !!searchKeywords, // Only run this query when searchKeywords is present
   })
 
   const filteredProducts = useMemo(() => {
@@ -124,8 +140,15 @@ const Shop = () => {
       searchParams.delete('page')
     }
 
+    // Set search results.
+    if (searchKeywords) {
+      searchParams.set('search-for', searchKeywords)
+    } else {
+      searchParams.delete('search-for')
+    }
+
     navigate({ search: searchParams.toString() }, { replace: true })
-  }, [priceFilter, selectedFilters, sort, page, location.search, navigate])
+  }, [priceFilter, selectedFilters, sort, page, location.search, navigate, searchKeywords])
 
   useEffect(() => {
     if (data && data.data && data.data.items) {
@@ -137,19 +160,28 @@ const Shop = () => {
     window.scrollTo(0, 0)
   }, [pathname, page])
 
-  if (isLoading) return <CircleProgress />
+  // Handle loading states
+  if (isLoading || isSearchedBooksLoading) return <CircleProgress />
 
-  if (error) return <ErrorPage text="An error occurred" error={error} />
+  // Handle error states
+  if (error || searchedBooksError) return <ErrorPage text="An error occurred" error={error || searchedBooksError} />
 
   // Check if it's the last page
-  const isLastPage = data && data.data.items.length < limit
+  const isLastPage =
+    (data && data.data.items.length < limit) || (searchedBooks && searchedBooks?.data.items.length < limit)
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage)
   }
 
-  const totalItems = data?.data.pagination.total || 0 // Assuming totalItems comes from the API
+  const totalItems = searchKeywords ? searchedBooks?.data.pagination.total || 0 : data?.data?.pagination?.total || 0
+
   const totalPages = Math.ceil(totalItems / limit)
+
+  const productsToDisplay =
+    searchKeywords && searchedBooks?.data.items && searchedBooks?.data.items.length > 0
+      ? searchedBooks.data.items
+      : sortedProducts
 
   return (
     <>
@@ -183,49 +215,51 @@ const Shop = () => {
         </Container>
         <Container>
           <div className={s.shopMain__content}>
-            <div className={s.sidebar}>
-              <div className={s.price_filter}>
-                <Typography className={s.filter_item__title} tag="h5">
-                  Ціна
-                </Typography>
+            {!searchKeywords && (
+              <div className={s.sidebar}>
+                <div className={s.price_filter}>
+                  <Typography className={s.filter_item__title} tag="h5">
+                    Ціна
+                  </Typography>
 
-                <div className={s.range_filter}>
-                  <Range
-                    step={1}
-                    min={RANGE_PRICE.MIN}
-                    max={RANGE_PRICE.MAX}
-                    values={priceRange}
-                    onChange={handlePriceChange}
-                    renderTrack={({ props, children }) => (
-                      <div
-                        {...props}
-                        className={s.range_btn_low}
-                        style={{
-                          background: getTrackBackground(),
-                        }}>
-                        {children}
-                      </div>
-                    )}
-                    renderThumb={({ props }) => <div className={s.range_btn_max} {...props} />}
-                  />
+                  <div className={s.range_filter}>
+                    <Range
+                      step={1}
+                      min={RANGE_PRICE.MIN}
+                      max={RANGE_PRICE.MAX}
+                      values={priceRange}
+                      onChange={handlePriceChange}
+                      renderTrack={({ props, children }) => (
+                        <div
+                          {...props}
+                          className={s.range_btn_low}
+                          style={{
+                            background: getTrackBackground(),
+                          }}>
+                          {children}
+                        </div>
+                      )}
+                      renderThumb={({ props }) => <div className={s.range_btn_max} {...props} />}
+                    />
 
-                  <div className={s.range_values_container}>
-                    <span>Ціна: </span>
-                    <div className={s.range_value}>{priceRange[0]} грн</div>
-                    <span>-</span>
-                    <div className={clsx(s.range_value, s.last_range_value)}>{priceRange[1]} грн</div>
-                    <BaseButton onClick={applyPriceFilter}>Фільтрувати</BaseButton>
+                    <div className={s.range_values_container}>
+                      <span>Ціна: </span>
+                      <div className={s.range_value}>{priceRange[0]} грн</div>
+                      <span>-</span>
+                      <div className={clsx(s.range_value, s.last_range_value)}>{priceRange[1]} грн</div>
+                      <BaseButton onClick={applyPriceFilter}>Фільтрувати</BaseButton>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <FilterItem title="Жанри" filterItems={genreFilterItems} className={s.filter_item__title} />
-            </div>
+                <FilterItem title="Жанри" filterItems={genreFilterItems} className={s.filter_item__title} />
+              </div>
+            )}
 
             <div className={s.mainContent__inner}>
               <div className={s.grid}>
-                {sortedProducts.length > 0 ? (
-                  sortedProducts.map((product) => <ProductItem key={product.id} {...product} />)
+                {productsToDisplay.length ? (
+                  productsToDisplay.map((product) => <ProductItem key={product.id} {...product} />)
                 ) : (
                   <div>Немає товарів, що відповідають вашим критеріям фільтрації.</div>
                 )}
