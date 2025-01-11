@@ -15,6 +15,23 @@ export interface BookItem {
   updated_at: string
 }
 
+export interface BooksQueryParams {
+  search?: string
+  min_price?: number
+  max_price?: number
+  genre?: string
+  author?: string
+  publisher?: string
+  country_of_origin?: string
+  text_language?: string
+  min_publication_year?: number
+  max_publication_year?: number
+  min_rating?: number
+  max_rating?: number
+  offset?: number // Default is 0
+  limit?: number // Default is 10
+}
+
 interface Pagination {
   offset: number
   limit: number

@@ -28,11 +28,13 @@
 
 .filter_item__title {
   color: #333;
-  background-color: #989898;
+  background-color: #c6ced0;
 
   padding: 6px 30px;
   margin-left: -15px;
   margin-right: -15px;
+
+  font-weight: 500;
 }
 
 .filterList {
@@ -66,6 +68,13 @@
 
   &:hover {
     background-color: #d4d4d4;
+  }
+}
+
+.filterList__sort {
+
+  select {
+    border: 0
   }
 }
 

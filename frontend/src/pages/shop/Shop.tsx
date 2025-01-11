@@ -6,7 +6,7 @@ import { Range } from 'react-range'
 import clsx from 'clsx'
 
 import { genreFilterItems } from '@/pages/shop/data.ts'
-import { ErrorPage } from '../errorPage/ErrorPage'
+import { ErrorPage } from '@/pages'
 
 import arrow_left from '@/assets/images/pagination/arrow_left.svg'
 import arrow_right from '@/assets/images/pagination/arrow_right.svg'
@@ -44,7 +44,7 @@ const Shop = () => {
 
   const limit = PAGE.LIMITED_PRODUCTS
 
-  const { data, isPending, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [
       'books',
       {
@@ -55,8 +55,6 @@ const Shop = () => {
       },
     ],
     queryFn: fetchBooks,
-    // keepPreviousData: true, // Keeps the previous data while fetching new results
-    // staleTime: 1000 * 60 * 5, // Optional: Cache data for 5 minutes
   })
 
   const filteredProducts = useMemo(() => {
@@ -130,7 +128,7 @@ const Shop = () => {
   }, [priceFilter, selectedFilters, sort, page, location.search, navigate])
 
   useEffect(() => {
-    if (data && data.data.items) {
+    if (data && data.data && data.data.items) {
       setAllProducts(data.data.items)
     }
   }, [data, setAllProducts])
@@ -139,12 +137,12 @@ const Shop = () => {
     window.scrollTo(0, 0)
   }, [pathname, page])
 
-  if (isPending) return <CircleProgress />
+  if (isLoading) return <CircleProgress />
 
   if (error) return <ErrorPage text="An error occurred" error={error} />
 
   // Check if it's the last page
-  const isLastPage = data?.data.items.length < limit
+  const isLastPage = data && data.data.items.length < limit
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage)
@@ -173,7 +171,7 @@ const Shop = () => {
               ))}
             </div>
 
-            <div className="filterList__sort">
+            <div className={s.filterList__sort}>
               <select value={sort} onChange={(e) => setSort(e.currentTarget.value as SORT)}>
                 <option value="1">Сортувати за</option>
                 <option value="2">Популярністю</option>
@@ -188,7 +186,7 @@ const Shop = () => {
             <div className={s.sidebar}>
               <div className={s.price_filter}>
                 <Typography className={s.filter_item__title} tag="h5">
-                  Price Range
+                  Ціна
                 </Typography>
 
                 <div className={s.range_filter}>
@@ -212,16 +210,16 @@ const Shop = () => {
                   />
 
                   <div className={s.range_values_container}>
-                    <span>Price: </span>
-                    <div className={s.range_value}>{priceRange[0]} UAN</div>
+                    <span>Ціна: </span>
+                    <div className={s.range_value}>{priceRange[0]} грн</div>
                     <span>-</span>
-                    <div className={clsx(s.range_value, s.last_range_value)}>{priceRange[1]} UAN</div>
-                    <BaseButton onClick={applyPriceFilter}>Filter</BaseButton>
+                    <div className={clsx(s.range_value, s.last_range_value)}>{priceRange[1]} грн</div>
+                    <BaseButton onClick={applyPriceFilter}>Фільтрувати</BaseButton>
                   </div>
                 </div>
               </div>
 
-              <FilterItem title="Genres" filterItems={genreFilterItems} className={s.filter_item__title} />
+              <FilterItem title="Жанри" filterItems={genreFilterItems} className={s.filter_item__title} />
             </div>
 
             <div className={s.mainContent__inner}>

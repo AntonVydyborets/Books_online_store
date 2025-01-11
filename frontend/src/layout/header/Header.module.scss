@@ -6,8 +6,8 @@
   display: flex;
   align-items: center;
 
-  height: 125px;
-  background-color: #e4e4e4;
+  height: 90px;
+  background-color: #ffffff;
 
   margin-bottom: 40px;
 
@@ -29,9 +29,11 @@
   flex-grow: 1;
 
   input {
-    height: 64px;
+    height: 37px;
     border-color: #1d1d1d;
     background-color: transparent;
+
+    border-radius: 8px;
   }
 }
 
