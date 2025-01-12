@@ -1,6 +1,5 @@
-from dataclasses import field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel
 
@@ -8,37 +7,42 @@ from core.apps.books.entities import Book as BookEntity
 
 
 class BookSchema(BaseModel):
-    id: int  # noqa
     title: str
-    price: int
+    current_price: int
+    old_price: Optional[int] = None
+    quantity: int
 
     description: str
     author: str
     publisher: str
-    genre: str
+    genres: List[str]
     publication_year: int
     country_of_origin: str
     text_language: str
 
     rating: float
+    tags: List[str] = []
     is_available: Optional[bool] = True
     created_at: datetime
     updated_at: Optional[datetime] = None
 
     @staticmethod
     def from_entity(entity: BookEntity) -> "BookSchema":
+        print("Debug: Converting entity to BookSchema", entity)
         return BookSchema(
-            id=entity.id,
             title=entity.title,
-            price=entity.price,
+            current_price=entity.price,
+            old_price=entity.old_price,
+            quantity=entity.quantity,
             description=entity.description,
             author=entity.author,
             publisher=entity.publisher,
-            genre=entity.genre,
+            genres=entity.genres,
             publication_year=entity.publication_year,
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
+            tags=entity.tags,
             is_available=entity.is_available,
             created_at=entity.created_at,
             updated_at=entity.updated_at,
@@ -46,57 +50,64 @@ class BookSchema(BaseModel):
 
 
 class BookInSchema(BaseModel):
-    id: Optional[int] = field(default=None, kw_only=True)  # noqa
     title: str
-    price: int
+    current_price: int
+    old_price: Optional[int] = None
+    quantity: int
 
     description: str
     author: str
     publisher: str
-    genre: str
+    genres: List[str]
     publication_year: int
     country_of_origin: str
     text_language: str
 
     rating: float
+    tags: List[str] = []
     is_available: Optional[bool] = True
 
     def to_entity(self):
+        print("Debug: Converting BookInSchema to entity", self)
         return BookEntity(
-            id=self.id,
             title=self.title,
-            price=self.price,
+            price=self.current_price,
+            old_price=self.old_price,
+            quantity=self.quantity,
             description=self.description,
             author=self.author,
             publisher=self.publisher,
-            genre=self.genre,
+            genres=self.genres,
             publication_year=self.publication_year,
             country_of_origin=self.country_of_origin,
             text_language=self.text_language,
             rating=self.rating,
+            tags=self.tags,
             is_available=self.is_available,
         )
 
 
 class BookOutSchema(BookInSchema):
-    id: int  # noqa
     created_at: datetime
-    updated_at: datetime | None
+    updated_at: Optional[datetime] = None
 
     @classmethod
     def from_entity(cls, entity: BookEntity) -> "BookOutSchema":
+        print("Debug: Converting entity to BookOutSchema", entity)
         return cls(
-            id=entity.id,  # noqa
             title=entity.title,
-            price=entity.price,
+            current_price=entity.price,
+            old_price=entity.old_price,
+            quantity=entity.quantity,
             description=entity.description,
             author=entity.author,
             publisher=entity.publisher,
-            genre=entity.genre,
+            genres=entity.genres,
             publication_year=entity.publication_year,
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
+            tags=entity.tags,
             is_available=entity.is_available,
             created_at=entity.created_at,
             updated_at=entity.updated_at,

@@ -103,8 +103,8 @@ class ORMBookService(BaseBookService):
                 ),
             )
 
-        if filters.genre:
-            query = query.filter(BookModel.genre == filters.genre)
+        if filters.genres:
+            query = query.filter(BookModel.genres == filters.genres)
 
         if filters.min_price is not None:
             query = query.filter(BookModel.price >= filters.min_price)

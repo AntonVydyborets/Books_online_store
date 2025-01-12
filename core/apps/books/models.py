@@ -5,6 +5,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    ARRAY,  
 )
 
 from core.apps.books.entities import Book as BookEntity
@@ -22,33 +23,39 @@ class Book(TimedBaseModel):
         autoincrement=True,
     )  # noqa
     title = Column(String(100), index=True, nullable=False)
-    price = Column(Float, nullable=False)
+    current_price = Column(Float, nullable=False)
+    old_price = Column(Float, nullable=True)
+    quantity = Column(Integer, nullable=False, default=0)
 
     description = Column(Text, nullable=True)
     author = Column(String(50), nullable=False)
     publisher = Column(String(50), nullable=True)
-    genre = Column(String(50), nullable=False)
-    publication_year = Column(Integer, nullable=False)
+    genres = Column(ARRAY(String), nullable=False)  
+    publication_year = Column(Integer, nullable=False)  
     country_of_origin = Column(String(50), nullable=True)
     text_language = Column(String(50), nullable=True)
 
     rating = Column(Float, nullable=True, default=0.0)
     is_available = Column(Boolean, default=True)
+    tags = Column(ARRAY(String), nullable=True) 
 
     def to_entity(self) -> BookEntity:
         return BookEntity(
             id=self.id,
             title=self.title,
-            price=self.price,
+            current_price=self.current_price,
+            old_price=self.old_price,
+            quantity=self.quantity,
             description=self.description,
             author=self.author,
             publisher=self.publisher,
-            genre=self.genre,
+            genres=self.genres,
             publication_year=self.publication_year,
             country_of_origin=self.country_of_origin,
             text_language=self.text_language,
             rating=self.rating,
             is_available=self.is_available,
+            tags=self.tags,
             created_at=self.created_at,
             updated_at=self.updated_at,
         )
@@ -58,16 +65,19 @@ class Book(TimedBaseModel):
         return cls(
             id=entity.id,
             title=entity.title,
-            price=entity.price,
+            current_price=entity.current_price,
+            old_price=entity.old_price,
+            quantity=entity.quantity,
             description=entity.description,
             author=entity.author,
             publisher=entity.publisher,
-            genre=entity.genre,
+            genres=entity.genres,
             publication_year=entity.publication_year,
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
             is_available=entity.is_available,
+            tags=entity.tags,
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )

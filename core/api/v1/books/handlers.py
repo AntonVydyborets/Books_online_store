@@ -52,7 +52,7 @@ async def get_book_list_handler(
                 search=filters.search,
                 min_price=filters.min_price,
                 max_price=filters.max_price,
-                genre=filters.genre,
+                genres=filters.genres,
                 author=filters.author,
                 publisher=filters.publisher,
                 country_of_origin=filters.country_of_origin,
