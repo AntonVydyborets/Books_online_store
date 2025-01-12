@@ -32,6 +32,11 @@ export interface BooksQueryParams {
   limit?: number // Default is 10
 }
 
+export interface ExtendedBooksQueryParams extends Omit<BooksQueryParams, 'genre' | 'publisher'> {
+  genres?: string[]
+  publishers?: string[]
+}
+
 interface Pagination {
   offset: number
   limit: number
