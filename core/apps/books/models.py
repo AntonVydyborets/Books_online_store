@@ -36,7 +36,6 @@ class Book(TimedBaseModel):
     text_language = Column(String(50), nullable=True)
 
     rating = Column(Float, nullable=True, default=0.0)
-    is_available = Column(Boolean, default=True)
     tags = Column(ARRAY(String), nullable=True) 
 
     def to_entity(self) -> BookEntity:
@@ -54,7 +53,6 @@ class Book(TimedBaseModel):
             country_of_origin=self.country_of_origin,
             text_language=self.text_language,
             rating=self.rating,
-            is_available=self.is_available,
             tags=self.tags,
             created_at=self.created_at,
             updated_at=self.updated_at,
@@ -76,7 +74,6 @@ class Book(TimedBaseModel):
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
-            is_available=entity.is_available,
             tags=entity.tags,
             created_at=entity.created_at,
             updated_at=entity.updated_at,

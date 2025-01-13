@@ -67,3 +67,19 @@ class BookInvalidTextLanguageError(ServiceException):
     @property
     def message(self):
         return "Book language text is not valid"
+
+@dataclass(eq=False)
+class BookInvalidQuantityError(ServiceException):
+    book: BookEntity
+
+    @property
+    def message(self):
+        return "Book quantity must be greater than 0"
+
+@dataclass(eq=False)
+class BookInvalidCountryOfOrigin(ServiceException):
+    book: BookEntity
+
+    @property
+    def message(self):
+        return "Book country of origin must be at least 2 characters long"

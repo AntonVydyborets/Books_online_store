@@ -7,6 +7,7 @@ from core.apps.books.entities import Book as BookEntity
 
 
 class BookSchema(BaseModel):
+    id: int
     title: str
     current_price: int
     old_price: Optional[int] = None
@@ -22,14 +23,13 @@ class BookSchema(BaseModel):
 
     rating: float
     tags: List[str] = []
-    is_available: Optional[bool] = True
     created_at: datetime
     updated_at: Optional[datetime] = None
 
     @staticmethod
     def from_entity(entity: BookEntity) -> "BookSchema":
-        print("Debug: Converting entity to BookSchema", entity)
         return BookSchema(
+            id=entity.id,
             title=entity.title,
             current_price=entity.price,
             old_price=entity.old_price,
@@ -43,13 +43,13 @@ class BookSchema(BaseModel):
             text_language=entity.text_language,
             rating=entity.rating,
             tags=entity.tags,
-            is_available=entity.is_available,
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )
 
 
 class BookInSchema(BaseModel):
+    id: int
     title: str
     current_price: int
     old_price: Optional[int] = None
@@ -65,13 +65,12 @@ class BookInSchema(BaseModel):
 
     rating: float
     tags: List[str] = []
-    is_available: Optional[bool] = True
 
     def to_entity(self):
-        print("Debug: Converting BookInSchema to entity", self)
         return BookEntity(
+            id=self.id,
             title=self.title,
-            price=self.current_price,
+            current_price=self.current_price,
             old_price=self.old_price,
             quantity=self.quantity,
             description=self.description,
@@ -83,7 +82,6 @@ class BookInSchema(BaseModel):
             text_language=self.text_language,
             rating=self.rating,
             tags=self.tags,
-            is_available=self.is_available,
         )
 
 
@@ -93,10 +91,10 @@ class BookOutSchema(BookInSchema):
 
     @classmethod
     def from_entity(cls, entity: BookEntity) -> "BookOutSchema":
-        print("Debug: Converting entity to BookOutSchema", entity)
         return cls(
+            id=entity.id,
             title=entity.title,
-            current_price=entity.price,
+            current_price=entity.current_price,
             old_price=entity.old_price,
             quantity=entity.quantity,
             description=entity.description,
@@ -108,7 +106,6 @@ class BookOutSchema(BookInSchema):
             text_language=entity.text_language,
             rating=entity.rating,
             tags=entity.tags,
-            is_available=entity.is_available,
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )

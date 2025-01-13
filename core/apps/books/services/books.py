@@ -94,7 +94,7 @@ class ORMBookService(BaseBookService):
         self,
         filters: BookFilters,
     ) -> "select":
-        query = select(BookModel).filter(BookModel.is_available)
+        query = select(BookModel).filter(BookModel.quantity > 0)
         if filters.search:
             query = query.filter(
                 or_(
