@@ -8,7 +8,7 @@ import error_image from '@/assets/images/404/error_404.jpg'
 import s from './ErrorPage.module.scss'
 
 interface ErrorPageProps {
-  text: string
+  text?: string
   error?: {
     message: string
     status?: number

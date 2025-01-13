@@ -1,11 +1,15 @@
 import { FC, useEffect, useState } from 'react'
+
 import InputControl from '@/components/inputControl/InputControl'
-import s from './СheckoutCard.module.scss'
-import { BookItemType } from '@/utils/types/BookItemType'
+
 import { useOrdersStore } from '@/store/useOrdersStore'
 
+import { BookItem } from '@/utils/types/BookItemType'
+
+import s from '@/pages/cart/Cart.module.scss'
+
 interface BookProps {
-  book: BookItemType
+  book: BookItem
 }
 
 const Book: FC<BookProps> = ({ book }) => {
@@ -16,7 +20,7 @@ const Book: FC<BookProps> = ({ book }) => {
 
   useEffect(() => {
     setCount(book.quantity || 1)
-    setPrice(book.quantity * book.price || 0)
+    setPrice(book?.quantity * book.price || 0)
   }, [book])
 
   useEffect(() => {

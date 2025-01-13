@@ -23,7 +23,7 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems, classNa
   const selectFilter = useFiltersStore((state) => state.selectFilter)
 
   const handleCheckboxChange = (item: FilterType) => {
-    selectFilter({ ...item, type }) // Ensure the type is passed correctly
+    selectFilter({ ...item, type })
   }
 
   const filtersOfType = selectedFilters.filter((filter) => filter.type === type)

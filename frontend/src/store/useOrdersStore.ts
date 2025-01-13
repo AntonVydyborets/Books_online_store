@@ -69,9 +69,11 @@ const initialState = {
 
 export const useOrdersStore = create<OrderState>((set) => ({
   orders: initialState,
+
   setTotalPrice: (sum: number) => {
     set((state) => ({ orders: { ...state.orders, totalPrice: sum } }))
   },
+
   setQuantity: (id: string | number, count: number) => {
     set((state) => ({
       orders: {

@@ -115,7 +115,7 @@ const Header = () => {
                 <div>
                   <img src={wishlist_icon} alt="wishlist" />
                 </div>
-                <Link to="/checkout">
+                <Link to="/cart">
                   <img src={trash_icon} alt="trash" />
                 </Link>
               </div>

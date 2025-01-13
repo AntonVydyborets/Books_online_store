@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import s from './СheckoutCard.module.scss'
+import s from '@/pages/cart/Cart.module.scss'
 
 interface FormValues {
   firstName: string

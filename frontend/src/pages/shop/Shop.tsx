@@ -224,6 +224,10 @@ const Shop = () => {
                   </Typography>
 
                   <div className={s.range_filter}>
+                    {/* 
+                        TODO: FIX "KEY" ISSUE.
+                        TODO: FIX RANGE CSS ISSUE
+                    */}
                     <Range
                       step={1}
                       min={RANGE_PRICE.MIN}
