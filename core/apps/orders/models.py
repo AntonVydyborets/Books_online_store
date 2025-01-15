@@ -22,8 +22,16 @@ class OrderBook(TimedBaseModel):
     __tablename__ = "order_books"
 
     id = Column(Integer, primary_key=True, index=True)  # noqa
-    order_id = Column(Integer, ForeignKey("orders.id"), nullable=False)
-    book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
+    order_id = Column(
+        Integer,
+        ForeignKey("orders.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    book_id = Column(
+        Integer,
+        ForeignKey("books.id", ondelete="CASCADE"),
+        nullable=False,
+    )
     quantity = Column(Integer, default=1)
 
     order = relationship("Order", back_populates="items")

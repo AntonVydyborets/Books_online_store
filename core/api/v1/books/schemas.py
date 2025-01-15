@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -7,6 +7,7 @@ from core.apps.books.entities import Book as BookEntity
 
 
 class BookSchema(BaseModel):
+    id: int  # noqa
     title: str
     current_price: int
     old_price: Optional[int] = None
@@ -15,41 +16,40 @@ class BookSchema(BaseModel):
     description: str
     author: str
     publisher: str
-    genres: List[str]
+    genres: str
     publication_year: int
     country_of_origin: str
     text_language: str
 
     rating: float
-    tags: List[str] = []
-    is_available: Optional[bool] = True
+    tags: str = ""
     created_at: datetime
     updated_at: Optional[datetime] = None
 
     @staticmethod
     def from_entity(entity: BookEntity) -> "BookSchema":
-        print("Debug: Converting entity to BookSchema", entity)
         return BookSchema(
+            id=entity.id,
             title=entity.title,
-            current_price=entity.price,
+            current_price=entity.current_price,
             old_price=entity.old_price,
             quantity=entity.quantity,
             description=entity.description,
             author=entity.author,
             publisher=entity.publisher,
-            genres=entity.genres,
+            genres=",".join(entity.genres),
             publication_year=entity.publication_year,
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
-            tags=entity.tags,
-            is_available=entity.is_available,
+            tags=",".join(entity.tags),
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )
 
 
 class BookInSchema(BaseModel):
+    id: int  # noqa
     title: str
     current_price: int
     old_price: Optional[int] = None
@@ -58,32 +58,30 @@ class BookInSchema(BaseModel):
     description: str
     author: str
     publisher: str
-    genres: List[str]
+    genres: str
     publication_year: int
     country_of_origin: str
     text_language: str
 
     rating: float
-    tags: List[str] = []
-    is_available: Optional[bool] = True
+    tags: str = ""
 
     def to_entity(self):
-        print("Debug: Converting BookInSchema to entity", self)
         return BookEntity(
+            id=self.id,
             title=self.title,
-            price=self.current_price,
+            current_price=self.current_price,
             old_price=self.old_price,
             quantity=self.quantity,
             description=self.description,
             author=self.author,
             publisher=self.publisher,
-            genres=self.genres,
+            genres=self.genres.replace(" ", "").split(","),
             publication_year=self.publication_year,
             country_of_origin=self.country_of_origin,
             text_language=self.text_language,
             rating=self.rating,
-            tags=self.tags,
-            is_available=self.is_available,
+            tags=self.tags.replace(" ", "").split(","),
         )
 
 
@@ -93,22 +91,21 @@ class BookOutSchema(BookInSchema):
 
     @classmethod
     def from_entity(cls, entity: BookEntity) -> "BookOutSchema":
-        print("Debug: Converting entity to BookOutSchema", entity)
         return cls(
+            id=entity.id,
             title=entity.title,
-            current_price=entity.price,
+            current_price=entity.current_price,
             old_price=entity.old_price,
             quantity=entity.quantity,
             description=entity.description,
             author=entity.author,
             publisher=entity.publisher,
-            genres=entity.genres,
+            genres=",".join(entity.genres),
             publication_year=entity.publication_year,
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
-            tags=entity.tags,
-            is_available=entity.is_available,
+            tags=",".join(entity.tags),
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )

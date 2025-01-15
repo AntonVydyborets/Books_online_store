@@ -94,7 +94,7 @@ class ORMBookService(BaseBookService):
         self,
         filters: BookFilters,
     ) -> "select":
-        query = select(BookModel).filter(BookModel.is_available)
+        query = select(BookModel).filter(BookModel.quantity > 0)
         if filters.search:
             query = query.filter(
                 or_(
@@ -107,10 +107,10 @@ class ORMBookService(BaseBookService):
             query = query.filter(BookModel.genres == filters.genres)
 
         if filters.min_price is not None:
-            query = query.filter(BookModel.price >= filters.min_price)
+            query = query.filter(BookModel.current_price >= filters.min_price)
 
         if filters.max_price is not None:
-            query = query.filter(BookModel.price <= filters.max_price)
+            query = query.filter(BookModel.current_price <= filters.max_price)
 
         if filters.author:
             query = query.filter(BookModel.author == filters.author)
@@ -262,7 +262,8 @@ class ORMBookService(BaseBookService):
             update(BookModel)
             .where(BookModel.id == book.id)
             .values(
-                **updated_data, updated_at=func.now(),
+                **updated_data,
+                updated_at=func.now(),
             )  # Use func.now() for updating time of updation
             .execution_options(synchronize_session="fetch")
         )

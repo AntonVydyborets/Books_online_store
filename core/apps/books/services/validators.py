@@ -8,7 +8,9 @@ from core.apps.books.entities import Book as BookEntity
 from core.apps.books.exceptions.books import (
     BookDoesNotExistError,
     BookInvalidAuthorError,
+    BookInvalidCountryOfOrigin,
     BookInvalidPriceError,
+    BookInvalidQuantityError,
     BookInvalidRating,
     BookInvalidTextLanguageError,
     SingleBookError,
@@ -82,7 +84,7 @@ class BookPriceValidatorService(BaseBookValidatorService):
         *args,
         **kwargs,
     ):
-        if book.price < 0:
+        if book.current_price < 0:
             raise BookInvalidPriceError(book=book)
 
 
@@ -106,6 +108,28 @@ class BookTextLanguageValidatorService(BaseBookValidatorService):
     ):
         if not book.text_language or len(book.text_language) < 2:
             raise BookInvalidTextLanguageError(book=book)
+
+
+class BookQuantityValidatorService(BaseBookValidatorService):
+    async def validate(
+        self,
+        book: BookEntity,
+        *args,
+        **kwargs,
+    ):
+        if book.quantity <= 0:
+            raise BookInvalidQuantityError(book=book)
+
+
+class BookCountryOfOriginValidatorService(BaseBookValidatorService):
+    async def validate(
+        self,
+        book: BookEntity,
+        *args,
+        **kwargs,
+    ):
+        if not book.country_of_origin or len(book.country_of_origin) < 2:
+            raise BookInvalidCountryOfOrigin(book=book)
 
 
 # Composed Services

@@ -1,11 +1,10 @@
 from sqlalchemy import (
-    Boolean,
+    ARRAY,
     Column,
     Float,
     Integer,
     String,
     Text,
-    ARRAY,  
 )
 
 from core.apps.books.entities import Book as BookEntity
@@ -30,14 +29,13 @@ class Book(TimedBaseModel):
     description = Column(Text, nullable=True)
     author = Column(String(50), nullable=False)
     publisher = Column(String(50), nullable=True)
-    genres = Column(ARRAY(String), nullable=False)  
-    publication_year = Column(Integer, nullable=False)  
+    genres = Column(ARRAY(String), nullable=False)
+    publication_year = Column(Integer, nullable=False)
     country_of_origin = Column(String(50), nullable=True)
     text_language = Column(String(50), nullable=True)
 
     rating = Column(Float, nullable=True, default=0.0)
-    is_available = Column(Boolean, default=True)
-    tags = Column(ARRAY(String), nullable=True) 
+    tags = Column(ARRAY(String), nullable=True)
 
     def to_entity(self) -> BookEntity:
         return BookEntity(
@@ -54,7 +52,6 @@ class Book(TimedBaseModel):
             country_of_origin=self.country_of_origin,
             text_language=self.text_language,
             rating=self.rating,
-            is_available=self.is_available,
             tags=self.tags,
             created_at=self.created_at,
             updated_at=self.updated_at,
@@ -76,7 +73,6 @@ class Book(TimedBaseModel):
             country_of_origin=entity.country_of_origin,
             text_language=entity.text_language,
             rating=entity.rating,
-            is_available=entity.is_available,
             tags=entity.tags,
             created_at=entity.created_at,
             updated_at=entity.updated_at,

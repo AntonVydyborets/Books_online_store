@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -8,7 +8,7 @@ class BookFilters(BaseModel):
     min_price: Optional[float] = None
     max_price: Optional[float] = None
 
-    genres: Optional[List[str]] = None
+    genres: Optional[str] = None
     author: Optional[str] = None
     publisher: Optional[str] = None
     country_of_origin: Optional[str] = None
