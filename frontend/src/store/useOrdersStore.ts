@@ -1,87 +1,97 @@
 import { create } from 'zustand'
-import { v4 as uuid } from 'uuid'
-import { Status } from '@/utils/types/OrderType'
+import { persist } from 'zustand/middleware' // Import persist middleware
 
-interface OrderItem {
-  id: string | number
-  quantity: number
-  book: {
-    id: number
-    title: string
-    cover: string
-    author: string
-    price: number
-  }
-  createdAt: string
-  updatedAt: string
-}
+//@ts-ignore
+import debounce from 'lodash.debounce'
 
-interface OrderType {
-  id: string | number
-  orderItems: OrderItem[]
-  status: Status
-  totalPrice: number | null
-  createdAt: string
-  updatedAt: string
-}
+import { RequiredCartItemType } from '@/utils/types/BookItemType'
+
+export type ProductItemType = Pick<
+  RequiredCartItemType,
+  'id' | 'title' | 'author' | 'price' | 'cover' | 'genre' | 'quantity'
+>
 
 interface OrderState {
-  orders: OrderType
+  order: RequiredCartItemType[]
+  totalPrice: number
+
   setTotalPrice: (sum: number) => void
-  setQuantity: (id: string | number, count: number) => void
+  setQuantity: (id: number, count: number) => void
+  setOrderProduct: (product: ProductItemType) => void
+  removeOrderProduct: (id: number) => void // Optional: To remove items
+  clearOrder: () => void // Optional: To clear the cart
 }
 
-const initialState = {
-  id: uuid(),
-  orderItems: [
-    {
-      id: 11,
-      quantity: 1,
-      book: {
-        id: 112,
-        title: 'За Перекопом є земля 2',
-        cover: 'https://laboratory.ua/files/products/za-perekopom-ye-zemlia-1000-2.270x435.jpg',
-        author: 'Євстахій Загачевський',
-        price: 400,
-      },
-      createdAt: '2024-11-16T10:04:48.224Z',
-      updatedAt: '2024-11-16T10:24:41.308Z',
-    },
-    {
-      id: 22,
-      quantity: 1,
-      book: {
-        id: 222,
-        title: 'Закохані в життя, одружені на смерті 1',
-        cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
-        author: 'Євстахій Загачевський',
-        price: 150,
-      },
-      createdAt: '2024-12-16T10:04:48.224Z',
-      updatedAt: '2024-12-16T10:24:41.308Z',
-    },
-  ],
-  status: Status.pending,
-  totalPrice: null,
-  createdAt: '2024-11-16T10:04:48.224Z',
-  updatedAt: '2024-11-16T10:04:50.224Z',
+const initialState: Pick<OrderState, 'order' | 'totalPrice'> = {
+  order: [],
+  totalPrice: 0,
 }
 
-export const useOrdersStore = create<OrderState>((set) => ({
-  orders: initialState,
+// Define the saveState function
+const saveState = (state: Pick<OrderState, 'order' | 'totalPrice'>) => {
+  try {
+    const serializedState = JSON.stringify(state)
+    localStorage.setItem('ordersState', serializedState)
+  } catch (error) {
+    console.error('Failed to save state:', error)
+  }
+}
 
-  setTotalPrice: (sum: number) => {
-    set((state) => ({ orders: { ...state.orders, totalPrice: sum } }))
-  },
+// Debounced version of saveState
+const saveStateDebounced = debounce((state: Pick<OrderState, 'order' | 'totalPrice'>) => {
+  saveState(state)
+}, 500)
 
-  setQuantity: (id: string | number, count: number) => {
-    set((state) => ({
-      orders: {
-        ...state.orders,
-        orderItems: state.orders.orderItems.map((order) =>
-          order.book.id === id ? { ...order, quantity: count } : order
-        ),
+export const useOrdersStore = create<OrderState>()(
+  persist(
+    (set, get) => ({
+      ...initialState,
+
+      setTotalPrice: (sum: number) => {
+        set({ totalPrice: sum })
+        saveStateDebounced({ order: get().order, totalPrice: sum })
       },
-    }))
-  },
-}))
+
+      setQuantity: (id: string | number, count: number) => {
+        set((state) => {
+          const updatedOrder = state.order.map((item) => (item.id === id ? { ...item, quantity: count } : item))
+          // Debounced save
+          saveStateDebounced({ order: updatedOrder, totalPrice: state.totalPrice })
+          return { order: updatedOrder }
+        })
+      },
+
+      setOrderProduct: (product: RequiredCartItemType) => {
+        set((state) => {
+          const updatedOrder = [...state.order, product]
+          // Debounced save
+          saveStateDebounced({ order: updatedOrder, totalPrice: state.totalPrice })
+          return { order: updatedOrder }
+        })
+      },
+
+      removeOrderProduct: (id: string | number) => {
+        set((state) => {
+          const updatedOrder = state.order.filter((item) => item.id !== id)
+          // Debounced save
+          saveStateDebounced({ order: updatedOrder, totalPrice: state.totalPrice })
+          return { order: updatedOrder }
+        })
+      },
+
+      clearOrder: () => {
+        set(initialState)
+        saveStateDebounced(initialState)
+      },
+    }),
+    {
+      name: 'orders-storage',
+      getStorage: () => localStorage, // (optional) by default, 'localStorage' is used
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          console.log('State rehydrated:', state)
+        }
+      },
+    }
+  )
+)

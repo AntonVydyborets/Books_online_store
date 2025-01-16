@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState, useRef, EffectCallback, DependencyList } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
+// @ts-ignore
 import isEqual from 'lodash/isEqual'
 
 import SecondStep from '@/components/checkoutCard/SecondStep'
@@ -18,55 +19,27 @@ import iconSafety from '@/assets/images/icon-safety.svg'
 
 import { useOrdersStore } from '@/store/useOrdersStore.ts'
 
-import { OrderItem, Status } from '@/utils/types/OrderType'
-
 import s from './Cart.module.scss'
 
 enum BONUS {
   DISCOUNT = 150,
 }
 
-interface OrderType {
-  id: string
-  orderItems: OrderItem[]
-  status: Status
-  totalPrice: number
-  createdAt: string
-  updatedAt: string
-}
-
-const useDeepCompareEffect = (callback: EffectCallback, dependencies: DependencyList) => {
-  const currentDependenciesRef = useRef<DependencyList | undefined>(undefined)
-
-  if (!isEqual(currentDependenciesRef.current, dependencies)) {
-    currentDependenciesRef.current = dependencies
-  }
-
-  useEffect(callback, [currentDependenciesRef.current])
-}
-
 const Cart = () => {
-  const { orders, setTotalPrice } = useOrdersStore((state) => state)
+  const { order, totalPrice, setTotalPrice } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
-
-  const totalPrice = useCallback(
-    (arr: OrderType) => {
-      let res: number = 0
-
-      arr?.orderItems.forEach((item) => (res += item?.book?.price * item.quantity))
-
-      setTotalPrice(res)
-    },
-    [setTotalPrice]
-  )
 
   const nextStep = () => {
     setStep((step) => step + 1)
   }
 
-  useDeepCompareEffect(() => {
-    totalPrice(orders)
-  }, [orders])
+  useEffect(() => {
+    const total = order.reduce((accumulator, item) => {
+      return accumulator + item.price * item.quantity
+    }, 0)
+
+    setTotalPrice(total)
+  }, [order, setTotalPrice])
 
   return (
     <>
@@ -77,8 +50,8 @@ const Cart = () => {
           <div className={s.left}>
             {step === 1 && (
               <div className={s.first}>
-                {orders.orderItems.map(({ book }) => (
-                  <Book key={book.id} book={book} />
+                {order.map((i) => (
+                  <Book key={i.id} book={i} />
                 ))}
 
                 <Link to="/shop" className={s['to-catalog']}>
@@ -93,11 +66,11 @@ const Cart = () => {
           <div className={s.right}>
             <h3>Замовлення</h3>
             <div className={s['checkout-sidebar']}>
-              {step > 1 && orders.orderItems.map(({ book }) => <BookAside key={book.id} book={book} />)}
+              {step > 1 && order.map(({ book }) => <BookAside key={book.id} book={book} />)}
               <div className={s['checkout-totals']}>
                 <div>
-                  <p>Сума ({orders.orderItems.length} позиції)</p>
-                  <p>{orders.totalPrice || '0'} грн</p>
+                  <p>Сума ({order.length} позиції)</p>
+                  <p>{totalPrice || '0'} грн</p>
                 </div>
                 <div>
                   <p>Знижка</p>
@@ -106,7 +79,7 @@ const Cart = () => {
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>
-                <p>{orders.totalPrice || '0'} грн</p>
+                <p>{totalPrice || '0'} грн</p>
               </div>
             </div>
             {step === 1 && (

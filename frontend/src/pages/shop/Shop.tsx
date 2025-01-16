@@ -37,13 +37,8 @@ const Shop = () => {
   const [priceRange, setPriceRange] = useState([PRICE.MIN, PRICE.MAX])
   const [priceFilter, setPriceFilter] = useState<number[]>([])
 
-  const setAllProducts = useProductsStore((state) => state.setAllProducts)
-  const allProducts = useProductsStore((state) => state.allProducts)
-
-  const selectedFilters = useFiltersStore((state) => state.selectedFilters)
-  const removeFilter = useFiltersStore((state) => state.removeFilter)
-
-  const searchKeywords = useProductsStore((state) => state.searchKeywords)
+  const { setAllProducts, allProducts, searchKeywords } = useProductsStore((state) => state)
+  const { selectedFilters, removeFilter } = useFiltersStore((state) => state)
 
   const location = useLocation()
   const { pathname } = useLocation()

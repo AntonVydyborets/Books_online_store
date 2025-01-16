@@ -6,6 +6,7 @@ export interface BookItem {
   author: string
   publisher: string
   genre: string
+  cover?: string
   publication_year: number
   country_of_origin: string
   text_language: string
@@ -73,6 +74,10 @@ export interface RequiredBookItemTypeApi {
   price: number
   is_available: boolean
   genre?: string
+}
+
+export interface RequiredCartItemType extends BookItem {
+  quantity: number
 }
 
 export interface OptionalBookItemTypeApi {
