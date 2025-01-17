@@ -4,13 +4,14 @@ import { Link, useNavigate } from 'react-router'
 import logo from '@/assets/images/header/main_logo.svg'
 import account_icon from '@/assets/images/header/language.svg'
 import wishlist_icon from '@/assets/images/header/user.svg'
-import trash_icon from '@/assets/images/header/bag-2.svg'
+import cart_icon from '@/assets/images/header/bag-2.svg'
 import burger_menu from '@/assets/images/b_menu.svg'
 import search_icon from '../../assets/images/header/search-sm.svg'
 
 import { Container } from '@/shared'
 
 import { useProductsStore } from '@/store/useProductsStore'
+import { useOrdersStore } from '@/store/useOrdersStore'
 
 import { BaseInput, Typography } from '@/ui'
 
@@ -20,6 +21,7 @@ const Header = () => {
   const [searchBook, setSearchBook] = useState('')
 
   const setSearchValue = useProductsStore((state) => state.setSearchKeywords)
+  const cartCounter = useOrdersStore((state) => state.order)
 
   const navigate = useNavigate()
 
@@ -115,8 +117,9 @@ const Header = () => {
                 <div>
                   <img src={wishlist_icon} alt="wishlist" />
                 </div>
-                <Link to="/cart">
-                  <img src={trash_icon} alt="trash" />
+                <Link to="/cart" className={s.cart_icon}>
+                  <div className={s.cart_icon__counter}>{cartCounter.length}</div>
+                  <img src={cart_icon} alt="cart" />
                 </Link>
               </div>
             </div>
@@ -141,9 +144,10 @@ const Header = () => {
               <div>
                 <img src={wishlist_icon} alt="wishlist" />
               </div>
-              <div>
-                <img src={trash_icon} alt="trash" />
-              </div>
+              <Link to="/cart" className={s.cart_icon}>
+                <div className={s.cart_icon__counter}>{cartCounter.length}</div>
+                <img src={cart_icon} alt="cart" />
+              </Link>
             </div>
           </div>
         </Container>
