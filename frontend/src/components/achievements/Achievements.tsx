@@ -1,39 +1,36 @@
-import { Link } from 'react-router-dom'
-import logo from '@/assets/images/logo.png'
+import { Container } from '@/shared'
+import storeIcon from '@/assets/images/store-icon.svg'
+import booksIcon from '@/assets/images/books-icon.svg'
+import peopleIcon from '@/assets/images/people-icon.svg'
 import s from './Achievements.module.scss'
 
 function Achievements() {
   return (
-    <div className={s.container}>
+    <Container className={s.container}>
       <div className={s.wrap}>
-        <div className={s.logo}>
-          <Link to="/">
-            <img src={logo} alt="logo" />
-          </Link>
-        </div>
         <div className={s.shop}>
-          <img src='https://openclipart.org/image/800px/275692' alt="shop" />
+          <img src={storeIcon} alt="store" />
           <div className={s['inner-wrap']}>
             <p className={s.number}>7</p>
-            <p>Years working</p>
+            <p>років працюємо</p>
           </div>
         </div>
         <div className={s.shop}>
-          <img src='https://openclipart.org/image/800px/275692' alt="shop" />
+          <img src={booksIcon} alt="books" />
           <div className={s['inner-wrap']}>
-            <p className={s.number}>38 K</p>
-            <p>Books sold</p>
+            <p className={s.number}>38 К</p>
+            <p>книг продано</p>
           </div>
         </div>
         <div className={s.shop}>
-          <img src='https://openclipart.org/image/800px/275692' alt="shop" />
+          <img src={peopleIcon} alt="people" />
           <div className={s['inner-wrap']}>
-            <p className={s.number}>22 K</p>
-            <p>Customers served</p>
+            <p className={s.number}>22 К</p>
+            <p>клієнтів обслуговано</p>
           </div>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 

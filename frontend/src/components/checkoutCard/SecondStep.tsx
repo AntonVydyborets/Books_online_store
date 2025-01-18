@@ -92,9 +92,9 @@ const SecondStep = (props: { nextStep: unknown }) => {
           <label>
             <span>Місто*</span>
             <select defaultValue="Kyiv" {...register('city', { required: true })}>
-              <option value="Kyiv">Kyiv</option>
-              <option value="Lviv">Lviv</option>
-              <option value="Kremenchyk">Kremenchyk</option>
+              <option value="Kyiv">Київ</option>
+              <option value="Lviv">Львів</option>
+              <option value="Kremenchyk">Кременчук</option>
             </select>
             <span className={s['sub-label']}>почніть вводити перші літери міста та виберіть варіант зі списку</span>
           </label>

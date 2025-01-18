@@ -42,9 +42,9 @@ const Home = () => {
     <>
       <Header />
       <HomeSlider />
-      <SliderBooks data={allBooks} title="РОЗПРОДАЖ" link="See all books of the year" />
+      <SliderBooks data={allBooks} title="Книги року" />
       <Achievements />
-      <SliderBooks data={allBooks} title="НОВИНКИ" />
+      <SliderBooks data={allBooks} title="Нові надходження" />
       <ChooseCategory />
       <BonusProgram />
       <Blog data={blogs} />

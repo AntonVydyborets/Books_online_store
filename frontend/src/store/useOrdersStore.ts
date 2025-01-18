@@ -29,6 +29,7 @@ interface OrderState {
   orders: OrderType
   setTotalPrice: (sum: number) => void
   setQuantity: (id: string | number, count: number) => void
+  removeBook: (id: string | number) => void
 }
 
 const initialState = {
@@ -80,6 +81,11 @@ export const useOrdersStore = create<OrderState>((set) => ({
           order.book.id === id ? { ...order, quantity: count } : order
         ),
       },
+    }))
+  },
+  removeBook: (id: number | string) => {
+    set((state) => ({
+      orders: { ...state.orders, totalPrice: 0, orderItems: state.orders.orderItems.filter((book) => book.id !== id) },
     }))
   },
 }))

@@ -7,7 +7,7 @@ function ChooseCategory() {
     'https://vivat.com.ua/resize_480x686x95/storage/1.d/files/8/f/8fe5be3a_overleyi-balada-pro-nedovgo-i-neshhaslivo_01.webp'
   return (
     <div className={s.container}>
-      <h3>Choose your category</h3>
+      <h3>Оберіть свою категорію</h3>
       <div className={s.wrap}>
         <CategoryItem title="Освітня література" poster={cover} items={educational} />
         <CategoryItem title="Книги для дітей" poster={cover} items={children} />

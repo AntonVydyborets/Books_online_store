@@ -9,7 +9,7 @@ interface BookProps {
 }
 
 const Book: FC<BookProps> = ({ book }) => {
-  const { setQuantity } = useOrdersStore((state) => state)
+  const { setQuantity, removeBook } = useOrdersStore((state) => state)
 
   const [count, setCount] = useState(book.quantity)
   const [price, setPrice] = useState(book.price)
@@ -22,7 +22,8 @@ const Book: FC<BookProps> = ({ book }) => {
   useEffect(() => {
     if (count < 1) setCount(1)
     setPrice(Number(count) * Number(book.price))
-  }, [count, book.price])
+    removeBook(book.id)
+  }, [count, book.price, removeBook, book.id])
 
   useEffect(() => {
     setQuantity(book.id, Number(count))
@@ -33,6 +34,9 @@ const Book: FC<BookProps> = ({ book }) => {
   }
   const minus = () => {
     setCount((prevState: number) => Number(prevState) - 1)
+  }
+  const deleteBook = () => {
+    removeBook(book.id)
   }
   return (
     <div className={s['product-card']}>
@@ -47,7 +51,7 @@ const Book: FC<BookProps> = ({ book }) => {
       <div className={s.actions}>
         <InputControl count={count} plus={plus} minus={minus} />
         <p className={s.price}>{price} грн</p>
-        <button className={s.remove} onClick={() => {}}>
+        <button className={s.remove} onClick={deleteBook}>
           X
         </button>
       </div>

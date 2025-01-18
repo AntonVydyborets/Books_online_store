@@ -1,23 +1,11 @@
 .container {
-  max-width: 1380px;
   margin: 50px auto;
-  padding: 0 15px;
 }
 
 .title {
   font-size: 1.2rem;
   line-height: 1.3rem;
   color: #1E1E1E;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  & a {
-    color: #1E1E1E;
-    font-weight: 400;
-    font-size: 1.1rem;
-    line-height: 1.2rem;
-    text-decoration: underline;
-  }
 }
 
 .swiper_slide {

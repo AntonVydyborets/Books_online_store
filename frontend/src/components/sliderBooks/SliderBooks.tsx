@@ -1,10 +1,7 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Link } from 'react-router-dom'
 import { Navigation } from 'swiper/modules'
-
 import { Container } from '@/shared'
-
 import SlideItem from '../slideItem/SlideItem'
 
 import { BookItem } from '@/utils/types/BookItemType.ts'
@@ -17,19 +14,17 @@ import styles from './SliderBooks.module.scss'
 interface SliderBooksProps {
   title: string
   data: BookItem[]
-  link?: string | null
 }
 
-const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
+const SliderBooks: React.FC<SliderBooksProps> = ({ title, data}) => {
   const slidesPerView = data.length < 5 ? data.length : 5
   const loop = data.length >= 5
 
   return (
-    <Container>
-      <h3 className={styles.title}>
+    <Container className={styles.container}>
+      <p className={styles.title}>
         {title}
-        <Link to="/">{link || null}</Link>
-      </h3>
+      </p>
       <Swiper
         spaceBetween={10}
         slidesPerView={slidesPerView}
