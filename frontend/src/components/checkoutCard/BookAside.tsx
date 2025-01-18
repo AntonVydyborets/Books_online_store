@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import InputControl from '@/components/inputControl/InputControl'
-import s from './СheckoutCard.module.scss'
+import s from '@/pages/cart/Cart.module.scss'
+
 import { BookItemType } from '@/utils/types/BookItemType'
 import { useOrdersStore } from '@/store/useOrdersStore'
 

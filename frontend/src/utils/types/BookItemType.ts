@@ -6,6 +6,7 @@ export interface BookItem {
   author: string
   publisher: string
   genre: string
+  cover?: string
   publication_year: number
   country_of_origin: string
   text_language: string
@@ -30,6 +31,11 @@ export interface BooksQueryParams {
   max_rating?: number
   offset?: number // Default is 0
   limit?: number // Default is 10
+}
+
+export interface ExtendedBooksQueryParams extends Omit<BooksQueryParams, 'genre' | 'publisher'> {
+  genres?: string[]
+  publishers?: string[]
 }
 
 interface Pagination {
@@ -68,6 +74,10 @@ export interface RequiredBookItemTypeApi {
   price: number
   is_available: boolean
   genre?: string
+}
+
+export interface RequiredCartItemType extends BookItem {
+  quantity: number
 }
 
 export interface OptionalBookItemTypeApi {

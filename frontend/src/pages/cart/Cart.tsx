@@ -1,79 +1,76 @@
-import { FC, useCallback, useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router'
+
+// @ts-ignore
 import isEqual from 'lodash/isEqual'
-import FirstStep from './FirstStep'
-import SecondStep from './SecondStep'
-import ThirdStep from './ThirdStep'
-import { useOrdersStore } from '@/store/useOrdersStore.ts'
-import s from './СheckoutCard.module.scss'
+
+import SecondStep from '@/components/checkoutCard/SecondStep'
+import ThirdStep from '@/components/checkoutCard/ThirdStep'
+import Breadcrumbs from '@/components/breadcrumbs/Breadcrumbs'
+import BookAside from '@/components/checkoutCard/BookAside'
+import Book from '@/components/checkoutCard/Book'
+
+import Footer from '@/layout/footer/Footer'
+import Header from '@/layout/header/Header'
+
 import iconsReturning from '@/assets/images/icons-returning.svg'
 import iconsFreeDeliver from '@/assets/images/icons-free-deliver.svg'
 import iconSafety from '@/assets/images/icon-safety.svg'
-import { OrderItem, Status } from '@/utils/types/OrderType'
-import Breadcrumbs from '../breadcrumbs/Breadcrumbs'
-import BookAside from './BookAside'
+
+import { useOrdersStore } from '@/store/useOrdersStore.ts'
+
+import s from './Cart.module.scss'
 
 enum BONUS {
   DISCOUNT = 150,
 }
 
-interface OrderType {
-  id: string
-  orderItems: OrderItem[]
-  status: Status
-  totalPrice: number
-  createdAt: string
-  updatedAt: string
-}
-
-const useDeepCompareEffect = (callback, dependencies) => {
-  const currentDependenciesRef = useRef()
-  if (!isEqual(currentDependenciesRef.current, dependencies)) {
-    currentDependenciesRef.current = dependencies
-  }
-  useEffect(callback, [currentDependenciesRef.current])
-}
-
-const СheckoutCard: FC = () => {
-  const { orders, setTotalPrice } = useOrdersStore((state) => state)
+const Cart = () => {
+  const { order, totalPrice, setTotalPrice } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
-
-  const totalPrice = useCallback(
-    (arr: OrderType) => {
-      let res: number = 0
-      arr?.orderItems.forEach((item) => (res += item?.book?.price * item.quantity))
-      setTotalPrice(res)
-    },
-    [setTotalPrice]
-  )
 
   const nextStep = () => {
     setStep((step) => step + 1)
   }
 
-  useDeepCompareEffect(() => {
-    totalPrice(orders)
-  }, [orders])
+  useEffect(() => {
+    const total = order.reduce((accumulator, item) => {
+      return accumulator + item.price * item.quantity
+    }, 0)
+
+    setTotalPrice(total)
+  }, [order, setTotalPrice])
 
   return (
     <>
+      <Header />
       <section className={s.container}>
         <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
-            {step === 1 && <FirstStep order={orders} nextStep={nextStep} />}
+            {step === 1 && (
+              <div className={s.first}>
+                {order.map((i) => (
+                  <Book key={i.id} book={i} />
+                ))}
+
+                <Link to="/shop" className={s['to-catalog']}>
+                  <span>&#8592;</span> До каталогу
+                </Link>
+              </div>
+            )}
+
             {step === 2 && <SecondStep nextStep={nextStep} />}
             {step === 3 && <ThirdStep />}
           </div>
           <div className={s.right}>
             <h3>Замовлення</h3>
             <div className={s['checkout-sidebar']}>
-              {step > 1 && orders.orderItems.map(({ book }) => (
-                <BookAside key={book.id} book={book} />
-              ))}
+              {step > 1 && order.map(({ book }) => <BookAside key={book.id} book={book} />)}
               <div className={s['checkout-totals']}>
                 <div>
-                  <p>Сума ({orders.orderItems.length} позиції)</p>
-                  <p>{orders.totalPrice || '0'} грн</p>
+                  <p>Сума ({order.length} позиції)</p>
+                  <p>{totalPrice || '0'} грн</p>
                 </div>
                 <div>
                   <p>Знижка</p>
@@ -82,7 +79,7 @@ const СheckoutCard: FC = () => {
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>
-                <p>{orders.totalPrice || '0'} грн</p>
+                <p>{totalPrice || '0'} грн</p>
               </div>
             </div>
             {step === 1 && (
@@ -114,8 +111,9 @@ const СheckoutCard: FC = () => {
           <p>БЕЗКОШТОВНА ДОСТАВКА ДЛЯ ЗАМОВЛЕНЬ НА СУМУ ВІД 2000 ГРН</p>
         </div>
       </section>
+      <Footer />
     </>
   )
 }
 
-export default СheckoutCard
+export default Cart

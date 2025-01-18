@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Range } from 'react-range'
 import clsx from 'clsx'
 
-import { genreFilterItems } from '@/pages/shop/data.ts'
+import { genreFilterItems, publisherFilterItems } from '@/pages/shop/data.ts'
 import { ErrorPage } from '@/pages'
 
 import arrow_left from '@/assets/images/pagination/arrow_left.svg'
@@ -23,9 +23,13 @@ import { useProductsStore } from '@/store/useProductsStore.ts'
 import { BaseButton, Typography } from '@/ui'
 
 import { PAGE, PRICE, RANGE_PRICE, SORT } from '@/utils/enums/shopEnums'
+import { FilterType } from '@/utils/types/FilterType'
 
 import s from './Shop.module.scss'
-import { Link } from 'react-router-dom'
+
+export const getFilterTitlesByType = (filters: FilterType[], type: 'genre' | 'publisher'): string[] => {
+  return filters.filter((filter) => filter.type === type).map((filter) => filter.title)
+}
 
 const Shop = () => {
   const [page, setPage] = useState<number>(PAGE.FIRST_PAGE)
@@ -33,19 +37,17 @@ const Shop = () => {
   const [priceRange, setPriceRange] = useState([PRICE.MIN, PRICE.MAX])
   const [priceFilter, setPriceFilter] = useState<number[]>([])
 
-  const setAllProducts = useProductsStore((state) => state.setAllProducts)
-  const allProducts = useProductsStore((state) => state.allProducts)
-
-  const selectedFilters = useFiltersStore((state) => state.selectedFilters)
-  const removeFilter = useFiltersStore((state) => state.removeFilter)
-
-  const searchKeywords = useProductsStore((state) => state.searchKeywords)
+  const { setAllProducts, allProducts, searchKeywords } = useProductsStore((state) => state)
+  const { selectedFilters, removeFilter } = useFiltersStore((state) => state)
 
   const location = useLocation()
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
   const limit = PAGE.LIMITED_PRODUCTS
+
+  const genreFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'genre'), [selectedFilters])
+  const publisherFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'publisher'), [selectedFilters])
 
   // Frist useQuery for fetching books.
   const { data, isLoading, error } = useQuery({
@@ -56,6 +58,8 @@ const Shop = () => {
         limit,
         min_price: priceFilter[0],
         max_price: priceFilter[1],
+        genre: genreFilters.length > 0 ? genreFilters.join(',') : undefined,
+        publisher: publisherFilters.length > 0 ? publisherFilters.join(',') : undefined,
       },
     ],
     queryFn: fetchBooks,
@@ -72,21 +76,6 @@ const Shop = () => {
     queryFn: fetchBooks,
     enabled: !!searchKeywords, // Only run this query when searchKeywords is present
   })
-
-  const filteredProducts = useMemo(() => {
-    return selectedFilters.length > 0
-      ? allProducts.filter((product) => selectedFilters.some((filter) => product.genre === filter.title))
-      : allProducts
-  }, [allProducts, selectedFilters])
-
-  const sortedProducts = useMemo(() => {
-    if (sort === SORT.DEFAULT) return filteredProducts
-    if (sort === SORT.POPULARITY) return [...filteredProducts].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0))
-    if (sort === SORT.PRICE) return [...filteredProducts].sort((a, b) => a.price - b.price)
-    if (sort === SORT.NAME) return [...filteredProducts].sort((a, b) => a.title.localeCompare(b.title))
-
-    return filteredProducts
-  }, [filteredProducts, sort])
 
   const handlePriceChange = (values: number[]) => {
     setPriceRange(values)
@@ -106,6 +95,7 @@ const Shop = () => {
     return `linear-gradient(to right, #ccc ${left}%, #404040 ${left}%, #404040 ${right}%, #ccc ${right}%)`
   }
 
+  // Update URL search parameters based on filters
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
 
@@ -119,11 +109,17 @@ const Shop = () => {
     }
 
     // Set selected genres
-    if (selectedFilters.length > 0) {
-      const genres = selectedFilters.map((filter) => filter.title).join(',')
-      searchParams.set('genres', genres)
+    if (genreFilters.length > 0) {
+      searchParams.set('genres', genreFilters.join(','))
     } else {
       searchParams.delete('genres')
+    }
+
+    // Set selected publishers
+    if (publisherFilters.length > 0) {
+      searchParams.set('publishers', publisherFilters.join(','))
+    } else {
+      searchParams.delete('publishers')
     }
 
     // Set sorting preference
@@ -133,14 +129,14 @@ const Shop = () => {
       searchParams.delete('sort')
     }
 
-    // Set pages.
-    if (page !== PAGE.FIRST_PAGE) {
+    // Set page
+    if (page !== 1) {
       searchParams.set('page', page.toString())
     } else {
       searchParams.delete('page')
     }
 
-    // Set search results.
+    // Set search keywords
     if (searchKeywords) {
       searchParams.set('search-for', searchKeywords)
     } else {
@@ -148,7 +144,7 @@ const Shop = () => {
     }
 
     navigate({ search: searchParams.toString() }, { replace: true })
-  }, [priceFilter, selectedFilters, sort, page, location.search, navigate, searchKeywords])
+  }, [priceFilter, genreFilters, publisherFilters, sort, page, location.search, navigate, searchKeywords])
 
   useEffect(() => {
     if (data && data.data && data.data.items) {
@@ -160,13 +156,13 @@ const Shop = () => {
     window.scrollTo(0, 0)
   }, [pathname, page])
 
-  // Handle loading states
+  // Handle loading states.
   if (isLoading || isSearchedBooksLoading) return <CircleProgress />
 
-  // Handle error states
+  // Handle error states.
   if (error || searchedBooksError) return <ErrorPage text="An error occurred" error={error || searchedBooksError} />
 
-  // Check if it's the last page
+  // Check if it's the last page.
   const isLastPage =
     (data && data.data.items.length < limit) || (searchedBooks && searchedBooks?.data.items.length < limit)
 
@@ -181,7 +177,7 @@ const Shop = () => {
   const productsToDisplay =
     searchKeywords && searchedBooks?.data.items && searchedBooks?.data.items.length > 0
       ? searchedBooks.data.items
-      : sortedProducts
+      : allProducts
 
   return (
     <>
@@ -223,6 +219,10 @@ const Shop = () => {
                   </Typography>
 
                   <div className={s.range_filter}>
+                    {/* 
+                        TODO: FIX "KEY" ISSUE.
+                        TODO: FIX RANGE CSS ISSUE
+                    */}
                     <Range
                       step={1}
                       min={RANGE_PRICE.MIN}
@@ -252,7 +252,19 @@ const Shop = () => {
                   </div>
                 </div>
 
-                <FilterItem title="Жанри" filterItems={genreFilterItems} className={s.filter_item__title} />
+                <FilterItem
+                  title="Жанри"
+                  filterItems={genreFilterItems}
+                  className={s.filter_item__title}
+                  type="genre"
+                />
+
+                <FilterItem
+                  title="Видавництво"
+                  filterItems={publisherFilterItems}
+                  className={s.filter_item__title}
+                  type="publisher"
+                />
               </div>
             )}
 

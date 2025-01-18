@@ -15,15 +15,18 @@ interface FilterItemProps {
   title: string
   filterItems: FilterType[]
   className?: string
+  type: 'genre' | 'publisher'
 }
 
-const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems, className }) => {
+const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems, className, type }) => {
   const selectedFilters = useFiltersStore((state) => state.selectedFilters)
   const selectFilter = useFiltersStore((state) => state.selectFilter)
 
   const handleCheckboxChange = (item: FilterType) => {
-    selectFilter(item)
+    selectFilter({ ...item, type })
   }
+
+  const filtersOfType = selectedFilters.filter((filter) => filter.type === type)
 
   return (
     <div className={s.filterItem}>
@@ -39,7 +42,7 @@ const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems, classNa
             type="checkbox"
             id={`check-${item.id}`}
             onChange={() => handleCheckboxChange(item)}
-            checked={selectedFilters.some((f) => f.id === item.id)}
+            checked={filtersOfType.some((filter) => filter.id === item.id)}
           />
           <label htmlFor={`check-${item.id}`}>{item.title}</label>
         </div>

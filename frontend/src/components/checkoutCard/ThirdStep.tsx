@@ -1,4 +1,4 @@
-import s from './СheckoutCard.module.scss'
+import s from '@/pages/cart/Cart.module.scss'
 
 function ThirdStep() {
   return (

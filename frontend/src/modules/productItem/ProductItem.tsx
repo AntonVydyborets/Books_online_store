@@ -1,9 +1,13 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import star_icon from '@/assets/images/product/star.svg'
 import product_img from '@/assets/images/product_default_img.jpg'
 import cart_icon from '@/assets/images/header/bag-2.svg'
+
+import { CircleProgress } from '@/shared'
+
+import { ProductItemType, useOrdersStore } from '@/store/useOrdersStore'
 
 import { BookItem } from '@/utils/types/BookItemType.ts'
 
@@ -11,16 +15,55 @@ import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
 
-const ProductItem: FC<BookItem> = ({ author, price, title, rating }) => {
+const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre }) => {
+  const [isRemoving, setIsRemoving] = useState<boolean>(false)
+
+  const { setOrderProduct } = useOrdersStore((state) => state)
+
+  const addToCart = () => {
+    const cover = product_img
+
+    const prod: ProductItemType = {
+      id,
+      title: title,
+      author,
+      price,
+      cover,
+      genre,
+      quantity: 1,
+    }
+
+    setOrderProduct(prod)
+  }
+
+  const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+
+    setIsRemoving(true)
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      addToCart()
+    } catch (error) {
+      console.error('Failed to remove product:', error)
+    } finally {
+      setIsRemoving(false)
+    }
+  }
+
   return (
     <div className={s.product_grid_item}>
       <div className={s.product_grid_item__top}>
-        <Link to={'/'}>
+        <Link to={'/'} onClick={(e) => handleAddToCart(e)}>
           <div className={s.product_labels}>
             <div className={s.product_labels__item}>Promo</div>
           </div>
+          {/* 
+            TODO: Change the styles.
+          */}
           <div className={s.product_labels__icons}>
-            <img src={cart_icon} alt="cart icon" />
+            {isRemoving ? <CircleProgress isButton={true} /> : <img src={cart_icon} alt="cart icon" />}
           </div>
           <img className={s.product_image} src={product_img} alt="product image" />
         </Link>

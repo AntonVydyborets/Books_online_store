@@ -16,6 +16,8 @@ import {
 
 import { useProductsStore } from '@/store/useProductsStore.ts'
 
+import { CircleProgress } from '@/shared'
+
 import { fetchBooks } from '@/services/api'
 
 const Home = () => {
@@ -23,7 +25,7 @@ const Home = () => {
   const allBooks = useProductsStore((state) => state.allProducts)
   const blogs = useProductsStore((state) => state.blogs)
 
-  const { data, isPending, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['books', { limit: 12 }],
     queryFn: fetchBooks,
   })
@@ -34,7 +36,7 @@ const Home = () => {
     }
   }, [data, setAllProducts])
 
-  if (isPending) return <div>Loading...</div>
+  if (isLoading) return <CircleProgress />
 
   if (error) return <div>Error loading books</div>
 

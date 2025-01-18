@@ -17,6 +17,7 @@ export const useFiltersStore = create<StoreState>((set) => ({
         ? state.selectedFilters.filter((f) => f.id !== value.id)
         : [...state.selectedFilters, value],
     })),
+
   removeFilter: (id: string) =>
     set((state: StoreState) => ({ selectedFilters: state.selectedFilters.filter((f) => f.id !== id) })),
 }))
