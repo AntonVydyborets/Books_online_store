@@ -1,19 +1,97 @@
-
 .wrap {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 2rem;
+  @media (max-width: 650px) {
+    flex-direction: column;
+  }
 }
 
 .cover {
-  flex: 0 1 30%;
-  // width: 33%;
-  & img {
-    max-width: 256px;
+  flex: 0 0 auto;
+  width: 33%;
+  @media (max-width: 650px) {
+    align-self: center;
+    width: 50%;
   }
 }
 
 .content {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
+  width: 60%;
+  @media (max-width: 650px) {
+    width: 100%;
+  }
+  & .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  & .author {
+    margin-bottom: 1.5rem;
+  }
+  & .rating {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    & .rate {
+      display: flex;
+      align-items: center;
+      & svg {
+        margin-right: 0.5rem;
+      }
+    }
+    & .estimate {
+      margin: 1rem 0 1.5rem;
+      display: flex;
+      align-items: center;
+      & div {
+        margin-left: 1rem;
+        display: flex;
+      }
+    }
+
+    & input[type='radio'] {
+      display: none;
+    }
+    & .star {
+      cursor: pointer;
+      font-size: 2rem;
+      margin-right: 5px;
+    }
+  }
+  & .available {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    & svg {
+      margin-left: 0.5rem;
+    }
+  }
+  & .price {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  & .add-to-cart {
+    background-color: var(--nordic);
+    color: var(--white);
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & span {
+      margin-right: 0.5rem;
+      background-color: transparent;
+      border: 2px solid var(--white);
+      height: 13px;
+      border-radius: 50%;
+      width: 13px;
+      display: block;
+    }
+    &:hover {
+      background-color: var(--swamp);
+    }
+  }
 }
