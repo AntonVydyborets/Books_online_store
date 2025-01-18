@@ -1,0 +1,19 @@
+
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.cover {
+  flex: 0 1 30%;
+  // width: 33%;
+  & img {
+    max-width: 256px;
+  }
+}
+
+.content {
+  flex: 1 1 auto;
+}
