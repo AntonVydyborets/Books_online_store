@@ -8,7 +8,6 @@ import {
   Header,
   SliderBooks,
   SubscribeForm,
-  BonusProgram,
   HomeSlider,
   ChooseCategory,
   Achievements,
@@ -48,7 +47,6 @@ const Home = () => {
       <Achievements />
       <SliderBooks data={allBooks} title="Нові надходження" />
       <ChooseCategory />
-      <BonusProgram />
       <Blog data={blogs} />
       <SubscribeForm />
       <Footer />
