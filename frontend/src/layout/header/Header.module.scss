@@ -16,6 +16,19 @@
   }
 }
 
+.header_banner {
+  background-color: #d2ccc9;
+  padding: 8px 15px;
+  display: flex;
+  justify-content: center;
+  & p {
+    font-weight: 600;
+    color: #1a1d23;
+    text-wrap: balance;
+    text-align: center;
+  }
+}
+
 .header_top,
 .header_bottom__container {
   display: flex;

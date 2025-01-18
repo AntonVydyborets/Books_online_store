@@ -32,6 +32,9 @@ const Header = () => {
 
   return (
     <>
+      <div className={s['header_banner']}>
+        <p>Безкоштовна доставка для замовлень від 2000 грн</p>
+      </div>
       <div className={s.header}>
         <Container>
           <div className={s.header_top}>
