@@ -19,3 +19,5 @@ class BookFilters:
 
     min_rating: Optional[float] = None
     max_rating: Optional[float] = None
+
+    tags: Optional[str] = None
