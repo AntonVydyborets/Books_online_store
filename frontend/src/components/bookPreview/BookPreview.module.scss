@@ -95,3 +95,43 @@
     }
   }
 }
+
+.bottom {
+  margin-top: 2rem;
+  & .tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & .tab {
+      flex: 0 0 33.3%;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      background-color: var(--light-grey);
+      &.active {
+        background-color: var(--iron);
+      }
+    }
+  }
+  & .text {
+    padding: 2rem 2rem;
+    background-color: var(--light-grey);
+  }
+  & .description {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
+  & .title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  & table {
+    width: 100%;
+    border-spacing: 0 1rem;
+    & tr {
+      margin: 20px auto;
+      width: 100%;
+    }
+  }
+}
