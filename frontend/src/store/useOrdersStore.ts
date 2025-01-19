@@ -17,7 +17,7 @@ interface OrderInfoType {
 }
 
 interface OrderState {
-  order: RequiredCartItemType[]
+  order: ProductItemType[]
   totalPrice: number
 
   orderInfo: OrderInfoType[]
@@ -71,9 +71,19 @@ export const useOrdersStore = create<OrderState>()(
         })
       },
 
-      setOrderProduct: (product: RequiredCartItemType) => {
+      setOrderProduct: (product: ProductItemType) => {
         set((state) => {
-          const updatedOrder = [...state.order, product]
+          let currentProduct = state.order.find((i) => i.id === product.id)
+          let updatedOrder
+
+          if (currentProduct) {
+            updatedOrder = state.order.map((item) =>
+              item.id === product.id ? { ...item, quantity: item.quantity + product.quantity } : item
+            )
+          } else {
+            updatedOrder = [...state.order, product]
+          }
+
           // Debounced save
           saveStateDebounced({ order: updatedOrder, totalPrice: state.totalPrice })
           return { order: updatedOrder }
