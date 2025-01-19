@@ -26,11 +26,11 @@ const Book: FC<BookProps> = ({ book }) => {
     setPrice(book.quantity * book.price || 0)
   }, [book])
 
-  useEffect(() => {
-    if (count < 1) setCount(1)
-    setPrice(Number(count) * Number(book.price))
-    removeBook(book.id)
-  }, [count, book.price, removeBook, book.id])
+  // useEffect(() => {
+  //   if (count < 1) setCount(1)
+  //   setPrice(Number(count) * Number(book.price))
+  //   removeBook(book.id)
+  // }, [count, book.price, removeBook, book.id])
 
   useEffect(() => {
     setQuantity(book.id, Number(count))

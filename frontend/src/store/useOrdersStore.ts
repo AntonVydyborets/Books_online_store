@@ -11,19 +11,28 @@ export type ProductItemType = Pick<
   'id' | 'title' | 'author' | 'price' | 'cover' | 'genre' | 'quantity'
 >
 
+interface OrderInfoType {
+  book_id: number
+  quantity: number
+}
+
 interface OrderState {
   order: RequiredCartItemType[]
   totalPrice: number
+
+  orderInfo: OrderInfoType[]
 
   setTotalPrice: (sum: number) => void
   setQuantity: (id: number, count: number) => void
   setOrderProduct: (product: ProductItemType) => void
   removeOrderProduct: (id: number) => void // Optional: To remove items
   clearOrder: () => void // Optional: To clear the cart
+  setOrderInfo: (productInfo: OrderInfoType[]) => void
 }
 
-const initialState: Pick<OrderState, 'order' | 'totalPrice'> = {
+const initialState: Pick<OrderState, 'order' | 'totalPrice' | 'orderInfo'> = {
   order: [],
+  orderInfo: [],
   totalPrice: 0,
 }
 
@@ -52,11 +61,12 @@ export const useOrdersStore = create<OrderState>()(
         saveStateDebounced({ order: get().order, totalPrice: sum })
       },
 
-      setQuantity: (id: string | number, count: number) => {
+      setQuantity: (id: number, count: number) => {
         set((state) => {
           const updatedOrder = state.order.map((item) => (item.id === id ? { ...item, quantity: count } : item))
           // Debounced save
           saveStateDebounced({ order: updatedOrder, totalPrice: state.totalPrice })
+
           return { order: updatedOrder }
         })
       },
@@ -82,6 +92,10 @@ export const useOrdersStore = create<OrderState>()(
       clearOrder: () => {
         set(initialState)
         saveStateDebounced(initialState)
+      },
+
+      setOrderInfo: (productInfo: OrderInfoType[]) => {
+        set((_) => ({ orderInfo: productInfo }))
       },
     }),
     {

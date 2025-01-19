@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
-
-// @ts-ignore
-import isEqual from 'lodash/isEqual'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useNavigate } from 'react-router'
 
 import SecondStep from '@/components/checkoutCard/SecondStep'
 import ThirdStep from '@/components/checkoutCard/ThirdStep'
@@ -26,20 +23,30 @@ enum BONUS {
 }
 
 const Cart = () => {
-  const { order, totalPrice, setTotalPrice } = useOrdersStore((state) => state)
+  const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
+
+  const navigate = useNavigate()
 
   const nextStep = () => {
     setStep((step) => step + 1)
   }
 
+  const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ id, quantity })), [order])
+
+  const setInfoForOrder = () => {
+    navigate('/checkout')
+  }
+
   useEffect(() => {
+    setOrderInfo(orderInfo)
+
     const total = order.reduce((accumulator, item) => {
       return accumulator + item.price * item.quantity
     }, 0)
 
     setTotalPrice(total)
-  }, [order, setTotalPrice])
+  }, [order, setTotalPrice, orderInfo, setOrderInfo])
 
   return (
     <>
@@ -83,7 +90,7 @@ const Cart = () => {
               </div>
             </div>
             {step === 1 && (
-              <button className={s.btn} onClick={() => nextStep()}>
+              <button className={s.btn} onClick={() => setInfoForOrder()}>
                 Далі
               </button>
             )}

@@ -1,20 +1,20 @@
 export interface OrderItem {
-  id: number
-  order_id: number
+  id?: number
+  order_id?: number
   book_id: number
   quantity: number
 }
 
 // Represents an individual order
 export interface Order {
-  id: number
+  id?: number
   total_price: number
   status: string
   email: string
   phone: string
   items: OrderItem[]
-  created_at: string
-  updated_at: string
+  created_at?: string
+  updated_at?: string
 }
 
 // Represents pagination details
