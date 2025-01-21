@@ -49,7 +49,6 @@ class BookSchema(BaseModel):
 
 
 class BookInSchema(BaseModel):
-    id: int  # noqa
     title: str
     current_price: int
     old_price: Optional[int] = None
@@ -67,8 +66,7 @@ class BookInSchema(BaseModel):
     tags: str = ""
 
     def to_entity(self):
-        return BookEntity(
-            id=self.id,
+        return BookEntity(  
             title=self.title,
             current_price=self.current_price,
             old_price=self.old_price,
@@ -76,16 +74,18 @@ class BookInSchema(BaseModel):
             description=self.description,
             author=self.author,
             publisher=self.publisher,
-            genres=self.genres.replace(" ", "").split(","),
+            genres=[genre.strip() for genre in self.genres.split(",")],
             publication_year=self.publication_year,
             country_of_origin=self.country_of_origin,
             text_language=self.text_language,
             rating=self.rating,
-            tags=self.tags.replace(" ", "").split(","),
+            tags=[tag.strip() for tag in self.tags.split(",")],
+
         )
 
 
 class BookOutSchema(BookInSchema):
+    
     created_at: datetime
     updated_at: Optional[datetime] = None
 
