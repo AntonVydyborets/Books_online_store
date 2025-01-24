@@ -1,43 +1,20 @@
-import { useForm, SubmitHandler } from 'react-hook-form'
-
+import Books from '@/assets/images/booksImg.png'
 import styles from './SubscribeForm.module.scss'
-
-type FormValue = {
-  email: string
-}
+import { Container } from '@/shared'
 
 const SubscribeForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormValue>()
-
-  const onSubmit: SubmitHandler<FormValue> = (value) => {
-    console.log('Form Submitted:', value)
-  }
-
   return (
     <div className={styles.container}>
-      <div className={styles.left}>
-        <p className={styles.text}>Sign up for our newsletter to get the latest updates and special offers!</p>
-      </div>
-      <div className={styles.right}>
-        <form onSubmit={handleSubmit(onSubmit)} className={styles['form']}>
-          <label>
-            <p>Insert your email</p>
-            <input
-              id="email"
-              className={styles.input}
-              type="email"
-              placeholder="Email address"
-              {...register('email', { required: 'This field is required', pattern: /^\S+@\S+\.\S+$/ })}
-            />
-          </label>
-          {errors.email && <span className={styles.error}>{errors.email.message}</span>}
-          <button className={styles['btn-subscribe']}>Subscribe</button>
-        </form>
-      </div>
+      <Container className={styles.wrap}>
+        <div className={styles.inner}>
+          <p className={styles.text}>Нові книги та акції – у твоїй пошті</p>
+          <button className={styles['btn-subscribe']}>Підписатись</button>
+        </div>
+
+        <div className={styles.image}>
+          <img src={Books} alt="books" />
+        </div>
+      </Container>
     </div>
   )
 }

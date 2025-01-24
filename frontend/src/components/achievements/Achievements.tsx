@@ -1,36 +1,46 @@
 import { Container } from '@/shared'
-import storeIcon from '@/assets/images/store-icon.svg'
-import booksIcon from '@/assets/images/books-icon.svg'
-import peopleIcon from '@/assets/images/people-icon.svg'
+import storeIcon from '@/assets/images/one.png'
+import booksIcon from '@/assets/images/two.png'
+import yearIcon from '@/assets/images/three.png'
+import lampIcon from '@/assets/images/four.png'
 import s from './Achievements.module.scss'
 
 function Achievements() {
   return (
-    <Container className={s.container}>
-      <div className={s.wrap}>
-        <div className={s.shop}>
-          <img src={storeIcon} alt="store" />
-          <div className={s['inner-wrap']}>
-            <p className={s.number}>7</p>
-            <p>років працюємо</p>
+    <div className={s.container}>
+      <Container>
+        <div className={s.wrap}>
+          <div className={s.shop}>
+            <img src={storeIcon} alt="store" />
+            <div className={s['inner-wrap']}>
+              <p className={s.number}>20 000</p>
+              <p className={s.text}>ВИБІР ЧИТАЧІВ</p>
+            </div>
+          </div>
+          <div className={s.shop}>
+            <img src={booksIcon} alt="store" />
+            <div className={s['inner-wrap']}>
+              <p className={s.number}>75 000</p>
+              <p className={s.text}>ПРОДАНО КНИГ</p>
+            </div>
+          </div>
+          <div className={s.shop}>
+            <img src={yearIcon} alt="books" />
+            <div className={s['inner-wrap']}>
+              <p className={s.number}>3 роки</p>
+              <p className={s.text}>МИ ПРАЦЮЄМО</p>
+            </div>
+          </div>
+          <div className={s.shop}>
+            <img src={lampIcon} alt="people" />
+            <div className={s['inner-wrap']}>
+              <p className={s.number}>5 000</p>
+              <p className={s.text}>АВТОРІВ СВІТУ</p>
+            </div>
           </div>
         </div>
-        <div className={s.shop}>
-          <img src={booksIcon} alt="books" />
-          <div className={s['inner-wrap']}>
-            <p className={s.number}>38 К</p>
-            <p>книг продано</p>
-          </div>
-        </div>
-        <div className={s.shop}>
-          <img src={peopleIcon} alt="people" />
-          <div className={s['inner-wrap']}>
-            <p className={s.number}>22 К</p>
-            <p>клієнтів обслуговано</p>
-          </div>
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   )
 }
 

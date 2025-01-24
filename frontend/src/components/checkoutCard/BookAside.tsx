@@ -10,7 +10,7 @@ interface BookProps {
 }
 
 const BookAside: FC<BookProps> = ({ book }) => {
-  const { setQuantity, removeBook } = useOrdersStore((state) => state)
+  const { setQuantity, removeProduct } = useOrdersStore((state) => state)
 
   const [count, setCount] = useState(book.quantity)
   const [price, setPrice] = useState(book.price)
@@ -46,7 +46,7 @@ const BookAside: FC<BookProps> = ({ book }) => {
       </div>
       <div className={s.actions}>
         <InputControl count={count} plus={plus} minus={minus} />
-        <button className={s.remove} onClick={() => removeBook(book.id)}>
+        <button className={s.remove} onClick={() => removeProduct(book.id)}>
           X
         </button>
       </div>
