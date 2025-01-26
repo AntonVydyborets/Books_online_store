@@ -7,6 +7,7 @@ class BookFilters(BaseModel):
     search: Optional[str] = None
     min_price: Optional[float] = None
     max_price: Optional[float] = None
+    min_quantity: int = 0
 
     genres: Optional[str] = None
     author: Optional[str] = None
@@ -19,5 +20,5 @@ class BookFilters(BaseModel):
 
     min_rating: Optional[float] = None
     max_rating: Optional[float] = None
-    
+
     tags: Optional[str] = None

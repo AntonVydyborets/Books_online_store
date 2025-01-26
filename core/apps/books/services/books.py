@@ -94,7 +94,7 @@ class ORMBookService(BaseBookService):
         self,
         filters: BookFilters,
     ) -> "select":
-        query = select(BookModel).filter(BookModel.quantity > 0)
+        query = select(BookModel).filter(BookModel.quantity >= filters.min_quantity)
         if filters.search:
             query = query.filter(
                 or_(
@@ -104,7 +104,9 @@ class ORMBookService(BaseBookService):
             )
 
         if filters.genres:
-            query = query.filter(or_(BookModel.genres.any(genre) for genre in filters.genres))
+            query = query.filter(
+                or_(BookModel.genres.any(genre) for genre in filters.genres),
+            )
 
         if filters.min_price is not None:
             query = query.filter(BookModel.current_price >= filters.min_price)
@@ -143,7 +145,7 @@ class ORMBookService(BaseBookService):
 
         if filters.max_rating is not None:
             query = query.filter(BookModel.rating <= filters.max_rating)
-        
+
         if filters.tags is not None:
             query = query.filter(or_(BookModel.tags.any(tag) for tag in filters.tags))
 

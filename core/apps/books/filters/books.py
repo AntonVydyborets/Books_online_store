@@ -7,6 +7,7 @@ class BookFilters:
     search: Optional[str] = None
     min_price: Optional[float] = None
     max_price: Optional[float] = None
+    min_quantity: int = 0
 
     genres: Optional[str] = None
     author: Optional[str] = None
