@@ -104,9 +104,8 @@ class ORMBookService(BaseBookService):
             )
 
         if filters.genres:
-            query = query.filter(
-                or_(BookModel.genres.any(genre) for genre in filters.genres),
-            )
+            genres = [tag.strip() for tag in filters.genres.split(",")]
+            query = query.filter(or_(BookModel.genres.any(genre) for genre in genres))
 
         if filters.min_price is not None:
             query = query.filter(BookModel.current_price >= filters.min_price)
@@ -147,7 +146,8 @@ class ORMBookService(BaseBookService):
             query = query.filter(BookModel.rating <= filters.max_rating)
 
         if filters.tags is not None:
-            query = query.filter(or_(BookModel.tags.any(tag) for tag in filters.tags))
+            tags = [tag.strip() for tag in filters.tags.split(",")]
+            query = query.filter(or_(BookModel.tags.any(tag) for tag in tags))
 
         return query
 
@@ -260,7 +260,7 @@ class ORMBookService(BaseBookService):
         updated_data = {
             key: value
             for key, value in book.__dict__.items()
-            if key not in ["created_at", "id"]
+            if key not in ["created_at", "id", "updated_at"]
         }
 
         query = (

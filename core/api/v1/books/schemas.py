@@ -49,6 +49,7 @@ class BookSchema(BaseModel):
 
 
 class BookInSchema(BaseModel):
+    id: int  # noqa
     title: str
     current_price: int
     old_price: Optional[int] = None
@@ -66,7 +67,8 @@ class BookInSchema(BaseModel):
     tags: str = ""
 
     def to_entity(self):
-        return BookEntity(  
+        return BookEntity(
+            id=self.id,
             title=self.title,
             current_price=self.current_price,
             old_price=self.old_price,
@@ -80,12 +82,11 @@ class BookInSchema(BaseModel):
             text_language=self.text_language,
             rating=self.rating,
             tags=[tag.strip() for tag in self.tags.split(",")],
-
         )
 
 
 class BookOutSchema(BookInSchema):
-    
+
     created_at: datetime
     updated_at: Optional[datetime] = None
 

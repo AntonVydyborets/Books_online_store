@@ -42,7 +42,6 @@ class GetBookListUseCase:
             limit=pagination_in.limit,
             total=book_count,
         )
-
         return (book_list, pagination_out)
 
 
