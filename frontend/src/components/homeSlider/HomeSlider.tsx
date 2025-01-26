@@ -14,11 +14,12 @@ import 'swiper/scss/autoplay'
 import 'swiper/css/pagination'
 
 import s from './HomeSlider.module.scss'
+import { Container } from '@/shared'
 
 const HomeSlider = () => {
   const slides = [banner1, banner2, banner3, banner4]
   return (
-    <div className={s.wrap}>
+    <Container className={s.wrap}>
       <Swiper
         centeredSlides={true}
         slidesPerView={1}
@@ -36,7 +37,7 @@ const HomeSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </Container>
   )
 }
 

@@ -2,11 +2,21 @@
   margin: 50px auto;
 }
 
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & .link {
+    font-size: 0.9rem;
+    color: #000;
+  }
+}
+
 .title {
-  font-size: 1.2rem;
+  font-size: 3rem;
   font-weight: 600;
   line-height: 1.3rem;
-  color: #1E1E1E;
+  color: #1e1e1e;
 }
 
 .swiper_slide {

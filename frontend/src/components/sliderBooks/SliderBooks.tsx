@@ -10,21 +10,25 @@ import 'swiper/scss'
 // @ts-ignore
 import 'swiper/scss/navigation'
 import styles from './SliderBooks.module.scss'
+import { Link } from 'react-router-dom'
 
 interface SliderBooksProps {
   title: string
   data: BookItem[]
 }
 
-const SliderBooks: React.FC<SliderBooksProps> = ({ title, data}) => {
+const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
   const slidesPerView = data.length < 5 ? data.length : 5
   const loop = data.length >= 5
 
   return (
     <Container className={styles.container}>
-      <p className={styles.title}>
-        {title}
-      </p>
+      <div className={styles.top}>
+        <h3 className={styles.title}>{title}</h3>
+        <Link to="/shop" className={styles.link}>
+          Дивитись більше
+        </Link>
+      </div>
       <Swiper
         spaceBetween={10}
         slidesPerView={slidesPerView}
