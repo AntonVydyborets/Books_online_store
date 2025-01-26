@@ -11,7 +11,7 @@ import { ErrorPage } from '@/pages'
 import arrow_left from '@/assets/images/pagination/arrow_left.svg'
 import arrow_right from '@/assets/images/pagination/arrow_right.svg'
 
-import { FilterItem, Footer, Header, ProductItem } from '@/components'
+import { FilterItem, Footer, Header, HomeSlider, ProductItem, SubscribeForm } from '@/components'
 
 import { fetchBooks } from '@/services/api.ts'
 
@@ -182,6 +182,7 @@ const Shop = () => {
   return (
     <>
       <Header />
+      <HomeSlider />
       <div className={s.shopMain}>
         <Container>
           <div className={s.filterList}>
@@ -307,6 +308,7 @@ const Shop = () => {
               </div>
             </div>
           </div>
+          <SubscribeForm />
         </Container>
       </div>
       <Footer />
