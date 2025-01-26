@@ -2,6 +2,7 @@ export interface BookItem {
   id: number
   title: string
   price: number
+  current_price: number
   description: string
   author: string
   publisher: string

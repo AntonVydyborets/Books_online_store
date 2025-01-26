@@ -19,6 +19,7 @@ export const fetchBooks = async ({
 
   try {
     const res: AxiosResponse<ApiResponse> = await instance.get('/books', { params })
+
     return res.data
   } catch (error) {
     console.error('Error fetching books:', error)
