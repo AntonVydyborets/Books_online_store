@@ -293,7 +293,7 @@ const Shop = () => {
                     onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
                     disabled={page === 1}>
                     <img src={arrow_left} alt="arrow left" />
-                    Previous
+                    Попередня
                   </button>
                 )}
 
@@ -310,7 +310,7 @@ const Shop = () => {
 
                 {!isLastPage && (
                   <button className={s.nav_button} onClick={() => setPage((prev) => prev + 1)} disabled={isLastPage}>
-                    Next
+                    Наступна
                     <img src={arrow_right} alt="arrow right" />
                   </button>
                 )}

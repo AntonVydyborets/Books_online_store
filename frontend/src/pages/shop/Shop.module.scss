@@ -72,9 +72,10 @@
 }
 
 .filterList__sort {
-
   select {
-    border: 0
+    border: 0;
+    padding: 10px 16px;
+    background-color: transparent;
   }
 }
 
@@ -157,7 +158,7 @@
     background-color: #d1cece;
     color: #7d7c7c;
 
-    transition: all .2s linear;
+    transition: all 0.2s linear;
 
     &:hover {
       background-color: #c2bcbc;
@@ -236,8 +237,7 @@
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr); /* 2 column on mobile */
-    grid-row-gap: 25px; /* Further spacing between rows */
+    grid-row-gap: 20px; /* Further spacing between rows */
+    grid-column-gap: 10px;
   }
 }
-
-
