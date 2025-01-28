@@ -14,6 +14,7 @@ interface StoreState {
   searchKeywords: string
   setSearchKeywords: (keywords: string) => void
   setAllProducts: (products: BookItem[]) => void
+  setBookById: (book: BookItem) => void
 }
 
 const initialState = {
@@ -107,6 +108,9 @@ export const useProductsStore = create<StoreState>((set) => ({
       }
     })
     set((_: StoreState) => ({ allProducts: [...modifiedProducts] }))
+  },
+  setBookById: (book: BookItem) => {
+    set((_: StoreState) => ({ bookById: { ...book } }))
   },
   setSearchKeywords: (keywords: string) => {
     set({ searchKeywords: keywords })

@@ -232,7 +232,6 @@ const Shop = () => {
 
                   <div className={s.range_filter}>
                     {/* 
-                        TODO: FIX "KEY" ISSUE.
                         TODO: FIX RANGE CSS ISSUE
                     */}
                     <Range

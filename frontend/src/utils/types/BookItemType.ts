@@ -1,8 +1,8 @@
 export interface BookItem {
-  id: number
+  id: number | undefined
   title: string
-  price: number
-  current_price: number
+  price: number | undefined
+  current_price?: number | undefined
   description: string
   author: string
   publisher: string
@@ -55,6 +55,11 @@ export interface ApiResponse {
   meta: Record<string, unknown>
   errors: any[]
 }
+export interface ApiResponseBookId {
+  data: BookItem
+  meta: Record<string, unknown>
+  errors: any[]
+}
 
 export interface BookItemType {
   id: string
@@ -65,6 +70,7 @@ export interface BookItemType {
   price: number
   stock: boolean
   quantity?: number
+  current_price?: number
 }
 
 export interface RequiredBookItemTypeApi {
@@ -75,6 +81,7 @@ export interface RequiredBookItemTypeApi {
   price: number
   is_available: boolean
   genre?: string
+  current_price?: number
 }
 
 export interface RequiredCartItemType extends BookItem {
