@@ -80,7 +80,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre }) 
           <div>{rating}</div>
         </div>
         <p className={s.product_grid_item__bottom__price}>
-          <span className={s.price_item}>Price</span> <span>{price}$</span>
+          <span className={s.price_item}>Price</span> <span>{price} грн</span>
         </p>
       </div>
     </div>
