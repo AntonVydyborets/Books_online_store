@@ -14,10 +14,11 @@ import { Link } from 'react-router-dom'
 
 interface SliderBooksProps {
   title: string
+  link?: string
   data: BookItem[]
 }
 
-const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
+const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
   const slidesPerView = data.length < 5 ? data.length : 5
   const loop = data.length >= 5
 
@@ -26,7 +27,7 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data }) => {
       <div className={styles.top}>
         <h3 className={styles.title}>{title}</h3>
         <Link to="/shop" className={styles.link}>
-          Дивитись більше
+          {link}
         </Link>
       </div>
       <Swiper

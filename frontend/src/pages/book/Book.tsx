@@ -1,5 +1,5 @@
 import { useProductsStore } from '@/store/useProductsStore'
-import { SliderBooks } from '@/components'
+import { SliderBooks, SubscribeForm } from '@/components'
 import BookPreview from '@/components/bookPreview/BookPreview'
 import Footer from '@/layout/footer/Footer'
 import Header from '@/layout/header/Header'
@@ -13,6 +13,7 @@ const Book = () => {
       <Header />
       <BookPreview book={chooseBook} />
       <SliderBooks data={allBooks} title="Вам також може сподобатись:" />
+      <SubscribeForm />
       <Footer />
     </>
   )

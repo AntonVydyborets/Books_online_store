@@ -43,9 +43,9 @@ const Home = () => {
     <>
       <Header />
       <HomeSlider />
-      <SliderBooks data={allBooks} title="Книги року" />
+      <SliderBooks data={allBooks} title="Книги року" link="Дивитись більше" />
       <Achievements />
-      <SliderBooks data={allBooks} title="Нові надходження" />
+      <SliderBooks data={allBooks} title="Нові надходження" link="Дивитись більше" />
       <ChooseCategory />
       <Blog data={blogs} />
       <SubscribeForm />
