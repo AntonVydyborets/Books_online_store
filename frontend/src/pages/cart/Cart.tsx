@@ -79,10 +79,10 @@ const Cart = () => {
                   <p>Сума ({order.length} позиції)</p>
                   <p>{totalPrice || '0'} грн</p>
                 </div>
-                <div>
+                {/* <div>
                   <p>Знижка</p>
                   <p>{BONUS.DISCOUNT} грн</p>
-                </div>
+                </div> */}
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>

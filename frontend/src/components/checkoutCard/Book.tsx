@@ -62,10 +62,10 @@ const Book: FC<BookProps> = ({ book }) => {
     <>
       <div className={s['product-card']}>
         <div className={s.cover}>
-          <img src={book.cover} alt={book.name} />
+          <img src={book.cover} alt={book.cover} />
         </div>
         <div className={s.details}>
-          <p className={s.title}>{book.name}</p>
+          <p className={s.title}>{book.title}</p>
           {book.author && <p className={s.author}>{book.author}</p>}
           {book.price && <p className={s.price}>{book.price} грн.</p>}
         </div>

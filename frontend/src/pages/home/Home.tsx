@@ -23,7 +23,6 @@ const Home = () => {
   const setAllProducts = useProductsStore((state) => state.setAllProducts)
   const allBooks = useProductsStore((state) => state.allProducts)
   const blogs = useProductsStore((state) => state.blogs)
-  console.log('allbooks', allBooks)
   const { data, isLoading, error } = useQuery({
     queryKey: ['books', { limit: 12 }],
     queryFn: fetchBooks,

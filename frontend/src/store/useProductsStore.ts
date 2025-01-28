@@ -14,6 +14,7 @@ interface StoreState {
   searchKeywords: string
   setSearchKeywords: (keywords: string) => void
   setAllProducts: (products: BookItem[]) => void
+  setBookById: (book: BookItem) => void
 }
 
 const initialState = {
@@ -100,7 +101,16 @@ export const useProductsStore = create<StoreState>((set) => ({
   bookById: initialState.book,
 
   setAllProducts: (products: BookItem[]) => {
-    set((_: StoreState) => ({ allProducts: [...products] }))
+    const modifiedProducts = products.map((product) => {
+      return {
+        ...product,
+        price: product.current_price,
+      }
+    })
+    set((_: StoreState) => ({ allProducts: [...modifiedProducts] }))
+  },
+  setBookById: (book: BookItem) => {
+    set((_: StoreState) => ({ bookById: { ...book } }))
   },
   setSearchKeywords: (keywords: string) => {
     set({ searchKeywords: keywords })

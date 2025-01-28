@@ -36,6 +36,7 @@ const Shop = () => {
   const [sort, setSort] = useState(SORT.DEFAULT)
   const [priceRange, setPriceRange] = useState([PRICE.MIN, PRICE.MAX])
   const [priceFilter, setPriceFilter] = useState<number[]>([])
+  const [sortType, setSortType] = useState<string | null>('')
 
   const { setAllProducts, allProducts, searchKeywords } = useProductsStore((state) => state)
   const { selectedFilters, removeFilter } = useFiltersStore((state) => state)
@@ -98,7 +99,7 @@ const Shop = () => {
   // Update URL search parameters based on filters
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
-
+    setSortType(searchParams.get('sort'))
     // Set price filters if applied
     if (priceFilter.length > 0) {
       searchParams.set('min-price', priceFilter[0].toString())
@@ -173,11 +174,20 @@ const Shop = () => {
   const totalItems = searchKeywords ? searchedBooks?.data.pagination.total || 0 : data?.data?.pagination?.total || 0
 
   const totalPages = Math.ceil(totalItems / limit)
+  let productsToDisplay = allProducts
+  if (searchKeywords && searchedBooks) {
+    productsToDisplay = searchedBooks.data.items
+  }
 
-  const productsToDisplay =
-    searchKeywords && searchedBooks?.data.items && searchedBooks?.data.items.length > 0
-      ? searchedBooks.data.items
-      : allProducts
+  if (sortType === '2') {
+    productsToDisplay.sort((a, b) => a.rating - b.rating)
+  }
+  if (sortType === '3') {
+    productsToDisplay.sort((a, b) => a.price - b.price)
+  }
+  if (sortType === '4') {
+    productsToDisplay.sort((a, b) => a.title.localeCompare(b.title))
+  }
 
   return (
     <>
@@ -221,7 +231,6 @@ const Shop = () => {
 
                   <div className={s.range_filter}>
                     {/* 
-                        TODO: FIX "KEY" ISSUE.
                         TODO: FIX RANGE CSS ISSUE
                     */}
                     <Range
@@ -240,7 +249,7 @@ const Shop = () => {
                           {children}
                         </div>
                       )}
-                      renderThumb={({ props }) => <div className={s.range_btn_max} {...props} />}
+                      renderThumb={({ props }) => <div className={s.range_btn_max} {...props} key={props.key} />}
                     />
 
                     <div className={s.range_values_container}>
