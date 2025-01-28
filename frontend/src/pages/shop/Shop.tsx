@@ -251,7 +251,7 @@ const Shop = () => {
                           {children}
                         </div>
                       )}
-                      renderThumb={({ props }) => <div className={s.range_btn_max} {...props} />}
+                      renderThumb={({ props }) => <div className={s.range_btn_max} {...props} key={props.key} />}
                     />
 
                     <div className={s.range_values_container}>
