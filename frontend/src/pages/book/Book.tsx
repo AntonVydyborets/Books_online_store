@@ -19,7 +19,6 @@ const Book = () => {
   const { allProducts, bookById, setBookById } = useProductsStore((state) => state)
   useEffect(() => {
     if (data) {
-      console.log('data', data.data)
       const modifiedBook = {
         ...data.data,
         price: data.data.current_price,
@@ -27,7 +26,6 @@ const Book = () => {
       setBookById(modifiedBook)
     }
   }, [data, setBookById])
-  console.log('allProducts', allProducts)
   return (
     <>
       <Header />

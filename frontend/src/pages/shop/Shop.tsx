@@ -174,11 +174,10 @@ const Shop = () => {
   const totalItems = searchKeywords ? searchedBooks?.data.pagination.total || 0 : data?.data?.pagination?.total || 0
 
   const totalPages = Math.ceil(totalItems / limit)
-
-  const productsToDisplay =
-    searchKeywords && searchedBooks?.data.items && searchedBooks?.data.items.length > 0
-      ? searchedBooks.data.items
-      : allProducts
+  let productsToDisplay = allProducts
+  if (searchKeywords && searchedBooks) {
+    productsToDisplay = searchedBooks.data.items
+  }
 
   if (sortType === '2') {
     productsToDisplay.sort((a, b) => a.rating - b.rating)

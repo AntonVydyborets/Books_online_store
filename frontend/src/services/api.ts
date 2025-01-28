@@ -16,7 +16,6 @@ export const fetchBooks = async ({
   queryKey,
 }: QueryFunctionContext<[string, BooksQueryParams]>): Promise<ApiResponse> => {
   const [, params] = queryKey
-  console.log('params', params)
   try {
     const res: AxiosResponse<ApiResponse> = await instance.get('/books', { params })
 

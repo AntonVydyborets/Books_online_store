@@ -15,7 +15,6 @@ interface BookProps {
 }
 
 const Book: FC<BookProps> = ({ book }) => {
-  console.log('book', book)
   const { setQuantity, removeOrderProduct } = useOrdersStore((state) => state)
 
   const [count, setCount] = useState(book.quantity)
