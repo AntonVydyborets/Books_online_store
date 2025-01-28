@@ -59,9 +59,6 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre }) 
           <div className={s.product_labels}>
             <div className={s.product_labels__item}>Promo</div>
           </div>
-          {/* 
-            TODO: Change the styles.
-          */}
           <div className={s.product_labels__icons}>
             {isRemoving ? <CircleProgress isButton={true} /> : <img src={cart_icon} alt="cart icon" />}
           </div>

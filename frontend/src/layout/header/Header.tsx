@@ -48,44 +48,59 @@ const Header = () => {
               <div className={s.verticalNavigation__title}>Каталог</div>
               <div className={s.mega_menu__content}>
                 <div className={s.mega_menu__contnet__item}>
-                  <Typography tag="h4">Genres</Typography>
+                  <Typography tag="h4">Жанри</Typography>
                   <ul>
-                    <li>Fiction</li>
-                    <li>Non-Fiction</li>
-                    <li>Educational</li>
-                    <li>Children's </li>
+                    <li>
+                      <Link to="/shop">Художня</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Документальна</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Освітня</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Дитяча</Link>
+                    </li>
                   </ul>
                 </div>
 
                 <div className={s.mega_menu__contnet__item}>
-                  <Typography tag="h4">Gift offers</Typography>
+                  <Typography tag="h4">Подарунки</Typography>
                   <ul>
-                    <li>Gift Certificates</li>
-                    <li>Gifts for kids</li>
-                    <li>Packed Sets</li>
-                    <li>For women</li>
-                    <li>For men</li>
+                    <li>
+                      <Link to="/shop">Подарункові сертифікати</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Подрунки для дітей</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Готові сети подарунків</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Для жінок</Link>
+                    </li>
+                    <li>
+                      <Link to="/shop">Для чоловіків</Link>
+                    </li>
                   </ul>
                 </div>
 
                 <ul className={s.mega_menu__contnet__main}>
                   <li>
-                    <Link to="/shop">Shop</Link>
+                    <Link to="/shop">Книги року</Link>
                   </li>
                   <li>
-                    <Link to="/shop">Books of the year</Link>
+                    <Link to="/shop">Нові надходження</Link>
                   </li>
                   <li>
-                    <Link to="/shop">New comings</Link>
+                    <Link to="/">Блог</Link>
                   </li>
                   <li>
-                    <Link to="/shop">Blog</Link>
+                    <Link to="/">Телеграм книжковий клуб</Link>
                   </li>
                   <li>
-                    <Link to="/shop">Telegram book club</Link>
-                  </li>
-                  <li>
-                    <Link to="/shop">Free shipping program</Link>
+                    <Link to="/">Програма безкоштовної доставки</Link>
                   </li>
                 </ul>
               </div>
