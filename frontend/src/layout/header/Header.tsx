@@ -22,9 +22,8 @@ const Header = () => {
 
   const setSearchValue = useProductsStore((state) => state.setSearchKeywords)
   const cartCounter = useOrdersStore((state) => state.order)
-
   const navigate = useNavigate()
-
+  const cartQuantity = cartCounter.reduce((acc, item) => acc + item.quantity, 0)
   const handleSearch = () => {
     setSearchValue(searchBook)
     navigate('/shop')
@@ -163,7 +162,7 @@ const Header = () => {
                 <img src={wishlist_icon} alt="wishlist" />
               </div>
               <Link to="/cart" className={s.cart_icon}>
-                <div className={s.cart_icon__counter}>{cartCounter.length}</div>
+                <div className={s.cart_icon__counter}>{cartQuantity}</div>
                 <img src={cart_icon} alt="cart" />
               </Link>
             </div>
