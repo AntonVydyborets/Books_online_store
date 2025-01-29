@@ -7,7 +7,6 @@ function BtnToTop() {
   const [showBtn, setShowBtn] = useState(false)
 
   window.onscroll = function () {
-    console.log('first')
     scrollFunction()
   }
 
