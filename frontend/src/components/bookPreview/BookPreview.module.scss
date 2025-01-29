@@ -1,0 +1,137 @@
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  @media (max-width: 650px) {
+    flex-direction: column;
+  }
+}
+
+.cover {
+  flex: 0 0 auto;
+  width: 33%;
+  @media (max-width: 650px) {
+    align-self: center;
+    width: 50%;
+  }
+}
+
+.content {
+  flex: 0 0 auto;
+  width: 60%;
+  @media (max-width: 650px) {
+    width: 100%;
+  }
+  & .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  & .author {
+    margin-bottom: 1.5rem;
+  }
+  & .rating {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    & .rate {
+      display: flex;
+      align-items: center;
+      & svg {
+        margin-right: 0.5rem;
+      }
+    }
+    & .estimate {
+      margin: 1rem 0 1.5rem;
+      display: flex;
+      align-items: center;
+      & div {
+        margin-left: 1rem;
+        display: flex;
+      }
+    }
+
+    & input[type='radio'] {
+      display: none;
+    }
+    & .star {
+      cursor: pointer;
+      font-size: 2rem;
+      margin-right: 5px;
+    }
+  }
+  & .available {
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    & svg {
+      margin-left: 0.5rem;
+    }
+  }
+  & .price {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  & .add-to-cart {
+    background-color: var(--nordic);
+    color: var(--white);
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & span {
+      margin-right: 0.5rem;
+      background-color: transparent;
+      border: 2px solid var(--white);
+      height: 13px;
+      border-radius: 50%;
+      width: 13px;
+      display: block;
+    }
+    &:hover {
+      background-color: var(--swamp);
+    }
+  }
+}
+
+.bottom {
+  margin-top: 2rem;
+  & .tabs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    & .tab {
+      flex: 0 0 33.3%;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      background-color: var(--light-grey);
+      &.active {
+        background-color: var(--iron);
+      }
+    }
+  }
+  & .text {
+    padding: 2rem 2rem;
+    background-color: var(--light-grey);
+  }
+  & .description {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+  }
+  & .title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  & table {
+    width: 100%;
+    border-spacing: 0 1rem;
+    & tr {
+      margin: 20px auto;
+      width: 100%;
+    }
+  }
+}
