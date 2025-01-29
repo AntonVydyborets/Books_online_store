@@ -6,10 +6,6 @@
   grid-template-rows: auto 1fr;
 
   &:hover {
-    // .product_labels__icons {
-    //   opacity: 1;
-    //   visibility: visible;
-    // }
     .product_grid_item__hover {
       opacity: 1;
       visibility: visible;
@@ -57,32 +53,6 @@
       font-weight: 300;
       font-size: 14px;
     }
-  }
-
-  .product_labels__icons {
-    position: absolute;
-    right: 20px;
-    top: 13px;
-    z-index: 999;
-
-    transition: all 0.2s linear;
-
-    img {
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-
-      background-color: #8a8a8a;
-      border-radius: 50%;
-      padding: 6px;
-
-      transition: all 0.2s linear;
-
-      &:hover {
-        background-color: #fff;
-      }
-    }
-
-    opacity: 0;
-    visibility: hidden;
   }
 
   .product_image {

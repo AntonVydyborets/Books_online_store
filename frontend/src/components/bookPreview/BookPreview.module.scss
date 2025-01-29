@@ -81,14 +81,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    & span {
+    & img {
       margin-right: 0.5rem;
-      background-color: transparent;
-      border: 2px solid var(--white);
-      height: 13px;
-      border-radius: 50%;
-      width: 13px;
-      display: block;
     }
     &:hover {
       background-color: var(--swamp);
