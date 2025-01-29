@@ -31,18 +31,18 @@ const defaultValue: FormValues = {
 }
 
 const schemaСheckoutCard = yup.object({
-  firstName: yup.string().required('Please enter your first name'),
-  lastName: yup.string().required('Please enter your last name'),
+  firstName: yup.string().required('Обовʼязкове для заповнення'),
+  lastName: yup.string().required('Обовʼязкове для заповнення'),
   tel: yup
     .string()
-    .required('Please enter your phone number')
-    .matches(/^\+380\d{9}$/, 'Enter a valid phone number in the format +380XXXXXXXXX'),
+    .required('Обовʼязкове для заповнення')
+    .matches(/^\+380\d{9}$/, 'Введіть номер у форматі +380XXXXXXXXX'),
   delivery_new_post: yup
     .string()
     .required()
     .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"], 'Оберіть метод доставки'),
   payment: yup.string().required().oneOf(['Онлайн оплата', 'Післяплата'], 'Оберіть метод оплати'),
-  city: yup.string().required('Please enter your city'),
+  city: yup.string().required('Виберіть із списку'),
 })
 
 const Checkout = () => {
@@ -147,7 +147,7 @@ const Checkout = () => {
               </label>
             </div>
           </div>
-          <button type="submit" disabled={isSubmitting}>
+          <button className={s.submit} type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Відправка...' : 'Підтвердити замовлення'}
           </button>
 
