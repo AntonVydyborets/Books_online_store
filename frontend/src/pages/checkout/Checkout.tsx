@@ -9,7 +9,7 @@ import { useOrdersStore } from '@/store/useOrdersStore'
 
 import { useMutation } from '@tanstack/react-query'
 import { setOrderInformation } from '@/services/api'
-
+import DeliverBanner from '@/assets/images/delivery-banner.png'
 import s from './Checkout.module.scss'
 
 interface FormValues {
@@ -88,21 +88,21 @@ const Checkout = () => {
             <h5>Введіть Ваші персональні дані</h5>
             <div className={s.wrap}>
               <label>
-                <span>Введіть Ваше ім’я*</span>
+                <span>Ім’я*</span>
                 <input type="text" placeholder="Введіть ваше ім’я" {...register('firstName')} />
 
                 {errors.firstName && <span className={s.error}>{errors.firstName.message}</span>}
               </label>
               <label>
-                <span>Введіть Ваше прізвище*</span>
+                <span>Прізвище*</span>
                 <input type="text" placeholder="Введіть ваше прізвище" {...register('lastName')} />
 
                 {errors.lastName && <span className={s.error}>{errors.lastName.message}</span>}
               </label>
               <label>
-                <span>Введіть Ваше номер телефону*</span>
+                <span>Номер телефону*</span>
                 <input type="tel" placeholder="+38" {...register('tel')} />
-                <span className={s['sub-label']}>введіть Ваш номер у форматі +380XXXXXXXXX</span>
+                <span className={s['sub-label']}>У форматі 380</span>
 
                 {errors.tel && <span className={s.error}>{errors.tel.message}</span>}
               </label>
@@ -118,7 +118,7 @@ const Checkout = () => {
             </div>
           </div>
           <div className={s.shipping}>
-            <h5>Оберіть метод доставки</h5>
+            <h5>Оберіть спосіб доставки</h5>
             <div className={s.radio}>
               <label>
                 <input type="radio" value="Самовивіз" {...register('delivery_new_post')} />
@@ -135,7 +135,7 @@ const Checkout = () => {
             </div>
           </div>
           <div className={s.payment}>
-            <h5>Оберіть метод оплати</h5>
+            <h5>Оберіть спосіб оплати</h5>
             <div className={s.radio}>
               <label>
                 <input type="radio" value="Онлайн оплата" {...register('payment')} />
@@ -154,6 +154,11 @@ const Checkout = () => {
           {mutation.isError && <p className={s.error}>An error occurred: {mutation.error.message}</p>}
           {mutation.isSuccess && <p>Order placed successfully!</p>}
         </form>
+      </Container>
+      <Container>
+        <div className={s.bottom}>
+          <img src={DeliverBanner} alt="icons-free-deliver" />
+        </div>
       </Container>
       <Footer />
     </>

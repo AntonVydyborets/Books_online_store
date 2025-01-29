@@ -4,47 +4,22 @@ import { v4 as uuid } from 'uuid'
 export const genreFilterItems: FilterType[] = [
   {
     id: uuid(),
-    title: 'Science Fiction',
+    title: 'Художня',
     type: 'genre',
   },
   {
     id: uuid(),
-    title: 'Cookbook',
+    title: 'Документальна',
     type: 'genre',
   },
   {
     id: uuid(),
-    title: 'Romance',
+    title: 'Освітня',
     type: 'genre',
   },
   {
     id: uuid(),
-    title: 'Historical Fiction',
-    type: 'genre',
-  },
-  {
-    id: uuid(),
-    title: 'Economics',
-    type: 'genre',
-  },
-  {
-    id: uuid(),
-    title: 'Poetry',
-    type: 'genre',
-  },
-  {
-    id: uuid(),
-    title: 'Technology',
-    type: 'genre',
-  },
-  {
-    id: uuid(),
-    title: 'Environmental Science',
-    type: 'genre',
-  },
-  {
-    id: uuid(),
-    title: 'Food & Drink',
+    title: 'Дитяча',
     type: 'genre',
   },
 ]
@@ -52,22 +27,52 @@ export const genreFilterItems: FilterType[] = [
 export const publisherFilterItems: FilterType[] = [
   {
     id: uuid(),
-    title: 'Nordic Science Press',
+    title: 'Ранок',
     type: 'publisher',
   },
   {
     id: uuid(),
-    title: 'Wine & Spirits Publications',
+    title: 'Сімейний клуб дозвілля',
     type: 'publisher',
   },
   {
     id: uuid(),
-    title: 'Wellness Books',
+    title: 'Віват',
     type: 'publisher',
   },
   {
     id: uuid(),
-    title: 'Quantum Press',
+    title: 'Видавництво Старого Лева',
+    type: 'publisher',
+  },
+  {
+    id: uuid(),
+    title: 'Фоліо',
+    type: 'publisher',
+  },
+  {
+    id: uuid(),
+    title: 'А-Ба-Ба-Га-Ла-Ма-Га',
+    type: 'publisher',
+  },
+  {
+    id: uuid(),
+    title: 'Видавництво Основи',
+    type: 'publisher',
+  },
+  {
+    id: uuid(),
+    title: 'Кальварія',
+    type: 'publisher',
+  },
+  {
+    id: uuid(),
+    title: 'Наш Формат',
+    type: 'publisher',
+  },
+  {
+    id: uuid(),
+    title: 'Смолоскип',
     type: 'publisher',
   },
 ]

@@ -6,10 +6,10 @@
   grid-template-rows: auto 1fr;
 
   &:hover {
-    .product_labels__icons {
-      opacity: 1;
-      visibility: visible;
-    }
+    // .product_labels__icons {
+    //   opacity: 1;
+    //   visibility: visible;
+    // }
     .product_grid_item__hover {
       opacity: 1;
       visibility: visible;
@@ -123,7 +123,7 @@
 
 .product_grid_item__bottom__price {
   display: flex;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   margin-top: auto;
 }
@@ -133,6 +133,7 @@
 }
 .product_grid_item__bottom__available {
   font-size: 14px;
+  margin-top: 5px
 }
 
 .product_grid_item__hover {

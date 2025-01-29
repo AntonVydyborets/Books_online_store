@@ -12,6 +12,7 @@ import Header from '@/layout/header/Header'
 
 import iconsReturning from '@/assets/images/icons-returning.svg'
 import iconsFreeDeliver from '@/assets/images/icons-free-deliver.svg'
+import DeliverBanner from '@/assets/images/delivery-banner.png'
 import iconSafety from '@/assets/images/icon-safety.svg'
 
 import { useOrdersStore } from '@/store/useOrdersStore.ts'
@@ -115,7 +116,7 @@ const Cart = () => {
           </div>
         </div>
         <div className={s.bottom}>
-          <p>БЕЗКОШТОВНА ДОСТАВКА ДЛЯ ЗАМОВЛЕНЬ НА СУМУ ВІД 2000 ГРН</p>
+          <img src={DeliverBanner} alt="icons-free-deliver" />
         </div>
       </section>
       <Footer />

@@ -60,7 +60,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is
         <img src={heartDark} alt="heartDark" />
       </p>
       <div className={s.product_grid_item__top}>
-        <p className={s.product_grid_item__genre}>{genre ? genre : 'Жанр невизначено'}</p>
+        <p className={s.product_grid_item__genre}>{genre ? genre : ''}</p>
         <div className={s.product_labels}>
           <div className={s.product_labels__item}>Подарунок</div>
         </div>

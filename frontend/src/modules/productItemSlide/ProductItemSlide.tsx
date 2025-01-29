@@ -35,7 +35,7 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
 
     setOrderProduct(prod)
   }
-
+console.log('id', id)
   const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
 
