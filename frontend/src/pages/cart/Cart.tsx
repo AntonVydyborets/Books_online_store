@@ -43,7 +43,7 @@ const Cart = () => {
     setOrderInfo(orderInfo)
 
     const total = order.reduce((accumulator, item) => {
-      return accumulator + item.price * item.quantity
+      return accumulator + (item.price ?? 0) * (item.quantity ?? 0)
     }, 0)
 
     setTotalPrice(total)

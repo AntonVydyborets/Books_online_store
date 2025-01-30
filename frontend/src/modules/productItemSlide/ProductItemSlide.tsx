@@ -31,7 +31,7 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
 
     setOrderProduct(prod)
   }
-  const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
 
     try {
@@ -46,12 +46,12 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
   return (
     <div className={s.product_grid_item}>
       <div className={s.product_grid_item__top}>
-        <Link to={'/'} onClick={(e) => handleAddToCart(e)}>
+        <div className={s.product_grid_item__wrap}>
           <div className={s.product_labels}>
             <div className={s.product_labels__item}>Подарунок</div>
           </div>
           <img className={s.product_image} src={product_img} alt="product image" />
-        </Link>
+        </div>
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">
@@ -68,7 +68,7 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
           <span>{price} грн</span>
         </p>
         <div className={s.product_grid_item__bottom__available}>{is_available ? 'В наявності' : 'Продано'}</div>
-        <button className={s.product_grid_item__bottom__btn} onClick={(e) => handleAddToCart(e)}>У кошик</button>
+        <button className={s.product_grid_item__bottom__btn} onClick={handleAddToCart}>У кошик</button>
       </div>
     </div>
   )

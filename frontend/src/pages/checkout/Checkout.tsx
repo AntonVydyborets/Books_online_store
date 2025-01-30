@@ -40,8 +40,11 @@ const schemaСheckoutCard = yup.object({
   delivery_new_post: yup
     .string()
     .required()
-    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"], 'Оберіть метод доставки'),
-  payment: yup.string().required().oneOf(['Онлайн оплата', 'Післяплата'], 'Оберіть метод оплати'),
+    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"] as const, 'Оберіть метод доставки'),
+  payment: yup
+    .string()
+    .required()
+    .oneOf(['Онлайн оплата', 'Післяплата'] as const, 'Оберіть метод оплати'),
   city: yup.string().required('Виберіть із списку'),
 })
 

@@ -19,10 +19,10 @@ const CategoryItem: FC<titleProps> = ({ title, poster,  items }) => {
       </div>
       <ul className={s.inner}>
         {items.map((item) => (
-          <Link to='/' key={item.id} className={s.link}>{item.title}<span></span></Link>
+          <Link to={`shop`} key={item.id} className={s.link}>{item.title}<span></span></Link>
         ))}
       </ul>
-      <Link to='/' className={s.more}>Дивитись всі</Link>
+      <Link to='shop' className={s.more}>Дивитись всі</Link>
     </div>
   )
 }

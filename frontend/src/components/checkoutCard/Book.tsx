@@ -18,13 +18,13 @@ interface BookProps {
 const Book: FC<BookProps> = ({ book }) => {
   const { setQuantity, removeOrderProduct } = useOrdersStore((state) => state)
 
-  const [count, setCount] = useState(book.quantity)
-  const [price, setPrice] = useState(book.price)
+  const [count, setCount] = useState(book.quantity || 1)
+  const [price, setPrice] = useState(book.price ?? 0)
   const [isRemoving, setIsRemoving] = useState<boolean>(false)
 
   useEffect(() => {
     setCount(book.quantity || 1)
-    setPrice(book.quantity * book.price || 0)
+    setPrice((book.quantity ?? 1) * (book.price ?? 0))
   }, [book])
 
   // useEffect(() => {

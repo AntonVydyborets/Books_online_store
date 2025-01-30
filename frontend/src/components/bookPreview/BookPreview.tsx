@@ -16,6 +16,17 @@ interface BookItemProps {
 }
 
 const BookPreview: FC<BookItemProps> = ({ book }) => {
+  const [rate, setRating] = useState<number | null>(null)
+  const [hover, setHover] = useState<number | null>(null)
+  const [tab, setTab] = useState('desc')
+  const [isAdded, setIsAdded] = useState<boolean>(false)
+
+  const { setOrderProduct } = useOrdersStore((state) => state)
+
+  if (!book) {
+    return null
+  }
+
   const {
     id,
     title,
@@ -31,14 +42,8 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
     rating,
     is_available,
   } = book
-  const [rate, setRating] = useState(null)
-  const [hover, setHover] = useState(null)
-  const [tab, setTab] = useState('desc')
-  const [isAdded, setIsAdded] = useState<boolean>(false)
-  
-  const { setOrderProduct } = useOrdersStore((state) => state)
-  const addToCart = () => {
 
+  const addToCart = () => {
     const prod: ProductItemType = {
       id,
       title: title,
@@ -94,9 +99,9 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
                       <Star
                         className={s.star}
                         style={{
-                          fill: currentRating <= (hover || rate) ? '#ffc107' : '#e4e5e9',
+                          fill: currentRating <= (hover ?? rate ?? 0) ? '#ffc107' : '#e4e5e9',
                         }}
-                        onMouseEnter={() => setHover(currentRating)}
+                        onMouseEnter={() => setHover(currentRating ?? 0)}
                         onMouseLeave={() => setHover(null)}
                       />
                     </label>
@@ -115,11 +120,18 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
             )}
           </p>
           <p className={s.price}>{`${price || null} грн`}</p>
-          {/* <button className={s['add-to-cart']} onClick={(e) => handleAddToCart(e)}>
-            {!isAdded ? 'До кошика' : 'Додано до кошика'}
-          </button> */}
           <button className={s['add-to-cart']} onClick={(e) => handleAddToCart(e)}>
-            {!isAdded ? <><img src={notAddedBook} alt='До кошика' />До кошика</> : <><img src={addedBook} alt='Додано до кошика' />Додано до кошика</>}
+            {!isAdded ? (
+              <>
+                <img src={notAddedBook} alt="До кошика" />
+                До кошика
+              </>
+            ) : (
+              <>
+                <img src={addedBook} alt="Додано до кошика" />
+                Додано до кошика
+              </>
+            )}
           </button>
         </div>
       </div>
