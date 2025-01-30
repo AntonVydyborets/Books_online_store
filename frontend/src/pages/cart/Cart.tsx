@@ -20,10 +20,6 @@ import { useOrdersStore } from '@/store/useOrdersStore.ts'
 import s from './Cart.module.scss'
 import clsx from 'clsx'
 
-enum BONUS {
-  DISCOUNT = 150,
-}
-
 const Cart = () => {
   const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
@@ -86,10 +82,6 @@ const Cart = () => {
                   <p>Сума ({order.length} позиції)</p>
                   <p>{totalPrice || '0'} грн</p>
                 </div>
-                {/* <div>
-                  <p>Знижка</p>
-                  <p>{BONUS.DISCOUNT} грн</p>
-                </div> */}
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>
