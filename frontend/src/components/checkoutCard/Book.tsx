@@ -8,6 +8,7 @@ import { CircleProgress } from '@/shared'
 
 import { RequiredCartItemType } from '@/utils/types/BookItemType'
 
+import book_img from '@/assets/images/default-book.png'
 import s from '@/pages/cart/Cart.module.scss'
 
 interface BookProps {
@@ -62,7 +63,7 @@ const Book: FC<BookProps> = ({ book }) => {
     <>
       <div className={s['product-card']}>
         <div className={s.cover}>
-          <img src={book.cover} alt={book.cover} />
+          <img src={book.cover ? book.cover : book_img} alt={book.title} />
         </div>
         <div className={s.details}>
           <p className={s.title}>{book.title}</p>

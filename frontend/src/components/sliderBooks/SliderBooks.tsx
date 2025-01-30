@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import { Container } from '@/shared'
@@ -22,6 +22,8 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
   const slidesPerView = data.length < 5 ? data.length : 5
   const loop = data.length >= 5
 
+  const navigationNextRef = useRef(null);
+  const navigationPrevRef = useRef(null);
   return (
     <Container className={styles.container}>
       <div className={styles.top}>
@@ -30,12 +32,21 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
           {link}
         </Link>
       </div>
+      <button ref={navigationPrevRef} className={styles.prev}></button>
+      <button ref={navigationNextRef} className={styles.next}></button>
       <Swiper
         spaceBetween={10}
         slidesPerView={slidesPerView}
         loop={loop}
         navigation={true}
         modules={[Navigation]}
+        speed={400}
+        onInit={(swiper) => {
+          swiper.params.navigation.prevEl = navigationPrevRef.current;
+          swiper.params.navigation.nextEl = navigationNextRef.current;
+          swiper.navigation.init();
+          swiper.navigation.update();
+        }}
         breakpoints={{
           440: {
             slidesPerView: 1,

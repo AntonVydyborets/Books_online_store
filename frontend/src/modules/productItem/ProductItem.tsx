@@ -14,13 +14,12 @@ import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
 
-const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is_available = true }) => {
+const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genre, is_available = true }) => {
   const [isRemoving, setIsRemoving] = useState<boolean>(false)
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
   const addToCart = () => {
-    const cover = product_img
 
     const prod: ProductItemType = {
       id,
@@ -61,7 +60,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is
         <div className={s.product_labels}>
           <div className={s.product_labels__item}>Подарунок</div>
         </div>
-        <img className={s.product_image} src={product_img} alt="product image" />
+        <img className={s.product_image} src={cover || product_img} alt="product image" />
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">

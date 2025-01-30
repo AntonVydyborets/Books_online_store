@@ -24,10 +24,11 @@ const HomeSlider = () => {
         centeredSlides={true}
         slidesPerView={1}
         loop={true}
+        speed={400}
         pagination={{
           clickable: true,
         }}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        autoplay={{ delay: 3500, disableOnInteraction: false }}
         modules={[Autoplay, Pagination]}>
         {slides.map((item) => (
           <SwiperSlide key={item}>

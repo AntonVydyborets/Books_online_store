@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  transition: all 0.5s ease;
   & .img-wrap {
     margin-bottom: -60px;
     z-index: 9999;
@@ -10,12 +11,21 @@
       width: 100%;
       object-fit: cover;
       object-position: center;
+      transition: all 0.5s ease;
     }
   }
   & .more {
     margin-top: auto;
     padding-top: 2rem;
-    color: #1A1D23;
+    color: #1a1d23;
+  }
+  &:hover {
+    & .inner {
+      box-shadow: rgba(149, 157, 165, 0.3) 0px 8px 24px;
+    }
+    & .img-wrap img {
+      transform: rotate(15deg);
+    }
   }
 }
 
@@ -31,19 +41,23 @@
 .link {
   font-size: 1.1rem;
   line-height: 1.1rem;
-  color: #1A1D23;
+  color: #1a1d23;
   display: block;
   margin-bottom: 1.7rem;
   display: flex;
   justify-content: space-between;
+  transition: all 0.3s ease;
   &:hover {
     color: #16b6b3;
+    font-weight: 500;
   }
 }
 
 .inner {
   width: 100%;
+  height: 100%;
   border: 1px solid #16b6b3;
   padding: 100px 10px 20px;
   border-radius: 20px;
+  transition: all 0.5s ease;
 }

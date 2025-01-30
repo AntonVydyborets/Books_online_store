@@ -1,6 +1,6 @@
 .product_grid_item {
   position: relative;
-  transition: all 0.3s linear;
+  transition: all 0.5s ease;
   &:hover {
     .product_grid_item__bottom {
       opacity: 1;
@@ -61,6 +61,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  transition: all 0.5s ease;
 }
 
 .product_grid_item__bottom__title {
