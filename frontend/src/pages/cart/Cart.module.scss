@@ -20,6 +20,16 @@
 .left {
   padding: 10px;
   flex-grow: 1;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  & .empty {
+    margin-top: 2.5rem;
+    font-size: 1.3rem;
+    line-height: 1.8rem;
+    align-self: center;
+  }
 }
 .form {
   & h5 {
@@ -99,12 +109,12 @@ label {
   padding: 3rem 2rem;
   flex: 0 0 437px;
   & h3 {
-    color: #1C3E43;
+    color: #1c3e43;
   }
   & .btn {
     width: 100%;
     display: block;
-    background-color: #1C3E43;
+    background-color: #1c3e43;
     border-radius: 8px;
     color: #ffffff;
     font-size: 1rem;
@@ -113,6 +123,11 @@ label {
     padding: 1rem 4rem;
     &:hover {
       background-color: rgb(51, 51, 51);
+    }
+    &.disabled {
+      background-color: #d1cece;
+      color: rgba(120, 120, 124, 1);
+      cursor: auto;
     }
   }
   & .checkout-totals {
@@ -133,7 +148,7 @@ label {
     justify-content: space-between;
     align-items: center;
     gap: 1rem 0;
-    color: #1C3E43;
+    color: #1c3e43;
   }
   & .note {
     margin: 2rem 0;
@@ -141,7 +156,7 @@ label {
     line-height: 1.1rem;
     text-align: justify;
     text-justify: auto;
-    color: #1C3E43;
+    color: #1c3e43;
     & span {
       font-weight: 600;
     }
@@ -187,6 +202,7 @@ label {
 }
 .first {
   & .to-catalog {
+    margin-top: auto;
     display: block;
     width: fit-content;
     margin-left: auto;
@@ -196,6 +212,7 @@ label {
     border-radius: 8px;
     background-color: transparent;
     outline: 1px solid rgba(193, 193, 193, 1);
+    transition: all 0.5s linear;
     & span {
       display: inline-block;
       font-size: 1.7rem;

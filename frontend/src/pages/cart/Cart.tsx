@@ -18,6 +18,7 @@ import iconSafety from '@/assets/images/icon-safety.svg'
 import { useOrdersStore } from '@/store/useOrdersStore.ts'
 
 import s from './Cart.module.scss'
+import clsx from 'clsx'
 
 enum BONUS {
   DISCOUNT = 150,
@@ -26,7 +27,6 @@ enum BONUS {
 const Cart = () => {
   const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
-
   const navigate = useNavigate()
 
   const nextStep = () => {
@@ -56,6 +56,12 @@ const Cart = () => {
         <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
+            {order.length === 0 && (
+              <div className={s.empty}>
+                <p>Ваш кошик поки що порожній. </p>
+                <p>Додайте книги, які вас цікавлять!</p>
+              </div>
+            )}
             {step === 1 && (
               <div className={s.first}>
                 {order.map((i) => (
@@ -90,7 +96,12 @@ const Cart = () => {
                 <p>{totalPrice || '0'} грн</p>
               </div>
             </div>
-            {step === 1 && (
+            {order.length === 0 && (
+              <button className={clsx(s.btn, s.disabled)}>
+                Далі
+              </button>
+            )}
+            {step === 1 && order.length > 0 &&(
               <button className={s.btn} onClick={() => setInfoForOrder()}>
                 Далі
               </button>
