@@ -29,7 +29,7 @@ const Cart = () => {
     setStep((step) => step + 1)
   }
 
-  const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ id, quantity })), [order])
+  const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ book_id: id, quantity })), [order])
 
   const setInfoForOrder = () => {
     navigate('/checkout')
@@ -43,7 +43,7 @@ const Cart = () => {
     }, 0)
 
     setTotalPrice(total)
-  }, [order, setTotalPrice, orderInfo, setOrderInfo])
+  }, [order, setTotalPrice, setOrderInfo])
 
   return (
     <>

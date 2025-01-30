@@ -12,12 +12,12 @@ interface BookProps {
 const BookAside: FC<BookProps> = ({ book }) => {
   const { setQuantity, removeProduct } = useOrdersStore((state) => state)
 
-  const [count, setCount] = useState(book.quantity)
-  const [price, setPrice] = useState(book.price)
+  const [count, setCount] = useState<number>(book.quantity ?? 1)
+  const [price, setPrice] = useState<number>(book.price * (book.quantity ?? 1))
 
   useEffect(() => {
     setCount(book.quantity || 1)
-    setPrice(book.quantity * book.price || 0)
+    setPrice((book.quantity || 1) * book.price || 0)
   }, [book])
 
   useEffect(() => {
@@ -30,10 +30,10 @@ const BookAside: FC<BookProps> = ({ book }) => {
   }, [count, book.id, setQuantity])
 
   const plus = () => {
-    setCount((prevState: number) => Number(prevState) + 1)
+    setCount((prevState) => (prevState ? prevState + 1 : 1))
   }
   const minus = () => {
-    setCount((prevState: number) => Number(prevState) - 1)
+    setCount((prevState) => (prevState && prevState > 1 ? prevState - 1 : 1))
   }
   return (
     <div className={s['product-card']}>

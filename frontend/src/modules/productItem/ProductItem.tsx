@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import star_icon from '@/assets/images/product/star-dark.svg'
@@ -15,7 +15,6 @@ import { Typography } from '@/ui'
 import s from './ProductItem.module.scss'
 
 const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genre, is_available = true }) => {
-  const [isRemoving, setIsRemoving] = useState<boolean>(false)
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
@@ -34,10 +33,8 @@ const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, ge
     setOrderProduct(prod)
   }
 
-  const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
-
-    setIsRemoving(true)
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 500))
@@ -45,8 +42,6 @@ const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, ge
       addToCart()
     } catch (error) {
       console.error('Failed to remove product:', error)
-    } finally {
-      setIsRemoving(false)
     }
   }
 
@@ -82,7 +77,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, ge
         <Link to={`/books/${id}`} className={s.product_grid_item__hover__link}>
           Переглянути
         </Link>
-        <button className={s.product_grid_item__hover__btn} onClick={(e) => handleAddToCart(e)}>
+        <button className={s.product_grid_item__hover__btn} onClick={handleAddToCart}>
           У кошик
         </button>
         <p className={s.product_grid_item__hover__liked}>

@@ -11,6 +11,7 @@ import 'swiper/scss'
 // import 'swiper/scss/navigation'
 import styles from './SliderBooks.module.scss'
 import { Link } from 'react-router-dom'
+import { NavigationOptions } from 'swiper/types'
 
 interface SliderBooksProps {
   title: string
@@ -22,8 +23,8 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
   const slidesPerView = data.length < 5 ? data.length : 5
   const loop = data.length >= 5
 
-  const navigationNextRef = useRef(null);
-  const navigationPrevRef = useRef(null);
+  const navigationNextRef = useRef(null)
+  const navigationPrevRef = useRef(null)
   return (
     <Container className={styles.container}>
       <div className={styles.top}>
@@ -42,10 +43,14 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
         modules={[Navigation]}
         speed={400}
         onInit={(swiper) => {
-          swiper.params.navigation.prevEl = navigationPrevRef.current;
-          swiper.params.navigation.nextEl = navigationNextRef.current;
-          swiper.navigation.init();
-          swiper.navigation.update();
+          if (!swiper || !swiper.params.navigation) return
+          const navigation = swiper.params.navigation as NavigationOptions
+          if (navigationPrevRef.current && navigationNextRef.current) {
+            navigation.prevEl = navigationPrevRef.current
+            navigation.nextEl = navigationNextRef.current
+            swiper.navigation.init()
+            swiper.navigation.update()
+          }
         }}
         breakpoints={{
           440: {

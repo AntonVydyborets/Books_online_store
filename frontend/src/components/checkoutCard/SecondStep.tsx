@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -29,13 +29,18 @@ const schemaСheckoutCard = yup.object({
   delivery_new_post: yup
     .string()
     .required()
-    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"], 'Оберіть метод доставки'),
-  payment: yup.string().required().oneOf(['Онлайн оплата', 'Післяплата'], 'Оберіть метод оплати'),
+    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"] as const, 'Оберіть метод доставки'),
+  payment: yup
+    .string()
+    .required()
+    .oneOf(['Онлайн оплата', 'Післяплата'] as const, 'Оберіть метод оплати'),
   city: yup.string().required('Please enter your city'),
 })
 
-const SecondStep = (props: { nextStep: unknown }) => {
-  const { nextStep } = props
+type SecondStepProps = {
+  nextStep: () => void
+}
+const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
   const {
     register,
     handleSubmit,

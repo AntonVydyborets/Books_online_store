@@ -1,10 +1,15 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 import Book from './Book.tsx'
 
 import s from '@/pages/cart/Cart.module.scss'
 
-function FirstStep(props) {
+type FirstStepProps = {
+  order: []
+}
+
+const FirstStep: React.FC<FirstStepProps> = (props) => {
   const { order } = props
 
   return (

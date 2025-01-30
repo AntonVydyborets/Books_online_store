@@ -56,7 +56,7 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
 
     setOrderProduct(prod)
   }
-  const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
 
     try {
@@ -120,7 +120,7 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
             )}
           </p>
           <p className={s.price}>{`${price || null} грн`}</p>
-          <button className={s['add-to-cart']} onClick={(e) => handleAddToCart(e)}>
+          <button className={s['add-to-cart']} onClick={handleAddToCart}>
             {!isAdded ? (
               <>
                 <img src={notAddedBook} alt="До кошика" />
