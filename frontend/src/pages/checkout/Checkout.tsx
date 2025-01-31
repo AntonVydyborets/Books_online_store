@@ -77,9 +77,6 @@ const Checkout = () => {
       email: '',
       phone: values.tel,
       items: orderInfo,
-      // delivery_method: values.delivery_new_post,
-      // payment_method: values.payment,
-      // city: values.city,
     }
 
     mutation.mutate(orderPayload)

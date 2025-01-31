@@ -1,7 +1,7 @@
 export interface OrderItem {
   id?: number
   order_id?: number
-  book_id: number
+  book_id: number | string | undefined
   quantity: number
 }
 

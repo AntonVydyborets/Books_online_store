@@ -12,7 +12,7 @@ export type ProductItemType = Pick<
 >
 
 interface OrderInfoType {
-  book_id: number
+  book_id: number | string | undefined
   quantity: number
 }
 
@@ -23,9 +23,9 @@ interface OrderState {
   orderInfo: OrderInfoType[]
 
   setTotalPrice: (sum: number) => void
-  setQuantity: (id: number, count: number) => void
+  setQuantity: (id: number | string | undefined, count: number) => void
   setOrderProduct: (product: ProductItemType) => void
-  removeOrderProduct: (id: number) => void // Optional: To remove items
+  removeOrderProduct: (id: number | string | undefined) => void // Optional: To remove items
   clearOrder: () => void // Optional: To clear the cart
   setOrderInfo: (productInfo: OrderInfoType[]) => void
 }
@@ -61,7 +61,7 @@ export const useOrdersStore = create<OrderState>()(
         saveStateDebounced({ order: get().order, totalPrice: sum })
       },
 
-      setQuantity: (id: number, count: number) => {
+      setQuantity: (id: number | string | undefined, count: number) => {
         set((state) => {
           const updatedOrder = state.order.map((item) => (item.id === id ? { ...item, quantity: count } : item))
           // Debounced save
@@ -73,7 +73,7 @@ export const useOrdersStore = create<OrderState>()(
 
       setOrderProduct: (product: ProductItemType) => {
         set((state) => {
-          let currentProduct = state.order.find((i) => i.id === product.id)
+          const currentProduct = state.order.find((i) => i.id === product.id)
           let updatedOrder
 
           if (currentProduct) {
@@ -90,7 +90,7 @@ export const useOrdersStore = create<OrderState>()(
         })
       },
 
-      removeOrderProduct: (id: string | number) => {
+      removeOrderProduct: (id: string | number | undefined) => {
         set((state) => {
           const updatedOrder = state.order.filter((item) => item.id !== id)
           // Debounced save
@@ -110,7 +110,6 @@ export const useOrdersStore = create<OrderState>()(
     }),
     {
       name: 'orders-storage',
-      getStorage: () => localStorage, // (optional) by default, 'localStorage' is used
       onRehydrateStorage: () => (state) => {
         if (state) {
           console.log('State rehydrated:', state)

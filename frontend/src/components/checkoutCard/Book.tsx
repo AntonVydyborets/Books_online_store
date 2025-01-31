@@ -17,7 +17,6 @@ interface BookProps {
 
 const Book: FC<BookProps> = ({ book }) => {
   const { setQuantity, removeOrderProduct } = useOrdersStore((state) => state)
-
   const [count, setCount] = useState(book.quantity || 1)
   const [price, setPrice] = useState(book.price ?? 0)
   const [isRemoving, setIsRemoving] = useState<boolean>(false)
@@ -26,12 +25,6 @@ const Book: FC<BookProps> = ({ book }) => {
     setCount(book.quantity || 1)
     setPrice((book.quantity ?? 1) * (book.price ?? 0))
   }, [book])
-
-  // useEffect(() => {
-  //   if (count < 1) setCount(1)
-  //   setPrice(Number(count) * Number(book.price))
-  //   removeBook(book.id)
-  // }, [count, book.price, removeBook, book.id])
 
   useEffect(() => {
     setQuantity(book.id, Number(count))

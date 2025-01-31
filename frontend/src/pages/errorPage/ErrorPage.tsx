@@ -9,12 +9,8 @@ import s from './ErrorPage.module.scss'
 
 interface ErrorPageProps {
   text?: string
-  error?: {
-    message: string
-    status?: number
-  }
+  error?: Error | null
 }
-
 export const ErrorPage: FC<ErrorPageProps> = ({ text, error }) => {
   return (
     <>
@@ -27,7 +23,7 @@ export const ErrorPage: FC<ErrorPageProps> = ({ text, error }) => {
         {error && (
           <div className={s.error_page__details}>
             <p>Error: {error.message}</p>
-            {error.status && <p>Status Code: {error.status}</p>}
+            {error.name && <p>Status Code: {error.name}</p>}
           </div>
         )}
 

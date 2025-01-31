@@ -43,7 +43,7 @@ const Cart = () => {
     }, 0)
 
     setTotalPrice(total)
-  }, [order, setTotalPrice, setOrderInfo])
+  }, [order, setTotalPrice, setOrderInfo, orderInfo])
 
   return (
     <>
@@ -88,12 +88,8 @@ const Cart = () => {
                 <p>{totalPrice || '0'} грн</p>
               </div>
             </div>
-            {order.length === 0 && (
-              <button className={clsx(s.btn, s.disabled)}>
-                Далі
-              </button>
-            )}
-            {step === 1 && order.length > 0 &&(
+            {order.length === 0 && <button className={clsx(s.btn, s.disabled)}>Далі</button>}
+            {step === 1 && order.length > 0 && (
               <button className={s.btn} onClick={() => setInfoForOrder()}>
                 Далі
               </button>

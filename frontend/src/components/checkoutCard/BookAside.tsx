@@ -10,10 +10,10 @@ interface BookProps {
 }
 
 const BookAside: FC<BookProps> = ({ book }) => {
-  const { setQuantity, removeProduct } = useOrdersStore((state) => state)
+  const { setQuantity, removeOrderProduct: removeProduct } = useOrdersStore((state) => state)
 
   const [count, setCount] = useState<number>(book.quantity ?? 1)
-  const [price, setPrice] = useState<number>(book.price * (book.quantity ?? 1))
+  const [, setPrice] = useState<number>(book.price * (book.quantity ?? 1))
 
   useEffect(() => {
     setCount(book.quantity || 1)
