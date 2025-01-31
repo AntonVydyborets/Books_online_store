@@ -91,7 +91,7 @@ const Cart = () => {
             </div>
             {order.length === 0 && <button className={clsx(s.btn, s.disabled)}>Далі</button>}
             {step === 1 && order.length > 0 && (
-              <button className={s.btn} onClick={() => setInfoForOrder()}>
+              <button className={s.btn} onClick={() => nextStep()}>
                 Далі
               </button>
             )}
