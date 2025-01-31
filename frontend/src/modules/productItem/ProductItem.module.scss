@@ -4,12 +4,9 @@
   background-color: #f3f5f5;
   display: grid;
   grid-template-rows: auto 1fr;
+  transition: all 0.5s ease;
 
   &:hover {
-    // .product_labels__icons {
-    //   opacity: 1;
-    //   visibility: visible;
-    // }
     .product_grid_item__hover {
       opacity: 1;
       visibility: visible;
@@ -37,7 +34,7 @@
   min-height: 220px;
   background-color: #F9FAFA;
   position: relative;
-  display: block;
+  display: flex;
   z-index: 1;
   padding: 20px;
   text-align: center;
@@ -59,36 +56,10 @@
     }
   }
 
-  .product_labels__icons {
-    position: absolute;
-    right: 20px;
-    top: 13px;
-    z-index: 999;
-
-    transition: all 0.2s linear;
-
-    img {
-      filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
-
-      background-color: #8a8a8a;
-      border-radius: 50%;
-      padding: 6px;
-
-      transition: all 0.2s linear;
-
-      &:hover {
-        background-color: #fff;
-      }
-    }
-
-    opacity: 0;
-    visibility: hidden;
-  }
-
   .product_image {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    max-height: 220px;
+    object-fit: contain;
   }
 }
 
@@ -150,6 +121,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.5s ease;
 }
 .product_grid_item__hover__link {
   color: #ffffff;
@@ -159,6 +131,7 @@
   display: block;
   border: 1px solid #ffffff;
   align-self: center;
+  transition: all 0.5s ease;
   &:hover {
     background-color: #1c3e43;
   }
@@ -174,6 +147,7 @@
   display: block;
   border: none;
   align-self: center;
+  transition: all 0.5s ease;
   &:hover {
     background-color: transparent;
     outline: 1px solid #ffffff;

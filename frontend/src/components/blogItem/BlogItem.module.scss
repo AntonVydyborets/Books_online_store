@@ -65,13 +65,13 @@
 }
 
 .info {
-  padding: 1.5rem;
+  padding: 1.3rem;
   position: absolute;
   inset: 0 0 0 0;
   color: #ffffff;
   overflow: hidden;
   max-width: 100%;
-  background-color: rgba(0, 0, 0, 0.247);
+  background: linear-gradient(160deg, #0000008f, transparent);
   @media (max-width: 545px) {
     padding: 1.5rem 1rem;
   }
@@ -95,5 +95,4 @@
 
 .date {
   font-size: 0.5rem;
-  font-weight: 500;
 }

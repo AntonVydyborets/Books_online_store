@@ -1,11 +1,8 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import star_icon from '@/assets/images/product/star.svg'
-import product_img from '@/assets/images/product_default_img.jpg'
-import cart_icon from '@/assets/images/header/bag-2.svg'
-
-import { CircleProgress } from '@/shared'
+import product_img from '@/assets/images/default-book.png'
 
 import { ProductItemType, useOrdersStore } from '@/store/useOrdersStore'
 
@@ -16,7 +13,6 @@ import { Typography } from '@/ui'
 import s from './ProductItemSlide.module.scss'
 
 const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genre, is_available = true }) => {
-  const [isRemoving, setIsRemoving] = useState<boolean>(false)
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
@@ -35,10 +31,8 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
 
     setOrderProduct(prod)
   }
-  const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
-
-    setIsRemoving(true)
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 500))
@@ -46,23 +40,18 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
       addToCart()
     } catch (error) {
       console.error('Failed to remove product:', error)
-    } finally {
-      setIsRemoving(false)
     }
   }
 
   return (
     <div className={s.product_grid_item}>
       <div className={s.product_grid_item__top}>
-        <Link to={'/'} onClick={(e) => handleAddToCart(e)}>
+        <div className={s.product_grid_item__wrap}>
           <div className={s.product_labels}>
             <div className={s.product_labels__item}>Подарунок</div>
           </div>
-          <div className={s.product_labels__icons}>
-            {isRemoving ? <CircleProgress isButton={true} /> : <img src={cart_icon} alt="cart icon" />}
-          </div>
           <img className={s.product_image} src={product_img} alt="product image" />
-        </Link>
+        </div>
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">
@@ -79,7 +68,7 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
           <span>{price} грн</span>
         </p>
         <div className={s.product_grid_item__bottom__available}>{is_available ? 'В наявності' : 'Продано'}</div>
-        <button className={s.product_grid_item__bottom__btn} onClick={(e) => handleAddToCart(e)}>У кошик</button>
+        <button className={s.product_grid_item__bottom__btn} onClick={handleAddToCart}>У кошик</button>
       </div>
     </div>
   )

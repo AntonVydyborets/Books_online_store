@@ -5,13 +5,30 @@ import { BookItem } from '@/utils/types/BookItemType'
 import s from './BookPreview.module.scss'
 import Tick from './Tick'
 import Star from './Star'
+import { ProductItemType, useOrdersStore } from '@/store/useOrdersStore'
+
+import product_img from '@/assets/images/default-book.png'
+import notAddedBook from '@/assets/images/not-added-book.svg'
+import addedBook from '@/assets/images/added-book.svg'
 
 interface BookItemProps {
   book: BookItem | null
 }
 
 const BookPreview: FC<BookItemProps> = ({ book }) => {
+  const [rate, setRating] = useState<number | null>(null)
+  const [hover, setHover] = useState<number | null>(null)
+  const [tab, setTab] = useState('desc')
+  const [isAdded, setIsAdded] = useState<boolean>(false)
+
+  const { setOrderProduct } = useOrdersStore((state) => state)
+
+  if (!book) {
+    return null
+  }
+
   const {
+    id,
     title,
     price,
     description,
@@ -25,14 +42,38 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
     rating,
     is_available,
   } = book
-  const [rate, setRating] = useState(null)
-  const [hover, setHover] = useState(null)
-  const [tab, setTab] = useState('desc')
+
+  const addToCart = () => {
+    const prod: ProductItemType = {
+      id,
+      title: title,
+      author,
+      price,
+      cover,
+      genre,
+      quantity: 1,
+    }
+
+    setOrderProduct(prod)
+  }
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
+    e.preventDefault()
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      addToCart()
+      setIsAdded(true)
+    } catch (error) {
+      console.error('Failed to remove product:', error)
+      setIsAdded(false)
+    }
+  }
   return (
     <Container>
       <div className={s.wrap}>
         <div className={s.cover}>
-          <img src={cover} alt={title} />
+          <img src={cover || product_img} alt={title} />
         </div>
         <div className={s.content}>
           <p className={s.title}>{title || null}</p>
@@ -58,9 +99,9 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
                       <Star
                         className={s.star}
                         style={{
-                          fill: currentRating <= (hover || rate) ? '#ffc107' : '#e4e5e9',
+                          fill: currentRating <= (hover ?? rate ?? 0) ? '#ffc107' : '#e4e5e9',
                         }}
-                        onMouseEnter={() => setHover(currentRating)}
+                        onMouseEnter={() => setHover(currentRating ?? 0)}
                         onMouseLeave={() => setHover(null)}
                       />
                     </label>
@@ -79,9 +120,18 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
             )}
           </p>
           <p className={s.price}>{`${price || null} грн`}</p>
-          <button className={s['add-to-cart']}>
-            <span></span>
-            До кошика
+          <button className={s['add-to-cart']} onClick={handleAddToCart}>
+            {!isAdded ? (
+              <>
+                <img src={notAddedBook} alt="До кошика" />
+                До кошика
+              </>
+            ) : (
+              <>
+                <img src={addedBook} alt="Додано до кошика" />
+                Додано до кошика
+              </>
+            )}
           </button>
         </div>
       </div>

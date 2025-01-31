@@ -5,6 +5,7 @@ import logo from '@/assets/images/header/main_logo.svg'
 import account_icon from '@/assets/images/header/language.svg'
 import wishlist_icon from '@/assets/images/header/user.svg'
 import cart_icon from '@/assets/images/header/bag-2.svg'
+import cart_icon_full from '@/assets/images/header/bag.svg'
 import burger_menu from '@/assets/images/b_menu.svg'
 import search_icon from '../../assets/images/header/search-sm.svg'
 
@@ -135,8 +136,12 @@ const Header = () => {
                   <img src={wishlist_icon} alt="wishlist" />
                 </div>
                 <Link to="/cart" className={s.cart_icon}>
-                  <div className={s.cart_icon__counter}>{cartCounter.length}</div>
-                  <img src={cart_icon} alt="cart" />
+                {cartCounter.length > 0 && <div className={s.cart_icon__counter}>{cartQuantity}</div>}
+                  {cartCounter.length > 0 ? (
+                    <img src={cart_icon_full} alt="cart" />
+                  ) : (
+                    <img src={cart_icon} alt="cart" />
+                  )}
                 </Link>
               </div>
             </div>
@@ -162,8 +167,9 @@ const Header = () => {
                 <img src={wishlist_icon} alt="wishlist" />
               </div>
               <Link to="/cart" className={s.cart_icon}>
-                <div className={s.cart_icon__counter}>{cartQuantity}</div>
-                <img src={cart_icon} alt="cart" />
+                {cartCounter.length > 0 && <div className={s.cart_icon__counter}>{cartQuantity}</div>}
+
+                {cartCounter.length > 0 ? <img src={cart_icon_full} alt="cart" /> : <img src={cart_icon} alt="cart" />}
               </Link>
             </div>
           </div>

@@ -1,13 +1,10 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import star_icon from '@/assets/images/product/star-dark.svg'
-import product_img from '@/assets/images/product_default_img.jpg'
-import cart_icon from '@/assets/images/header/bag-2.svg'
+import product_img from '@/assets/images/default-book.png'
 import heart from '@/assets/images/heart.svg'
 import heartDark from '@/assets/images/heart-dark.svg'
-
-import { CircleProgress } from '@/shared'
 
 import { ProductItemType, useOrdersStore } from '@/store/useOrdersStore'
 
@@ -17,13 +14,11 @@ import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
 
-const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is_available = true }) => {
-  const [isRemoving, setIsRemoving] = useState<boolean>(false)
+const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genre, is_available = true }) => {
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
   const addToCart = () => {
-    const cover = product_img
 
     const prod: ProductItemType = {
       id,
@@ -38,10 +33,8 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is
     setOrderProduct(prod)
   }
 
-  const handleAddToCart = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
-
-    setIsRemoving(true)
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 500))
@@ -49,8 +42,6 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is
       addToCart()
     } catch (error) {
       console.error('Failed to remove product:', error)
-    } finally {
-      setIsRemoving(false)
     }
   }
 
@@ -64,10 +55,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is
         <div className={s.product_labels}>
           <div className={s.product_labels__item}>Подарунок</div>
         </div>
-        <div className={s.product_labels__icons}>
-          {isRemoving ? <CircleProgress isButton={true} /> : <img src={cart_icon} alt="cart icon" />}
-        </div>
-        <img className={s.product_image} src={product_img} alt="product image" />
+        <img className={s.product_image} src={cover || product_img} alt="product image" />
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">
@@ -89,7 +77,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genre, is
         <Link to={`/books/${id}`} className={s.product_grid_item__hover__link}>
           Переглянути
         </Link>
-        <button className={s.product_grid_item__hover__btn} onClick={(e) => handleAddToCart(e)}>
+        <button className={s.product_grid_item__hover__btn} onClick={handleAddToCart}>
           У кошик
         </button>
         <p className={s.product_grid_item__hover__liked}>

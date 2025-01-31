@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import { Container } from '@/shared'
@@ -8,9 +8,10 @@ import { BookItem } from '@/utils/types/BookItemType.ts'
 // @ts-ignore
 import 'swiper/scss'
 // @ts-ignore
-import 'swiper/scss/navigation'
+// import 'swiper/scss/navigation'
 import styles from './SliderBooks.module.scss'
 import { Link } from 'react-router-dom'
+import { NavigationOptions } from 'swiper/types'
 
 interface SliderBooksProps {
   title: string
@@ -22,6 +23,8 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
   const slidesPerView = data.length < 5 ? data.length : 5
   const loop = data.length >= 5
 
+  const navigationNextRef = useRef(null)
+  const navigationPrevRef = useRef(null)
   return (
     <Container className={styles.container}>
       <div className={styles.top}>
@@ -30,12 +33,25 @@ const SliderBooks: React.FC<SliderBooksProps> = ({ title, data, link }) => {
           {link}
         </Link>
       </div>
+      <button ref={navigationPrevRef} className={styles.prev}></button>
+      <button ref={navigationNextRef} className={styles.next}></button>
       <Swiper
         spaceBetween={10}
         slidesPerView={slidesPerView}
         loop={loop}
         navigation={true}
         modules={[Navigation]}
+        speed={400}
+        onInit={(swiper) => {
+          if (!swiper || !swiper.params.navigation) return
+          const navigation = swiper.params.navigation as NavigationOptions
+          if (navigationPrevRef.current && navigationNextRef.current) {
+            navigation.prevEl = navigationPrevRef.current
+            navigation.nextEl = navigationNextRef.current
+            swiper.navigation.init()
+            swiper.navigation.update()
+          }
+        }}
         breakpoints={{
           440: {
             slidesPerView: 1,

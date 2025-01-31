@@ -8,6 +8,7 @@ import { CircleProgress } from '@/shared'
 
 import { RequiredCartItemType } from '@/utils/types/BookItemType'
 
+import book_img from '@/assets/images/default-book.png'
 import s from '@/pages/cart/Cart.module.scss'
 
 interface BookProps {
@@ -16,21 +17,14 @@ interface BookProps {
 
 const Book: FC<BookProps> = ({ book }) => {
   const { setQuantity, removeOrderProduct } = useOrdersStore((state) => state)
-
-  const [count, setCount] = useState(book.quantity)
-  const [price, setPrice] = useState(book.price)
+  const [count, setCount] = useState(book.quantity || 1)
+  const [price, setPrice] = useState(book.price ?? 0)
   const [isRemoving, setIsRemoving] = useState<boolean>(false)
 
   useEffect(() => {
     setCount(book.quantity || 1)
-    setPrice(book.quantity * book.price || 0)
+    setPrice((book.quantity ?? 1) * (book.price ?? 0))
   }, [book])
-
-  // useEffect(() => {
-  //   if (count < 1) setCount(1)
-  //   setPrice(Number(count) * Number(book.price))
-  //   removeBook(book.id)
-  // }, [count, book.price, removeBook, book.id])
 
   useEffect(() => {
     setQuantity(book.id, Number(count))
@@ -62,7 +56,7 @@ const Book: FC<BookProps> = ({ book }) => {
     <>
       <div className={s['product-card']}>
         <div className={s.cover}>
-          <img src={book.cover} alt={book.cover} />
+          <img src={book.cover ? book.cover : book_img} alt={book.title} />
         </div>
         <div className={s.details}>
           <p className={s.title}>{book.title}</p>

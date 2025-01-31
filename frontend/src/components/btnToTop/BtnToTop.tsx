@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import cx from 'clsx'
 import toTop from '@/assets/images/to-top.png'
 import s from './BtnToTop.module.scss'

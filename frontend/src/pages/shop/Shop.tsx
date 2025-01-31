@@ -183,7 +183,7 @@ const Shop = () => {
     productsToDisplay.sort((a, b) => a.rating - b.rating)
   }
   if (sortType === '3') {
-    productsToDisplay.sort((a, b) => a.price - b.price)
+    productsToDisplay.sort((a, b) => (a.price ?? 0) - (b.price ?? 0))
   }
   if (sortType === '4') {
     productsToDisplay.sort((a, b) => a.title.localeCompare(b.title))

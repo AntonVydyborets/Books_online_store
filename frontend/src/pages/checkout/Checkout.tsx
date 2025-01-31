@@ -19,6 +19,8 @@ interface FormValues {
   delivery_new_post: 'Самовивіз' | 'Доставка Новою Поштою' | "Кур'єрська доставка"
   payment: 'Онлайн оплата' | 'Післяплата'
   city: string
+  shippingAddress?: string
+  comment?: string
 }
 
 const defaultValue: FormValues = {
@@ -28,6 +30,8 @@ const defaultValue: FormValues = {
   delivery_new_post: 'Самовивіз',
   payment: 'Післяплата',
   city: '',
+  shippingAddress: '1',
+  comment: '',
 }
 
 const schemaСheckoutCard = yup.object({
@@ -36,13 +40,17 @@ const schemaСheckoutCard = yup.object({
   tel: yup
     .string()
     .required('Обовʼязкове для заповнення')
-    .matches(/^\+380\d{9}$/, 'Введіть номер у форматі +380XXXXXXXXX'),
+    .matches(/^380\d{9}$/, 'Введіть номер у форматі 380XXXXXXXXX'),
   delivery_new_post: yup
     .string()
     .required()
-    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"], 'Оберіть метод доставки'),
-  payment: yup.string().required().oneOf(['Онлайн оплата', 'Післяплата'], 'Оберіть метод оплати'),
+    .oneOf(['Самовивіз', 'Доставка Новою Поштою', "Кур'єрська доставка"] as const, 'Оберіть метод доставки'),
+  payment: yup
+    .string()
+    .required()
+    .oneOf(['Онлайн оплата', 'Післяплата'] as const, 'Оберіть метод оплати'),
   city: yup.string().required('Виберіть із списку'),
+  shippingAddress: yup.string().required('Виберіть із списку'),
 })
 
 const Checkout = () => {
@@ -69,9 +77,6 @@ const Checkout = () => {
       email: '',
       phone: values.tel,
       items: orderInfo,
-      // delivery_method: values.delivery_new_post,
-      // payment_method: values.payment,
-      // city: values.city,
     }
 
     mutation.mutate(orderPayload)
@@ -128,6 +133,16 @@ const Checkout = () => {
                 <input type="radio" value="Доставка Новою Поштою" {...register('delivery_new_post')} />
                 <span>Доставка Новою Поштою</span>
               </label>
+              <label className={s['shipping_address']}>
+                <span>Оберіть відділення*</span>
+                <select {...register('shippingAddress')}>
+                  <option value="1">Відділення 1</option>
+                  <option value="2">Відділення 2</option>
+                  <option value="3">Відділення 3</option>
+                </select>
+                <span>Почніть вводити номер або адресу та оберіть варіант зі списку</span>
+                {errors.city && <span className={s.error}>{errors.city.message}</span>}
+              </label>
               <label>
                 <input type="radio" value="Кур'єрська доставка" {...register('delivery_new_post')} />
                 <span>Кур'єрська доставка</span>
@@ -138,14 +153,15 @@ const Checkout = () => {
             <h5>Оберіть спосіб оплати</h5>
             <div className={s.radio}>
               <label>
-                <input type="radio" value="Онлайн оплата" {...register('payment')} />
-                <span>Онлайн оплата</span>
-              </label>
-              <label>
                 <input type="radio" value="Післяплата" {...register('payment')} />
                 <span>Післяплата</span>
               </label>
             </div>
+          </div>
+          <div className={s.textarea}>
+            <h5>Залиште коментар (за потреби)</h5>
+            <p>Додайте побажання або уточнення до вашого замовлення</p>
+            <textarea rows={3} value="" {...register('comment')}></textarea>
           </div>
           <button className={s.submit} type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Відправка...' : 'Підтвердити замовлення'}

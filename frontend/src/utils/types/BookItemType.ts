@@ -1,5 +1,5 @@
 export interface BookItem {
-  id: number | undefined
+  id: number | string | undefined
   title: string
   price: number | undefined
   current_price?: number | undefined
@@ -13,8 +13,8 @@ export interface BookItem {
   text_language: string
   rating: number
   is_available: boolean
-  created_at: string
-  updated_at: string
+  created_at?: string
+  updated_at?: string
 }
 
 export interface BooksQueryParams {
@@ -53,16 +53,16 @@ export interface ApiData {
 export interface ApiResponse {
   data: ApiData
   meta: Record<string, unknown>
-  errors: any[]
+  errors: Error[]
 }
 export interface ApiResponseBookId {
   data: BookItem
   meta: Record<string, unknown>
-  errors: any[]
+  errors: Error[]
 }
 
 export interface BookItemType {
-  id: string
+  id: string | string | undefined
   title: string
   cover: string
   genre: string
@@ -74,7 +74,7 @@ export interface BookItemType {
 }
 
 export interface RequiredBookItemTypeApi {
-  id: string
+  id: string | string | undefined
   name: string
   rating: number
   author: string

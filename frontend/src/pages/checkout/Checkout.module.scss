@@ -25,6 +25,7 @@
   & h5 {
     margin-top: 2rem;
     margin-bottom: 1.5rem;
+    font-size: 1.5rem;
   }
   & input,
   select {
@@ -32,17 +33,25 @@
     background-color: #fff;
     border-radius: 8px;
     padding: 0.8rem;
-    width: 85%;
+    width: 100%;
   }
   & .customer {
     & .wrap {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      grid-gap: 2rem 3rem;
+      margin-bottom: 70px;
+      @media (max-width: 992px) {
+        grid-gap: 2rem 0.5rem;
+      }
+      @media (max-width: 922px) {
+        grid-template-columns: 1fr;
+        grid-gap: 1.3rem 0rem;
+      }
       & span {
         display: block;
         color: rgba(117, 117, 117, 1);
-        margin-top: 1.5rem;
         margin-bottom: 0.5rem;
       }
     }
@@ -75,21 +84,20 @@
       margin-bottom: 0;
     }
   }
-
-  margin-bottom: 40px;
 }
 label {
   display: block;
   position: relative;
   & span.error {
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 103%;
+    right: 0;
     color: red !important;
     margin: 0 !important;
   }
 }
 .sub-label {
+  position: absolute;
   font-size: 0.9rem;
   display: block;
   color: rgba(117, 117, 117, 1);
@@ -149,7 +157,7 @@ label {
   border-radius: 8px;
   border: none;
   padding: 1rem 5rem;
-  background-color: #1C3E43;
+  background-color: #1c3e43;
   color: #fff;
   &[disabled] {
     background-color: #d1cece;
@@ -278,5 +286,32 @@ label {
     object-fit: cover;
     width: 100%;
     height: 100%;
+  }
+}
+
+.shipping_address {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.8rem;
+  & span {
+    font-size: 0.9rem;
+    color: #8a7f7f !important;
+  }
+  & select {
+    width: 400px;
+    margin: 0.3rem 0;
+  }
+}
+.textarea {
+  & p {
+    font-size: 0.9rem;
+    color: #8a7f7f !important;
+  }
+  & textarea {
+    border: 1px solid rgba(147, 140, 122, 1);
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 0.8rem;
+    width: 80%;
   }
 }

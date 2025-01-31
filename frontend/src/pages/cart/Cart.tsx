@@ -18,22 +18,18 @@ import iconSafety from '@/assets/images/icon-safety.svg'
 import { useOrdersStore } from '@/store/useOrdersStore.ts'
 
 import s from './Cart.module.scss'
-
-enum BONUS {
-  DISCOUNT = 150,
-}
+import clsx from 'clsx'
 
 const Cart = () => {
   const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
-
   const navigate = useNavigate()
 
   const nextStep = () => {
     setStep((step) => step + 1)
   }
 
-  const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ id, quantity })), [order])
+  const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ book_id: id, quantity })), [order])
 
   const setInfoForOrder = () => {
     navigate('/checkout')
@@ -43,11 +39,11 @@ const Cart = () => {
     setOrderInfo(orderInfo)
 
     const total = order.reduce((accumulator, item) => {
-      return accumulator + item.price * item.quantity
+      return accumulator + (item.price ?? 0) * (item.quantity ?? 0)
     }, 0)
 
     setTotalPrice(total)
-  }, [order, setTotalPrice, orderInfo, setOrderInfo])
+  }, [order, setTotalPrice, setOrderInfo, orderInfo])
 
   return (
     <>
@@ -56,6 +52,12 @@ const Cart = () => {
         <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
+            {order.length === 0 && (
+              <div className={s.empty}>
+                <p>Ваш кошик поки що порожній. </p>
+                <p>Додайте книги, які вас цікавлять!</p>
+              </div>
+            )}
             {step === 1 && (
               <div className={s.first}>
                 {order.map((i) => (
@@ -80,17 +82,14 @@ const Cart = () => {
                   <p>Сума ({order.length} позиції)</p>
                   <p>{totalPrice || '0'} грн</p>
                 </div>
-                {/* <div>
-                  <p>Знижка</p>
-                  <p>{BONUS.DISCOUNT} грн</p>
-                </div> */}
               </div>
               <div className={s.total}>
                 <p>Загальна сума</p>
                 <p>{totalPrice || '0'} грн</p>
               </div>
             </div>
-            {step === 1 && (
+            {order.length === 0 && <button className={clsx(s.btn, s.disabled)}>Далі</button>}
+            {step === 1 && order.length > 0 && (
               <button className={s.btn} onClick={() => setInfoForOrder()}>
                 Далі
               </button>
