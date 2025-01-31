@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom'
 import Book from './Book.tsx'
 
 import s from '@/pages/cart/Cart.module.scss'
+import { ProductItemType } from '@/store/useOrdersStore.ts'
 
 type FirstStepProps = {
-  order: { orderItems: [] }
+  order: { orderItems: ProductItemType[] }
 }
 
 const FirstStep: React.FC<FirstStepProps> = (props) => {

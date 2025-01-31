@@ -28,6 +28,7 @@ const Cart = () => {
   const nextStep = () => {
     setStep((step) => step + 1)
   }
+  console.log('order', order)
 
   const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ book_id: id, quantity })), [order])
 
@@ -76,7 +77,7 @@ const Cart = () => {
           <div className={s.right}>
             <h3>Замовлення</h3>
             <div className={s['checkout-sidebar']}>
-              {step > 1 && order.map(({ book }) => <BookAside key={book.id} book={book} />)}
+              {step > 1 && order.map((book) => <BookAside key={book.id} book={book} />)}
               <div className={s['checkout-totals']}>
                 <div>
                   <p>Сума ({order.length} позиції)</p>

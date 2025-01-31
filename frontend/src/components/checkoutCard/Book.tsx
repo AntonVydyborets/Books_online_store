@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react'
 
 import InputControl from '@/components/inputControl/InputControl'
 
-import { useOrdersStore } from '@/store/useOrdersStore'
+import { ProductItemType, useOrdersStore } from '@/store/useOrdersStore'
 
 import { CircleProgress } from '@/shared'
 
@@ -12,7 +12,7 @@ import book_img from '@/assets/images/default-book.png'
 import s from '@/pages/cart/Cart.module.scss'
 
 interface BookProps {
-  book: RequiredCartItemType
+  book: RequiredCartItemType | ProductItemType
 }
 
 const Book: FC<BookProps> = ({ book }) => {

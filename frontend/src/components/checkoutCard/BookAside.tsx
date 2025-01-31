@@ -2,27 +2,26 @@ import { FC, useEffect, useState } from 'react'
 import InputControl from '@/components/inputControl/InputControl'
 import s from '@/pages/cart/Cart.module.scss'
 
-import { BookItemType } from '@/utils/types/BookItemType'
-import { useOrdersStore } from '@/store/useOrdersStore'
+import { ProductItemType, useOrdersStore } from '@/store/useOrdersStore'
 
 interface BookProps {
-  book: BookItemType
+  book: ProductItemType
 }
 
 const BookAside: FC<BookProps> = ({ book }) => {
   const { setQuantity, removeOrderProduct: removeProduct } = useOrdersStore((state) => state)
 
   const [count, setCount] = useState<number>(book.quantity ?? 1)
-  const [, setPrice] = useState<number>(book.price * (book.quantity ?? 1))
+  const [, setPrice] = useState<number>(book.price ? book.price * (book.quantity ?? 1) : 0)
 
   useEffect(() => {
     setCount(book.quantity || 1)
-    setPrice((book.quantity || 1) * book.price || 0)
+    setPrice((book.quantity || 1) * (book.price ? book.price : 0))
   }, [book])
 
   useEffect(() => {
     if (count < 1) setCount(1)
-    setPrice(Number(count) * Number(book.price))
+    setPrice(Number(count) * Number(book?.price))
   }, [count, book.price])
 
   useEffect(() => {
