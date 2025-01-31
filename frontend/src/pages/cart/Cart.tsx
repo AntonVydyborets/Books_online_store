@@ -19,6 +19,7 @@ import { useOrdersStore } from '@/store/useOrdersStore.ts'
 
 import s from './Cart.module.scss'
 import clsx from 'clsx'
+import { Container } from '@/shared'
 
 const Cart = () => {
   const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
@@ -49,7 +50,7 @@ const Cart = () => {
   return (
     <>
       <Header />
-      <section className={s.container}>
+      <Container className={s.container}>
         <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
@@ -118,7 +119,7 @@ const Cart = () => {
         <div className={s.bottom}>
           <img src={DeliverBanner} alt="icons-free-deliver" />
         </div>
-      </section>
+      </Container>
       <Footer />
     </>
   )

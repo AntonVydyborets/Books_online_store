@@ -4,6 +4,7 @@ function ThirdStep() {
   return (
     <div className={s.third}>
       <h5>Ви успішно створили замовлення</h5>
+      <p>Перевірте вашу поштову скриньку, ми надіслали лист із деталями замовлення</p>
       <div className={s.grid}>
         <p className={s.title}>Доставка</p>
         <div className={s.desc}>

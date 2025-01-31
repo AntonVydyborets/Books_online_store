@@ -94,13 +94,13 @@ const Checkout = () => {
             <div className={s.wrap}>
               <label>
                 <span>Ім’я*</span>
-                <input type="text" placeholder="Введіть ваше ім’я" {...register('firstName')} />
+                <input type="text" placeholder="Ім’я" {...register('firstName')} />
 
                 {errors.firstName && <span className={s.error}>{errors.firstName.message}</span>}
               </label>
               <label>
                 <span>Прізвище*</span>
-                <input type="text" placeholder="Введіть ваше прізвище" {...register('lastName')} />
+                <input type="text" placeholder="Прізвище" {...register('lastName')} />
 
                 {errors.lastName && <span className={s.error}>{errors.lastName.message}</span>}
               </label>
