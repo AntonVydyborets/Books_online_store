@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 
 import SecondStep from '@/components/checkoutCard/SecondStep'
 import ThirdStep from '@/components/checkoutCard/ThirdStep'
@@ -23,7 +23,7 @@ import clsx from 'clsx'
 const Cart = () => {
   const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const nextStep = () => {
     setStep((step) => step + 1)
@@ -32,9 +32,9 @@ const Cart = () => {
 
   const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ book_id: id, quantity })), [order])
 
-  const setInfoForOrder = () => {
-    navigate('/checkout')
-  }
+  // const setInfoForOrder = () => {
+  //   navigate('/checkout')
+  // }
 
   useEffect(() => {
     setOrderInfo(orderInfo)
