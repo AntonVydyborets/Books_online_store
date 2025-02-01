@@ -29,7 +29,6 @@ const Cart = () => {
   const nextStep = () => {
     setStep((step) => step + 1)
   }
-  console.log('order', order)
 
   const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ book_id: id, quantity })), [order])
 
