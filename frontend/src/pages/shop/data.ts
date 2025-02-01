@@ -76,3 +76,15 @@ export const publisherFilterItems: FilterType[] = [
     type: 'publisher',
   },
 ]
+export const availableFilterItems: FilterType[] = [
+  {
+    id: uuid(),
+    title: 'У наявності',
+    type: 'available',
+  },
+  {
+    id: uuid(),
+    title: 'Всі',
+    type: 'available',
+  },
+]

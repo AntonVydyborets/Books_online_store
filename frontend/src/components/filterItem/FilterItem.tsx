@@ -15,7 +15,7 @@ interface FilterItemProps {
   title: string
   filterItems: FilterType[]
   className?: string
-  type: 'genre' | 'publisher'
+  type: 'genre' | 'publisher' | 'available'
 }
 
 const FilterItem: FC<FilterItemProps> = ({ isSearch, title, filterItems, className, type }) => {

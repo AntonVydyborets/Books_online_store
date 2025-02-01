@@ -14,7 +14,7 @@ import { Container } from '@/shared'
 
 function ChooseCategory() {
   return (
-    <div  className={s.wrap}>
+    <div className={s.wrap}>
       <h3 className={s.title}>Оберіть свою категорію</h3>
       <div className={s.container}>
         <Container className={s.grid}>
@@ -30,7 +30,9 @@ function ChooseCategory() {
           </Link>
         </Container>
       </div>
-      <Link to='/shop' className={s['choose-btn']}>Обрати книгу</Link>
+      <Link to="/shop" className={s['choose-btn']}>
+        Обрати книгу
+      </Link>
     </div>
   )
 }

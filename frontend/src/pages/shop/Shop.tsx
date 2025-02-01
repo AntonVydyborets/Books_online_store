@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Range } from 'react-range'
 import clsx from 'clsx'
 
-import { genreFilterItems, publisherFilterItems } from '@/pages/shop/data.ts'
+import { availableFilterItems, genreFilterItems, publisherFilterItems } from '@/pages/shop/data.ts'
 import { ErrorPage } from '@/pages'
 
 import arrow_left from '@/assets/images/pagination/arrow_left.svg'
@@ -27,7 +27,7 @@ import { FilterType } from '@/utils/types/FilterType'
 
 import s from './Shop.module.scss'
 
-export const getFilterTitlesByType = (filters: FilterType[], type: 'genre' | 'publisher'): string[] => {
+const getFilterTitlesByType = (filters: FilterType[], type: 'genre' | 'publisher' | 'available'): string[] => {
   return filters.filter((filter) => filter.type === type).map((filter) => filter.title)
 }
 
@@ -49,7 +49,7 @@ const Shop = () => {
 
   const genreFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'genre'), [selectedFilters])
   const publisherFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'publisher'), [selectedFilters])
-
+  const availableFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'available'), [selectedFilters])
   // Frist useQuery for fetching books.
   const { data, isLoading, error } = useQuery({
     queryKey: [
@@ -61,6 +61,7 @@ const Shop = () => {
         max_price: priceFilter[1],
         genre: genreFilters.length > 0 ? genreFilters.join(',') : undefined,
         publisher: publisherFilters.length > 0 ? publisherFilters.join(',') : undefined,
+        min_quantity: availableFilters.length > 0 ? availableFilters.join(',') : undefined,
       },
     ],
     queryFn: fetchBooks,
@@ -95,7 +96,6 @@ const Shop = () => {
 
     return `linear-gradient(to right, #ccc ${left}%, #404040 ${left}%, #404040 ${right}%, #ccc ${right}%)`
   }
-
   // Update URL search parameters based on filters
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
@@ -122,6 +122,12 @@ const Shop = () => {
     } else {
       searchParams.delete('publishers')
     }
+    // Set selected availability
+    if (availableFilters.length > 0) {
+      searchParams.set('min_quantity', availableFilters.join(','))
+    } else {
+      searchParams.delete('min_quantity')
+    }
 
     // Set sorting preference
     if (sort !== SORT.DEFAULT) {
@@ -145,7 +151,17 @@ const Shop = () => {
     }
 
     navigate({ search: searchParams.toString() }, { replace: true })
-  }, [priceFilter, genreFilters, publisherFilters, sort, page, location.search, navigate, searchKeywords])
+  }, [
+    priceFilter,
+    genreFilters,
+    publisherFilters,
+    availableFilters,
+    sort,
+    page,
+    location.search,
+    navigate,
+    searchKeywords,
+  ])
 
   useEffect(() => {
     if (data && data.data && data.data.items) {
@@ -274,6 +290,13 @@ const Shop = () => {
                   filterItems={publisherFilterItems}
                   className={s.filter_item__title}
                   type="publisher"
+                />
+
+                <FilterItem
+                  title="Наявність"
+                  filterItems={availableFilterItems}
+                  className={s.filter_item__title}
+                  type="available"
                 />
               </div>
             )}

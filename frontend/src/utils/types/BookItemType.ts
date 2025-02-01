@@ -30,13 +30,15 @@ export interface BooksQueryParams {
   max_publication_year?: number
   min_rating?: number
   max_rating?: number
+  min_quantity?: string
   offset?: number // Default is 0
   limit?: number // Default is 10
 }
 
-export interface ExtendedBooksQueryParams extends Omit<BooksQueryParams, 'genre' | 'publisher'> {
+export interface ExtendedBooksQueryParams extends Omit<BooksQueryParams, 'genre' | 'publisher' | 'available'> {
   genres?: string[]
   publishers?: string[]
+  available?: string[]
 }
 
 interface Pagination {
