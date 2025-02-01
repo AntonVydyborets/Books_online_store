@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Resolver, SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import s from '@/pages/cart/Cart.module.scss'
@@ -9,8 +9,10 @@ interface FormValues {
   lastName: string
   tel: string
   delivery_new_post: 'Самовивіз' | 'Доставка Новою Поштою' | "Кур'єрська доставка"
-  payment: 'Онлайн оплата' | 'Післяплата'
+  payment: 'Післяплата'
   city: string
+  shippingAddress?: string
+  comment?: string
 }
 
 const defaultValue: FormValues = {
@@ -20,12 +22,14 @@ const defaultValue: FormValues = {
   delivery_new_post: 'Самовивіз',
   payment: 'Післяплата',
   city: '',
+  shippingAddress: '1',
+  comment: '',
 }
 
 const schemaСheckoutCard = yup.object({
-  firstName: yup.string().required('Please enter your first name'),
-  lastName: yup.string().required('Please enter your last name'),
-  tel: yup.string().required('Please enter your tel'),
+  firstName: yup.string().required('Обовʼязкове для заповнення'),
+  lastName: yup.string().required('Обовʼязкове для заповнення'),
+  tel: yup.string().required('Обовʼязкове для заповнення'),
   delivery_new_post: yup
     .string()
     .required()
@@ -33,8 +37,9 @@ const schemaСheckoutCard = yup.object({
   payment: yup
     .string()
     .required()
-    .oneOf(['Онлайн оплата', 'Післяплата'] as const, 'Оберіть метод оплати'),
-  city: yup.string().required('Please enter your city'),
+    .oneOf(['Післяплата'] as const, 'Оберіть метод оплати'),
+  city: yup.string().required('Виберіть із списку'),
+  shippingAddress: yup.string(),
 })
 
 type SecondStepProps = {
@@ -50,7 +55,7 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
       ...defaultValue,
     },
     mode: 'onTouched',
-    resolver: yupResolver(schemaСheckoutCard),
+    resolver: yupResolver(schemaСheckoutCard) as Resolver<FormValues>,
   })
   const onSubmit: SubmitHandler<FormValues> = (v) => {
     console.log('handleSubmit >>>> ', v)
@@ -67,7 +72,7 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
         <h5>Введіть Ваші персональні дані</h5>
         <div className={s.wrap}>
           <label>
-            <span>Введіть Ваше ім’я*</span>
+            <span>Ім’я*</span>
             <input
               type="text"
               placeholder="Введіть ваше ім’я"
@@ -78,7 +83,7 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
             )}
           </label>
           <label>
-            <span>Введіть Ваше прізвище*</span>
+            <span>Прізвище*</span>
             <input
               type="text"
               placeholder="Введіть ваше прізвище"
@@ -89,9 +94,9 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
             )}
           </label>
           <label>
-            <span>Введіть Ваше номер телефону*</span>
-            <input type="tel" placeholder="+38" {...register('tel', { required: true })} />
-            <span className={s['sub-label']}>введіть Ваш номер у форматі +380</span>
+            <span>Номер телефону*</span>
+            <input type="tel" placeholder="38" {...register('tel', { required: true })} />
+            <span className={s['sub-label']}>У форматі 380</span>
             {errors.tel && <span className={s.error}>{errors.tel?.message || 'Error'}</span>}
           </label>
           <label>
@@ -106,7 +111,7 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
         </div>
       </div>
       <div className={s.shipping}>
-        <h5>Оберіть метод доставки</h5>
+        <h5>Оберіть спосіб доставки</h5>
         <div className={s.radio}>
           <label>
             <input value="Самовивіз" type="radio" {...register('delivery_new_post')} />
@@ -116,6 +121,16 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
             <input value="Доставка Новою Поштою" type="radio" {...register('delivery_new_post')} />
             <span>Доставка Новою Поштою</span>
           </label>
+              <label className={s['shipping_address']}>
+                <span>Оберіть відділення*</span>
+                <select {...register('shippingAddress')}>
+                  <option value="1">Відділення 1</option>
+                  <option value="2">Відділення 2</option>
+                  <option value="3">Відділення 3</option>
+                </select>
+                <span>Почніть вводити номер або адресу та оберіть варіант зі списку</span>
+                {errors.city && <span className={s.error}>{errors.city.message}</span>}
+              </label>
           <label>
             <input value="Кур'єрська доставка" type="radio" {...register('delivery_new_post')} />
             <span>Кур'єрська доставка</span>
@@ -123,19 +138,19 @@ const SecondStep: React.FC<SecondStepProps> = ({ nextStep }) => {
         </div>
       </div>
       <div className={s.payment}>
-        <h5>Оберіть метод оплати</h5>
+        <h5>Оберіть спосіб оплати</h5>
         <div className={s.radio}>
-          <label>
-            <input value="Онлайн оплата" type="radio" {...register('payment')} />
-            <span>Онлайн оплата</span>
-          </label>
           <label>
             <input value="Післяплата" type="radio" {...register('payment')} />
             <span>Післяплата</span>
           </label>
-          <span className={s['sub-label']}>оплата замовлення при отриманні</span>
         </div>
       </div>
+          <div className={s.textarea}>
+            <h5>Залиште коментар (за потреби)</h5>
+            <p>Додайте побажання або уточнення до вашого замовлення</p>
+            <textarea rows={3} value="" {...register('comment')}></textarea>
+          </div>
       <button type="submit" className={s.submit}>
         Підтвердити
       </button>
