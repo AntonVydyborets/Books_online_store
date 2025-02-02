@@ -13,3 +13,4 @@ services:
             - postgres
         volumes:
             - ..:/app/
+            - ./media:/app/media

@@ -17,7 +17,8 @@ class GetBookImageUseCase:
         session: AsyncSession,
     ) -> str:
         book_image = await self.book_service.get_book_image(
-            book_id=book_id, session=session,
+            book_id=book_id,
+            session=session,
         )
 
         if book_image and book_image.image_path:
@@ -28,4 +29,4 @@ class GetBookImageUseCase:
 
             return image_path
         else:
-            raise ImageNotFoundError(image_path=image_path, book_id=book_id)
+            raise ImageNotFoundError(book_id=book_id)

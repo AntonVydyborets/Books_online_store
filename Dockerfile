@@ -19,7 +19,12 @@ RUN pip install poetry
 RUN poetry config virtualenvs.create false
 RUN poetry install --no-root --no-interaction --no-ansi
 
+
+
 COPY . /app/
+
+RUN mkdir -p /app/media
+ENV PYTHONPATH=/app
 
 COPY entrypoint.sh /entrypoint.sh
 
