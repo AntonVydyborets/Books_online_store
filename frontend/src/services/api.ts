@@ -25,6 +25,7 @@ export const fetchBooks = async ({
     throw error
   }
 }
+
 export const fetchBookById = async (id: string | undefined): Promise<ApiResponseBookId> => {
   try {
     const res: AxiosResponse<ApiResponseBookId> = await instance.get(`/books/${id}`)
@@ -32,6 +33,18 @@ export const fetchBookById = async (id: string | undefined): Promise<ApiResponse
     return res.data
   } catch (error) {
     console.error(`Error fetching book with ${id}:`, error)
+    throw error
+  }
+}
+
+export const fetchBookImageById = async (id: string | undefined): Promise<Blob> => {
+  try {
+    const res: AxiosResponse<Blob> = await instance.get(`/books/${id}/image`, {
+      responseType: 'blob',
+    })
+    return res.data
+  } catch (error) {
+    console.error(`Error fetching book image with ${id}:`, error)
     throw error
   }
 }

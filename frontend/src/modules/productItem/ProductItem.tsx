@@ -13,13 +13,18 @@ import { BookItem } from '@/utils/types/BookItemType.ts'
 import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
+import { useQuery } from '@tanstack/react-query'
+import { fetchBookImageById } from '@/services/api'
 
-const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genres, is_available = true }) => {
-
+const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
   const { setOrderProduct } = useOrdersStore((state) => state)
-
+  const { data } = useQuery({
+    queryKey: ['image', id],
+    queryFn: () => fetchBookImageById(`${id}`),
+    enabled: !!id, // Only run this query when searchKeywords is present
+  })
+  const cover = data ? URL.createObjectURL(data as Blob) : ''
   const addToCart = () => {
-
     const prod: ProductItemType = {
       id,
       title: title,
