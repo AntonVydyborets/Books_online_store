@@ -1,9 +1,14 @@
 from fastapi import (
     APIRouter,
     Depends,
+    File,
     HTTPException,
+    UploadFile,
 )
-from fastapi.responses import JSONResponse
+from fastapi.responses import (
+    FileResponse,
+    JSONResponse,
+)
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -24,7 +29,9 @@ from core.apps.books.use_cases.books.get import (
     GetBookListUseCase,
     GetBookUseCase,
 )
+from core.apps.books.use_cases.books.get_image import GetBookImageUseCase
 from core.apps.books.use_cases.books.put import UpdateBookUseCase
+from core.apps.books.use_cases.books.upload_image import UploadImageUseCase
 from core.apps.common.exceptions import ServiceException
 from core.project.container.containers import get_container
 from core.project.database import get_session
@@ -115,10 +122,10 @@ async def create_book(
 ) -> APIResponse[BookOutSchema]:
     container = get_container()
     use_case: CreateBookUseCase = container.resolve(CreateBookUseCase)
-
+    book_entity = schema.to_entity()
     try:
         result = await use_case.execute(
-            book=schema.to_entity(),
+            book=book_entity,
             session=session,
         )
     except ServiceException as error:
@@ -175,3 +182,49 @@ async def delete_book(
         status_code=200,
         content={"message": "Book successfully deleted"},
     )
+
+
+@router.post("/{book_id}/upload_image/")
+async def upload_book_image(
+    book_id: int,
+    image_file: UploadFile = File(...),
+    session: AsyncSession = Depends(get_session),
+):
+    container = get_container()
+    use_case: UploadImageUseCase = container.resolve(UploadImageUseCase)
+
+    try:
+        await use_case.execute(
+            book_id=book_id,
+            image_file=image_file,
+            session=session,
+        )
+    except ServiceException as error:
+        raise HTTPException(
+            status_code=400,
+            detail=error.message,
+        )
+
+    return JSONResponse(
+        status_code=200,
+        content={"message": "Image successfully saved"},
+    )
+
+
+@router.get("/{book_id}/image/")
+async def get_book_image(
+    book_id: int,
+    session: AsyncSession = Depends(get_session),
+):
+    container = get_container()
+    use_case: GetBookImageUseCase = container.resolve(GetBookImageUseCase)
+
+    try:
+        image_path = await use_case.execute(book_id=book_id, session=session)
+    except ServiceException as error:
+        raise HTTPException(
+            status_code=400,
+            detail=error.message,
+        )
+
+    return FileResponse(image_path)

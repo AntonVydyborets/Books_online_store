@@ -2,10 +2,12 @@ from sqlalchemy import (
     ARRAY,
     Column,
     Float,
+    ForeignKey,
     Integer,
     String,
     Text,
 )
+from sqlalchemy.orm import relationship
 
 from core.apps.books.entities import Book as BookEntity
 from core.apps.common.models import TimedBaseModel
@@ -77,3 +79,13 @@ class Book(TimedBaseModel):
             created_at=entity.created_at,
             updated_at=entity.updated_at,
         )
+
+
+class BookImage(TimedBaseModel):
+    __tablename__ = "book_images"
+
+    id = Column(Integer, primary_key=True, index=True)  # noqa
+    book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
+    image_path = Column(String, nullable=True)
+
+    book = relationship("Book", backref="image", uselist=False)

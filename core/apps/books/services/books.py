@@ -2,7 +2,10 @@ from abc import (
     ABC,
     abstractmethod,
 )
-from typing import Iterable
+from typing import (
+    Iterable,
+    Optional,
+)
 
 from sqlalchemy import (
     delete,
@@ -17,7 +20,10 @@ from core.api.filters import PaginationIn
 from core.apps.books.entities import Book as BookEntity
 from core.apps.books.exceptions.books import BookNotFound
 from core.apps.books.filters.books import BookFilters
-from core.apps.books.models import Book as BookModel
+from core.apps.books.models import (
+    Book as BookModel,
+    BookImage,
+)
 
 
 # Implementations of Base classes
@@ -85,6 +91,21 @@ class BaseBookService(ABC):
         book_id: int,
         session: AsyncSession,
     ) -> None: ...
+
+    @abstractmethod
+    async def save_image_path(
+        self,
+        book_id: int,
+        image_path: str,
+        session: AsyncSession,
+    ) -> None: ...
+
+    @abstractmethod
+    async def get_book_image(
+        self,
+        book_id: int,
+        session: AsyncSession,
+    ) -> Optional[BookImage]: ...
 
 
 # Implementation of SQLAlchemy services
@@ -285,3 +306,27 @@ class ORMBookService(BaseBookService):
 
         await session.execute(query)
         await session.commit()
+
+    async def save_image_path(
+        self,
+        book_id: int,
+        image_path: str,
+        session: AsyncSession,
+    ) -> None:
+        query = select(BookImage).filter(BookImage.book_id == book_id)
+        result = await session.execute(query)
+        image = result.scalars().first()
+
+        if image:
+            image.image_path = image_path
+        else:
+            image = BookImage(book_id=book_id, image_path=image_path)
+            session.add(image)
+
+        await session.commit()
+        await session.refresh(image)
+
+    async def get_book_image(self, book_id: int, session: AsyncSession):
+        query = select(BookImage).filter(BookImage.book_id == book_id)
+        result = await session.execute(query)
+        return result.scalars().first()

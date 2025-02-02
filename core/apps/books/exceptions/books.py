@@ -35,7 +35,8 @@ class SingleBookError(ServiceException):
 
 @dataclass(eq=False)
 class BookDoesNotExistError(ServiceException):
-    book: BookEntity
+    book: Optional[BookEntity] = None
+    book_id: Optional[int] = None
 
     @property
     def message(self):
@@ -68,6 +69,7 @@ class BookInvalidTextLanguageError(ServiceException):
     def message(self):
         return "Book language text is not valid"
 
+
 @dataclass(eq=False)
 class BookInvalidQuantityError(ServiceException):
     book: BookEntity
@@ -76,6 +78,7 @@ class BookInvalidQuantityError(ServiceException):
     def message(self):
         return "Book quantity must be greater than 0"
 
+
 @dataclass(eq=False)
 class BookInvalidCountryOfOrigin(ServiceException):
     book: BookEntity
@@ -83,3 +86,13 @@ class BookInvalidCountryOfOrigin(ServiceException):
     @property
     def message(self):
         return "Book country of origin must be at least 2 characters long"
+
+
+@dataclass(eq=False)
+class ImageNotFoundError(ServiceException):
+    book_id: Optional[int] = None
+    image_path: Optional[str] = None
+
+    @property
+    def message(self):
+        return "Image not found"

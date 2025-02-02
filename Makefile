@@ -50,6 +50,10 @@ migrate-down:
 run-test: 
 	${EXEC} ${APP_CONTAINER} pytest 
 
+.PHONY: create-base-database
+create-base-database:
+	${EXEC} ${APP_CONTAINER} python core/project/tools/create_base_database.py
+
 
 .PHONY: app
 app: 
