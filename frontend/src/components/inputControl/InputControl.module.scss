@@ -1,0 +1,22 @@
+.product-quantity {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgb(116, 116, 116);
+  & p {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    font-size: 1.1rem;
+    margin: auto;
+    letter-spacing: 0.009em;
+  }
+  & .minus {
+    background-color: rgb(104, 104, 104);
+    color: #ffffff;
+  }
+  & .minus, .plus {
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+}

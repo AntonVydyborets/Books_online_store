@@ -1,0 +1,16 @@
+.error_page {
+  height: 50vh;
+  text-align: center;
+}
+
+.error_page__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error_page__not_found {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}

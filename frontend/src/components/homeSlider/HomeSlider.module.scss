@@ -1,0 +1,33 @@
+.wrap {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  margin-bottom: 50px;
+}
+
+.img-wrap {
+  width: 100%;
+  overflow: hidden;
+  & img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.wrap {
+  & :global(.swiper-pagination-bullet) {
+    background-color: #ffffff;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50px;
+    opacity: 1;
+  }
+
+  & :global(.swiper-pagination-bullet-active) {
+    background-color: #A7AFBF;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50px;
+  }
+}

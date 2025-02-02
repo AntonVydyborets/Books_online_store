@@ -1,0 +1,112 @@
+.product_grid_item {
+  position: relative;
+  transition: all 0.5s ease;
+  &:hover {
+    .product_grid_item__bottom {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+.product_grid_item__top {
+  width: 100%;
+  height: 220px;
+  background-color: #e4e4e4;
+  margin-bottom: 15px;
+  transition: all 0.2s linear;
+
+  .product_grid_item__wrap {
+    position: relative;
+    display: block;
+    z-index: 1;
+
+    .product_labels {
+      position: absolute;
+      left: 0;
+      top: 20px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .product_labels__item {
+        background-color: #8a8a8a;
+        color: #fff;
+        padding: 2px 15px;
+        font-weight: 300;
+        font-size: 14px;
+      }
+    }
+
+    .product_image {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+  }
+}
+
+.product_grid_item__bottom {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  inset: 0 0 0 0;
+  z-index: 99;
+  background-color: #34405491;
+  color: #ffffff;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  transition: all 0.5s ease;
+}
+
+.product_grid_item__bottom__title {
+  font-size: 14px;
+  margin-bottom: 4px;
+  align-self: flex-start;
+  & a {
+    font-weight: 500;
+    color: #ffffff;
+  }
+}
+
+.product_grid_item__bottom__author {
+  font-size: 13px;
+}
+
+.product_grid_item__bottom__rating,
+.product_grid_item__bottom__author {
+  margin-bottom: 5px;
+}
+
+.product_grid_item__bottom__rating {
+  display: flex;
+  align-items: center;
+  align-self: start;
+  gap: 5px;
+}
+
+.product_grid_item__bottom__price {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.product_grid_item__bottom__available {
+  font-size: 12px;
+}
+
+.product_grid_item__bottom__btn {
+  color: #ffffff;
+  padding: 10px 25px;
+  background-color: #1C3E43;
+  border-radius: 8px;
+  margin-top: auto;
+  display: flex;
+  border: none;
+  align-self: center;
+}

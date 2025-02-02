@@ -1,0 +1,64 @@
+.container {
+  margin: 120px auto 70px;
+}
+
+.wrap {
+  background-color: #0b4c4b;
+  color: #e3e1e4;
+  padding: 60px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+    @media (max-width: 450px) {
+      flex-direction: column-reverse;
+      text-align: center;
+    }
+}
+.inner {
+  flex: 0 1 auto;
+  & .text {
+    font-size: 3rem;
+    line-height: 3rem;
+    @media (max-width: 864px) {
+      font-size: 2rem;
+    }
+  }
+  & .btn-subscribe {
+    margin-top: 30px;
+    line-height: 1rem;
+    color: #e3e1e4;
+    font-weight: 600;
+    letter-spacing: 0.009em;
+    background-color: transparent;
+    padding: 17px 50px;
+    outline: 1px solid #d0d5dd;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.5s;
+    &:hover {
+      color: #0b4c4b;
+      background-color: #d0d5dd;
+    }
+  }
+}
+
+.image {
+  flex: 0 0 auto;
+  margin-top: -150px;
+  margin-bottom: -50px;
+  & img {
+    height: 100%;
+    width: 100%;
+  }
+  @media (max-width: 650px) {
+    margin-top: -40px;
+    margin-bottom: -150px;
+    width: 35%;
+  }
+  @media (max-width: 450px) {
+    margin-top: -140px;
+    margin-bottom: 0;
+    width: 45%;
+    align-self: flex-end;
+  }
+}

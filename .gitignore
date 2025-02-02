@@ -17,6 +17,7 @@ eggs/
 lib/
 lib64/
 parts/
+.idea/
 sdist/
 var/
 wheels/
@@ -161,4 +162,6 @@ cython_debug/
 
 .env
 backend/
+
 media/
+
