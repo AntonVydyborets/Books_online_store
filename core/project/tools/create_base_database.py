@@ -1,6 +1,8 @@
 import asyncio
 import json
+import os
 import shutil
+from pathlib import Path
 from typing import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import (
@@ -38,18 +40,25 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def create_or_update_book(
-    data: dict, session: AsyncSession, book_service: ORMBookService,
+    data: dict,
+    session: AsyncSession,
+    book_service: ORMBookService,
 ):
 
-    # Пытаемся найти книгу по id
+    # Trying to find book by id
     is_book_exist = await book_service.check_book_exists_by_id(data["id"], session)
     if is_book_exist:
         existing_book = await book_service.get_by_id(data["id"], session)
     else:
         existing_book = None
 
+    Path(os.path.dirname("media/books/")).mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
     if existing_book:
-        # Если книга существует, обновляем её
+        # If exist - update
         existing_book.title = data["title"]
         existing_book.current_price = data["current_price"]
         existing_book.old_price = data["old_price"]
@@ -64,7 +73,7 @@ async def create_or_update_book(
         existing_book.rating = data["rating"]
         existing_book.tags = [tag.strip() for tag in data["tags"].split(",")]
 
-        # Сохраняем обновлённую книгу
+        # Save updated book
         updated_book = await book_service.update_book(existing_book, session)
         updated_book = await book_service.get_by_id(data["id"], session)
 
@@ -79,7 +88,7 @@ async def create_or_update_book(
         return updated_book
 
     else:
-        # Если книга не существует, создаём её
+        # If does not exist - create
         new_book = Book(
             title=data["title"],
             current_price=data["current_price"],
@@ -96,7 +105,7 @@ async def create_or_update_book(
             tags=[tag.strip() for tag in data["tags"].split(",")],
         )
 
-        # Сохраняем новую книгу
+        # Save new book
         saved_book = await book_service.save_book(new_book, session)
 
         if "image_path" in data:
