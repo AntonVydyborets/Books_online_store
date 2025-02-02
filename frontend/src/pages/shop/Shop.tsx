@@ -27,7 +27,7 @@ import { FilterType } from '@/utils/types/FilterType'
 
 import s from './Shop.module.scss'
 
-const getFilterTitlesByType = (filters: FilterType[], type: 'genre' | 'publisher' | 'available'): string[] => {
+const getFilterTitlesByType = (filters: FilterType[], type: 'genres' | 'publisher' | 'available'): string[] => {
   return filters.filter((filter) => filter.type === type).map((filter) => filter.title)
 }
 
@@ -47,7 +47,7 @@ const Shop = () => {
 
   const limit = PAGE.LIMITED_PRODUCTS
 
-  const genreFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'genre'), [selectedFilters])
+  const genreFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'genres'), [selectedFilters])
   const publisherFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'publisher'), [selectedFilters])
   const availableFilters = useMemo(() => getFilterTitlesByType(selectedFilters, 'available'), [selectedFilters])
   // Frist useQuery for fetching books.
@@ -59,7 +59,7 @@ const Shop = () => {
         limit,
         min_price: priceFilter[0],
         max_price: priceFilter[1],
-        genre: genreFilters.length > 0 ? genreFilters.join(',') : undefined,
+        genres: genreFilters.length > 0 ? genreFilters.join(',') : undefined,
         publisher: publisherFilters.length > 0 ? publisherFilters.join(',') : undefined,
         min_quantity: availableFilters.length > 0 ? availableFilters.join(',') : undefined,
       },
@@ -282,7 +282,7 @@ const Shop = () => {
                   title="Жанри"
                   filterItems={genreFilterItems}
                   className={s.filter_item__title}
-                  type="genre"
+                  type="genres"
                 />
 
                 <FilterItem

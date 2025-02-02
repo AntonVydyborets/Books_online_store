@@ -12,7 +12,7 @@ import { Typography } from '@/ui'
 
 import s from './ProductItemSlide.module.scss'
 
-const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genre, is_available = true }) => {
+const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
@@ -25,7 +25,7 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
       author,
       price,
       cover,
-      genre,
+      genres,
       quantity: 1,
     }
 

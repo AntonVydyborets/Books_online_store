@@ -5,22 +5,22 @@ export const genreFilterItems: FilterType[] = [
   {
     id: uuid(),
     title: 'Художня',
-    type: 'genre',
+    type: 'genres',
   },
   {
     id: uuid(),
     title: 'Документальна',
-    type: 'genre',
+    type: 'genres',
   },
   {
     id: uuid(),
     title: 'Освітня',
-    type: 'genre',
+    type: 'genres',
   },
   {
     id: uuid(),
     title: 'Дитяча',
-    type: 'genre',
+    type: 'genres',
   },
 ]
 

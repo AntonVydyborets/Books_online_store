@@ -1,5 +1,5 @@
 export interface FilterType {
   id: string
   title: string
-  type: 'genre' | 'publisher'| 'available'
+  type: 'genres' | 'publisher'| 'available'
 }

@@ -14,7 +14,7 @@ import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
 
-const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genre, is_available = true }) => {
+const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genres, is_available = true }) => {
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
@@ -26,7 +26,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, ge
       author,
       price,
       cover,
-      genre,
+      genres,
       quantity: 1,
     }
 
@@ -51,7 +51,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, ge
         <img src={heartDark} alt="heartDark" />
       </p>
       <div className={s.product_grid_item__top}>
-        <p className={s.product_grid_item__genre}>{genre ? genre : ''}</p>
+        <p className={s.product_grid_item__genre}>{genres ? genres : ''}</p>
         <div className={s.product_labels}>
           <div className={s.product_labels__item}>Подарунок</div>
         </div>

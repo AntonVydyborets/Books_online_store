@@ -34,7 +34,7 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
     description,
     author,
     publisher,
-    genre,
+    genres,
     publication_year,
     country_of_origin,
     text_language,
@@ -50,7 +50,7 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
       author,
       price,
       cover,
-      genre,
+      genres,
       quantity: 1,
     }
 
@@ -160,7 +160,7 @@ const BookPreview: FC<BookItemProps> = ({ book }) => {
                   </tr>
                   <tr>
                     <td>Категорії</td>
-                    <td>{genre || null}</td>
+                    <td>{genres || null}</td>
                   </tr>
                   <tr>
                     <td>Рік видання</td>
