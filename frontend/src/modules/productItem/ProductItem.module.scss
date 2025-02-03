@@ -3,7 +3,7 @@
   transition: all 0.5s linear;
   background-color: #f3f5f5;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: minmax(220px, 1fr);
   transition: all 0.5s ease;
 
   &:hover {
@@ -22,11 +22,12 @@
 }
 
 .product_grid_item__genre {
-  position: absolute;
-  bottom: 3px;
-  right: 7px;
-  z-index: 5000;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  padding: 0.2rem 0;
+  margin: 0 -0.3rem;
+  margin-top: auto;
+  text-align: right;
+  text-wrap: balance;
 }
 
 .product_grid_item__top {
@@ -35,6 +36,7 @@
   background-color: #F9FAFA;
   position: relative;
   display: flex;
+  flex-direction: column;
   z-index: 1;
   padding: 20px;
   text-align: center;

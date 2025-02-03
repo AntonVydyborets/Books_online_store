@@ -80,6 +80,7 @@ export interface RequiredBookItemTypeApi {
   name: string
   rating: number
   author: string
+  cover?: string
   price: number
   is_available: boolean
   genres?: string
