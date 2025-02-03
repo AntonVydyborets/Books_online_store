@@ -12,13 +12,10 @@ import { Typography } from '@/ui'
 
 import s from './ProductItemSlide.module.scss'
 
-const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
-
+const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true, cover }) => {
   const { setOrderProduct } = useOrdersStore((state) => state)
-
+  console.log('cover', cover)
   const addToCart = () => {
-    const cover = product_img
-
     const prod: ProductItemType = {
       id,
       title: title,
@@ -68,7 +65,9 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
           <span>{price} грн</span>
         </p>
         <div className={s.product_grid_item__bottom__available}>{is_available ? 'В наявності' : 'Продано'}</div>
-        <button className={s.product_grid_item__bottom__btn} onClick={handleAddToCart}>У кошик</button>
+        <button className={s.product_grid_item__bottom__btn} onClick={handleAddToCart}>
+          У кошик
+        </button>
       </div>
     </div>
   )

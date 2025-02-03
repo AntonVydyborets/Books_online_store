@@ -9,6 +9,7 @@ interface SlideItemProps {
 }
 
 const SlideItem: React.FC<SlideItemProps> = ({ book }) => {
+  console.log('book', book)
   return <>{book && <ProductItemSlide {...book} />}</>
 }
 

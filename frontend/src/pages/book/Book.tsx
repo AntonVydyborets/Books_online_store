@@ -17,6 +17,7 @@ const Book = () => {
   })
 
   const { allProducts, bookById, setBookById } = useProductsStore((state) => state)
+  
   useEffect(() => {
     if (data) {
       const modifiedBook = {
