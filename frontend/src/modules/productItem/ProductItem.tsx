@@ -37,6 +37,7 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genres, i
 
     setOrderProduct(prod)
   }
+  const preparedGenres = genres.split(',').map(el => <span>{`${el} `}</span>);
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
@@ -56,11 +57,11 @@ const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genres, i
         <img src={heartDark} alt="heartDark" />
       </p>
       <div className={s.product_grid_item__top}>
-        <p className={s.product_grid_item__genre}>{genres ? genres : ''}</p>
         <div className={s.product_labels}>
           <div className={s.product_labels__item}>Подарунок</div>
         </div>
         <img className={s.product_image} src={cover || product_img} alt="product image" />
+        <p className={s.product_grid_item__genre}>{genres ? preparedGenres : ''}</p>
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">
