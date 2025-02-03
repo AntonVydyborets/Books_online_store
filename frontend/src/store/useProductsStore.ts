@@ -112,6 +112,7 @@ export const useProductsStore = create<StoreState>((set) => ({
   setBookById: (book: BookItem) => {
     set((_: StoreState) => ({ bookById: { ...book } }))
   },
+
   setSearchKeywords: (keywords: string) => {
     set({ searchKeywords: keywords })
   },

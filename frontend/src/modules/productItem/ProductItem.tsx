@@ -18,6 +18,7 @@ import { fetchBookImageById } from '@/services/api'
 
 const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
   const { setOrderProduct } = useOrdersStore((state) => state)
+
   const { data } = useQuery({
     queryKey: ['image', id],
     queryFn: () => fetchBookImageById(`${id}`),

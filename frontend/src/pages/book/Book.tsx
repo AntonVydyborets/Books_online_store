@@ -4,12 +4,15 @@ import BookPreview from '@/components/bookPreview/BookPreview'
 import Footer from '@/layout/footer/Footer'
 import Header from '@/layout/header/Header'
 import { useQuery } from '@tanstack/react-query'
-import { fetchBookById } from '@/services/api'
+import { fetchBookById, fetchBookImageById } from '@/services/api'
 import { useParams } from 'react-router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const Book = () => {
+  const [cover, setCover] = useState<string>('')
+
   const { bookId } = useParams()
+
   const { data } = useQuery({
     queryKey: ['book'],
     queryFn: () => fetchBookById(bookId),
@@ -17,7 +20,14 @@ const Book = () => {
   })
 
   const { allProducts, bookById, setBookById } = useProductsStore((state) => state)
-  
+
+  const { data: imageData } = useQuery({
+    queryKey: ['image', bookId],
+    queryFn: () => fetchBookImageById(`${bookId}`),
+    enabled: !!bookId,
+  })
+  bookById['cover'] = cover
+
   useEffect(() => {
     if (data) {
       const modifiedBook = {
@@ -27,6 +37,16 @@ const Book = () => {
       setBookById(modifiedBook)
     }
   }, [data, setBookById])
+
+  useEffect(() => {
+    if (imageData) {
+      const objectUrl = URL.createObjectURL(imageData)
+      setCover(objectUrl)
+
+      return () => URL.revokeObjectURL(objectUrl) // Уникнення memory leak
+    }
+  }, [imageData])
+
   return (
     <>
       <Header />
