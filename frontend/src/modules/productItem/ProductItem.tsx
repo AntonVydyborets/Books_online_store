@@ -13,25 +13,32 @@ import { BookItem } from '@/utils/types/BookItemType.ts'
 import { Typography } from '@/ui'
 
 import s from './ProductItem.module.scss'
+import { useQuery } from '@tanstack/react-query'
+import { fetchBookImageById } from '@/services/api'
 
-const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, genre, is_available = true }) => {
-
+const ProductItem: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
   const { setOrderProduct } = useOrdersStore((state) => state)
 
+  const { data } = useQuery({
+    queryKey: ['image', id],
+    queryFn: () => fetchBookImageById(`${id}`),
+    enabled: !!id, // Only run this query when searchKeywords is present
+  })
+  const cover = data ? URL.createObjectURL(data as Blob) : ''
   const addToCart = () => {
-
     const prod: ProductItemType = {
       id,
       title: title,
       author,
       price,
       cover,
-      genre,
+      genres,
       quantity: 1,
     }
 
     setOrderProduct(prod)
   }
+  const preparedGenres = genres.split(',').map(el => <span>{`${el} `}</span>);
 
   const handleAddToCart = async (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
     e.preventDefault()
@@ -51,11 +58,11 @@ const ProductItem: FC<BookItem> = ({ id, author, price, cover, title, rating, ge
         <img src={heartDark} alt="heartDark" />
       </p>
       <div className={s.product_grid_item__top}>
-        <p className={s.product_grid_item__genre}>{genre ? genre : ''}</p>
         <div className={s.product_labels}>
           <div className={s.product_labels__item}>Подарунок</div>
         </div>
         <img className={s.product_image} src={cover || product_img} alt="product image" />
+        <p className={s.product_grid_item__genre}>{genres ? preparedGenres : ''}</p>
       </div>
       <div className={s.product_grid_item__bottom}>
         <Typography className={s.product_grid_item__bottom__title} tag="h6">

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { Link } from 'react-router'
 
 import SecondStep from '@/components/checkoutCard/SecondStep'
 import ThirdStep from '@/components/checkoutCard/ThirdStep'
@@ -19,22 +19,22 @@ import { useOrdersStore } from '@/store/useOrdersStore.ts'
 
 import s from './Cart.module.scss'
 import clsx from 'clsx'
+import { Container } from '@/shared'
 
 const Cart = () => {
   const { order, totalPrice, setTotalPrice, setOrderInfo } = useOrdersStore((state) => state)
   const [step, setStep] = useState<number>(1)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const nextStep = () => {
     setStep((step) => step + 1)
   }
-  console.log('order', order)
 
   const orderInfo = useMemo(() => order.map(({ id, quantity }) => ({ book_id: id, quantity })), [order])
 
-  const setInfoForOrder = () => {
-    navigate('/checkout')
-  }
+  // const setInfoForOrder = () => {
+  //   navigate('/checkout')
+  // }
 
   useEffect(() => {
     setOrderInfo(orderInfo)
@@ -49,7 +49,7 @@ const Cart = () => {
   return (
     <>
       <Header />
-      <section className={s.container}>
+      <Container className={s.container}>
         <Breadcrumbs step={step} />
         <div className={s.wrapper}>
           <div className={s.left}>
@@ -91,7 +91,7 @@ const Cart = () => {
             </div>
             {order.length === 0 && <button className={clsx(s.btn, s.disabled)}>Далі</button>}
             {step === 1 && order.length > 0 && (
-              <button className={s.btn} onClick={() => setInfoForOrder()}>
+              <button className={s.btn} onClick={() => nextStep()}>
                 Далі
               </button>
             )}
@@ -118,7 +118,7 @@ const Cart = () => {
         <div className={s.bottom}>
           <img src={DeliverBanner} alt="icons-free-deliver" />
         </div>
-      </section>
+      </Container>
       <Footer />
     </>
   )

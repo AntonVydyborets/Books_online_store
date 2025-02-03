@@ -9,10 +9,22 @@ interface BreadcrumbsProps {
 const Breadcrumbs: FC<BreadcrumbsProps> = ({ step }) => {
   return (
     <div className={s.container}>
-      <div className={clsx(s.base, step === 1 && s.active, step > 1 && s.pass)}>Корзина</div>
-      <div className={clsx(s.base, step === 2 && s.active, step > 2 && s.pass)}>Доставка</div>
-      <div className={clsx(s.base, step === 3 && s.active, step > 3 && s.pass)}>Оплата</div>
-      <div className={clsx(s.base, step === 4 && s.active)}>Підтвердження</div>
+      <div className={clsx(s.base, step === 1 && s.active, step > 1 && s.pass)}>
+        <span></span>
+        <p>Корзина</p>
+      </div>
+      <div className={clsx(s.base, step === 2 && s.active, step > 2 && s.pass)}>
+        <span></span>
+        <p>Доставка</p>
+      </div>
+      <div className={clsx(s.base, step === 2 && s.active, step > 2 && s.pass)}>
+        <span></span>
+        <p>Оплата</p>
+      </div>
+      <div className={clsx(s.base, step === 3 && s.active)}>
+        <span></span>
+        <p>Підтвердження</p>
+      </div>
     </div>
   )
 }

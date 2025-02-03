@@ -24,7 +24,7 @@ const initialState = {
       id: uuid(),
       title: 'За Перекопом є земля 5',
       cover: 'https://laboratory.ua/files/products/za-perekопом-ye-земля-1000-2.1800x1200w.jpg',
-      genre: 'Fiction',
+      genres: 'Fiction',
       price: 370,
       stock: true,
     },
@@ -34,7 +34,7 @@ const initialState = {
       id: uuid(),
       title: 'Закохані в життя, одружені на смерті 1',
       cover: 'https://propalahramota.com/storage/product/md/JLKTdDv9R8m6BXjjMUmVQ8IaR70zC75GoY2g4vm7.jpeg',
-      genre: 'Fiction, Mystery',
+      genres: 'Fiction, Mystery',
       price: 150,
       stock: true,
     },
@@ -80,7 +80,7 @@ const initialState = {
       'У літературній творчості Улас Самчук (1905—1987) був літописцем змагань українського народу протягом сучасного йому півстоліття. Визначне місце в творчості Самчука посідає публіцистика, своєрідні подорожні нотатки. У творі «На білому коні» У. Самчук створив образ історичної батьківщини довоєнного періоду, «радянського життя». Автор розповідає про зустрічі з поетами Оленою Телігою, Олегом Ольжичем, Євгеном Маланюком, кінорежисером і скульптором Іваном Кавалерідзе, письменником Віктором Петровим (Домонтовичем), актрисою Тетяною Праховою, Степаном Скрипником (єпископом Мстиславом), отаманом Тарасом Бульбою-Боровцем. «На коні вороному» — це щемливе, тужливе прощання автора з рідною землею, де його надії не справдилися, прощання назавжди.',
     author: 'Улас Самчук',
     publisher: 'Фоліо',
-    genre: 'Історична проза, Класика',
+    genres: 'Історична проза, Класика',
     cover: 'https://readeat.com/storage/app/uploads/public/65c/0ac/5a1/thumb_54104_900_900_0_0_auto.jpg',
     publication_year: 2023,
     country_of_origin: 'Україна',
@@ -112,6 +112,7 @@ export const useProductsStore = create<StoreState>((set) => ({
   setBookById: (book: BookItem) => {
     set((_: StoreState) => ({ bookById: { ...book } }))
   },
+
   setSearchKeywords: (keywords: string) => {
     set({ searchKeywords: keywords })
   },

@@ -8,7 +8,7 @@ import { RequiredCartItemType } from '@/utils/types/BookItemType'
 
 export type ProductItemType = Pick<
   RequiredCartItemType,
-  'id' | 'title' | 'author' | 'price' | 'cover' | 'genre' | 'quantity'
+  'id' | 'title' | 'author' | 'price' | 'cover' | 'genres' | 'quantity'
 >
 
 interface OrderInfoType {

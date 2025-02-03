@@ -5,22 +5,22 @@ export const genreFilterItems: FilterType[] = [
   {
     id: uuid(),
     title: 'Художня',
-    type: 'genre',
+    type: 'genres',
   },
   {
     id: uuid(),
     title: 'Документальна',
-    type: 'genre',
+    type: 'genres',
   },
   {
     id: uuid(),
     title: 'Освітня',
-    type: 'genre',
+    type: 'genres',
   },
   {
     id: uuid(),
     title: 'Дитяча',
-    type: 'genre',
+    type: 'genres',
   },
 ]
 
@@ -74,5 +74,17 @@ export const publisherFilterItems: FilterType[] = [
     id: uuid(),
     title: 'Смолоскип',
     type: 'publisher',
+  },
+]
+export const availableFilterItems: FilterType[] = [
+  {
+    id: uuid(),
+    title: 'У наявності',
+    type: 'available',
+  },
+  {
+    id: uuid(),
+    title: 'Всі',
+    type: 'available',
   },
 ]
