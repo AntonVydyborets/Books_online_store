@@ -14,7 +14,7 @@ import s from './ProductItemSlide.module.scss'
 import { fetchBookImageById } from '@/services/api'
 import { useQuery } from '@tanstack/react-query'
 
-const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true, cover }) => {
+const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
   const { setOrderProduct } = useOrdersStore((state) => state)
 
   const { data } = useQuery({
