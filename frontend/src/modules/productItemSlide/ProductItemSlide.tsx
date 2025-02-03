@@ -11,14 +11,20 @@ import { BookItem } from '@/utils/types/BookItemType.ts'
 import { Typography } from '@/ui'
 
 import s from './ProductItemSlide.module.scss'
+import { fetchBookImageById } from '@/services/api'
+import { useQuery } from '@tanstack/react-query'
 
 const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genres, is_available = true }) => {
 
   const { setOrderProduct } = useOrdersStore((state) => state)
 
+    const { data } = useQuery({
+      queryKey: ['image', id],
+      queryFn: () => fetchBookImageById(`${id}`),
+      enabled: !!id, // Only run this query when searchKeywords is present
+    })
+    const cover = data ? URL.createObjectURL(data as Blob) : ''
   const addToCart = () => {
-    const cover = product_img
-
     const prod: ProductItemType = {
       id,
       title: title,
@@ -50,7 +56,7 @@ const ProductItemSlide: FC<BookItem> = ({ id, author, price, title, rating, genr
           <div className={s.product_labels}>
             <div className={s.product_labels__item}>Подарунок</div>
           </div>
-          <img className={s.product_image} src={product_img} alt="product image" />
+          <img className={s.product_image} src={cover || product_img} alt="product image" />
         </div>
       </div>
       <div className={s.product_grid_item__bottom}>
