@@ -1,0 +1,49 @@
+services:
+    postgres:
+        image: postgres:latest
+        container_name: example-db
+        restart: always
+        ports:
+            - "${POSTGRES_PORT}:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        env_file:
+            - .env
+        networks:
+            - book-network
+
+    main-app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: main-app
+        ports:
+            - "${FASTAPI_PORT}:8000"
+        command: "sh /entrypoint.sh"
+        env_file:
+            - .env
+        depends_on:
+            - postgres
+        networks:
+            - book-network
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        container_name: frontend
+        ports:
+            - 80:80
+        depends_on:
+            - main-app
+        entrypoint: [ "nginx", "-g", "daemon off;" ]
+        networks:
+            - book-network
+
+volumes:
+    postgres_data:
+
+networks:
+  book-network:
+    name: book-network
+    driver: bridge
